@@ -18,4 +18,6 @@ public class EmailDataModel {
 	private String reason;
 	private String address;
 	private String price;
+	private String ngaykham;
+	private String doctor_name;
 }
