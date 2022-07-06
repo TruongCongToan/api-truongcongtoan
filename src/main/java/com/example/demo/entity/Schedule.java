@@ -55,8 +55,8 @@ public class Schedule implements Serializable {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "timetype", referencedColumnName = "key", insertable = false, updatable = false)
 	private AllCode allCode = null;
-
-	@ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
-    @JoinColumn(name="doctorid",insertable=false, updatable=false)
-    private Users users;
+//
+//	@ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
+//    @JoinColumn(name="doctorid",insertable=false, updatable=false)
+//    private Users users;
 }
