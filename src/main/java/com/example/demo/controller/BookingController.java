@@ -7,7 +7,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -79,18 +78,19 @@ public class BookingController {
 		}
 	@GetMapping("/api/verify-booking/{token}/{patientid}")
 	@CrossOrigin(origins = "http://localhost:3000")
-	public ResponseEntity<Object> VerifyBooking(@Valid @PathVariable("token") String token,  @PathVariable("patientid") int patientid) {
-		HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+	public String VerifyBooking(@Valid @PathVariable("token") String token,  @PathVariable("patientid") int patientid) {
 		Booking booking = new Booking();
 		
 		try {
 			 booking = bookingService.VerifyBooking(token,patientid);
-			 httpStatus = HttpStatus.CREATED;
+			 if (booking != null) {
+					return "Bạn đã xác nhận lịch khám tại Health Care thành công ! Xin cảm ơn và chúc bạn nhiều điều tốt đẹp.";
+			}else {
+				return "Thông báo : Xác  nhận lịch đặt khám thất bại !";
+			}
 		} catch (Exception e) {
 			 throw new DuplicateRecordException("Da co trong danh sach");		 
-		}
-		return new ResponseEntity<Object>(booking, httpStatus);
-
+			}
 		}
 	@PutMapping("api/bookings/{patientID}")
 	@CrossOrigin(origins = "http://localhost:3000")
