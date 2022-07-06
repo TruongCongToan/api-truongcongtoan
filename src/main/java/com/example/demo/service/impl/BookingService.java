@@ -32,7 +32,9 @@ public class BookingService implements IBookingService {
 			bookingModel.setTimetype(booking.getTimetype());
 			bookingModel.setUpdateat(booking.getUpdateat());
 			bookingModel.setCreateat(booking.getCreateat());
+			bookingModel.setToken(booking.getToken());
 			bookingModel.setId(booking.getId());
+			
 			
 			bookingModelList.add(bookingModel);
 		}
@@ -68,6 +70,7 @@ public class BookingService implements IBookingService {
 			booking.setStatusId(bookingModel.getStatusid());
 			booking.setTimetype(bookingModel.getTimetype());
 			booking.setUpdateat(bookingModel.getUpdateat());
+			booking.setToken(bookingModel.getToken());
 			
 			return bookingDAO.save(booking);
 		}
@@ -92,6 +95,10 @@ public class BookingService implements IBookingService {
 			if(booking.getTimetype().equals(bookingModel.getTimetype())) {
 				booking.setTimetype(bookingModel.getTimetype());
 			}
+			if(booking.getToken().equals(bookingModel.getToken())) {
+				booking.setToken(bookingModel.getToken());
+			}
+			
 			booking.setCreateat(bookingModel.getCreateat());
 			booking.setUpdateat(bookingModel.getUpdateat());
 			

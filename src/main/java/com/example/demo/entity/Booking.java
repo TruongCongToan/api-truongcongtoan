@@ -41,6 +41,9 @@ public class Booking implements Serializable {
 	  @Column(name = "timetype")
 	  private String timetype;
 	  
+	  @Column(name = "token")
+	  private String token;
+	  
 	  @JsonFormat(pattern = "yyyy-MM-dd",shape = Shape.STRING)
 	  @Column(name = "createat")
 	private Date createat;
@@ -48,6 +51,7 @@ public class Booking implements Serializable {
 	  @JsonFormat(pattern = "yyyy-MM-dd",shape = Shape.STRING)
 	  @Column(name = "updateat")
 	private Date updateat;
+	  
 	  
 
 }

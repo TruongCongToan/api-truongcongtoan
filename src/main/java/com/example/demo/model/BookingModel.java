@@ -23,6 +23,7 @@ public class BookingModel {
 	private int patientid;
 	private String date;
 	private String timetype;
+	private String token;
 	 
 	  @JsonFormat(pattern = "yyyy-MM-dd",shape = Shape.STRING)
 	  @Column(name = "createat")
