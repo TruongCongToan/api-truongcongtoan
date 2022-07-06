@@ -77,7 +77,7 @@ public class BookingController {
 		return new ResponseEntity<Object>(bookingModel, httpStatus);
 
 		}
-	@GetMapping("/api/VerifyBooking/{token}/{patientid}")
+	@GetMapping("/api/verify-booking/{token}/{patientid}")
 	@CrossOrigin(origins = "http://localhost:3000")
 	public ResponseEntity<Object> VerifyBooking(@Valid @PathVariable("token") String token,  @PathVariable("patientid") int patientid) {
 		HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
