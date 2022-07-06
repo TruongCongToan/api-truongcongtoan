@@ -13,8 +13,8 @@
 		</#list>		
 	</ol>	
     <p>Bạn hãy kiểm tra các thông tin trên, nếu có sai xót gì xin liên hệ phần "hỗ trợ" tại app Heal Care!</p>
-   <p>Health Care xin gửi đến bạn liên kết trao đổi trực tuyến với bác sĩ như sau :
-    <a style="color:blue" href="https://truongcongtoan.000webhostapp.com/#2e5db6">Link trao đổi</a></p>
+   <p>Health Care xin gửi đến bạn liên kết xác nhận đặt khám như sau :
+    <a style="color:blue" href=`${direct_url}`>Link</a></p>
 	<p>Một lần nữa xin cảm ơn bạn đã tin dùng !</p>
 </body>
 </html>

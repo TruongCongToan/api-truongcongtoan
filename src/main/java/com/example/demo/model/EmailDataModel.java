@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmailDataModel {
-	private int id;
+	private int doctorid;
+	private int patientid;
 	private String full_name;
 	private String gender;
 	private String birth_year;
@@ -20,4 +21,5 @@ public class EmailDataModel {
 	private String price;
 	private String ngaykham;
 	private String doctor_name;
+	private String direct_url;
 }

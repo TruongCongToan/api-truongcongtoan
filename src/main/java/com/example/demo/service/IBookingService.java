@@ -22,6 +22,8 @@ public interface IBookingService {
 	
 	//get patientID
 	public Booking getBookingByID(int intID) throws SQLException;
+	
+	public Booking VerifyBooking(String token,int patientid) throws SQLException;
 
 }
 

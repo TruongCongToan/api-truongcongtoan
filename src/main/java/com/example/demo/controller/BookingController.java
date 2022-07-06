@@ -7,6 +7,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,6 +31,7 @@ public class BookingController {
 	@Autowired
 	BookingService bookingService;
 	
+
 	//get all booking
 	@GetMapping("/api/bookings")
 	@CrossOrigin(origins = "http://localhost:3000")
@@ -58,13 +60,13 @@ public class BookingController {
 		
 		try {
 			Booking booking = bookingService.addBooking(bookingModelIn);
-			if (null != booking) {
+			if (booking != null) {
 				httpStatus = HttpStatus.CREATED;
 				bookingModel.setCreateat(booking.getCreateat());
 				bookingModel.setDate(booking.getDate());
 				bookingModel.setDoctorid(booking.getDoctorid());
 				bookingModel.setPatientid(booking.getPatientid());
-				bookingModel.setStatusid(booking.getStatusId());
+				bookingModel.setStatusId(booking.getStatusId());
 				bookingModel.setTimetype(booking.getTimetype());
 				bookingModel.setUpdateat(booking.getUpdateat());
 				bookingModel.setId(booking.getId());
@@ -75,7 +77,21 @@ public class BookingController {
 		return new ResponseEntity<Object>(bookingModel, httpStatus);
 
 		}
-	
+	@GetMapping("/api/VerifyBooking/{token}/{patientid}")
+	@CrossOrigin(origins = "http://localhost:3000")
+	public ResponseEntity<Object> VerifyBooking(@Valid @PathVariable("token") String token,  @PathVariable("patientid") int patientid) {
+		HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+		Booking booking = new Booking();
+		
+		try {
+			 booking = bookingService.VerifyBooking(token,patientid);
+			 httpStatus = HttpStatus.CREATED;
+		} catch (Exception e) {
+			 throw new DuplicateRecordException("Da co trong danh sach");		 
+		}
+		return new ResponseEntity<Object>(booking, httpStatus);
+
+		}
 	@PutMapping("api/bookings/{patientID}")
 	@CrossOrigin(origins = "http://localhost:3000")
 	public ResponseEntity<Object> editBooking(@Valid @RequestBody BookingModel bookingModel,

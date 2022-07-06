@@ -18,7 +18,7 @@ public class BookingModel {
 
 	
 	private int id;
-	private String statusid;
+	private String statusId;
 	private int doctorid;
 	private int patientid;
 	private String date;

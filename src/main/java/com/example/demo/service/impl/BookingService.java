@@ -3,6 +3,7 @@ package com.example.demo.service.impl;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class BookingService implements IBookingService {
 		for (Booking booking : bookings) {
 			BookingModel bookingModel = new BookingModel();
 			
-			bookingModel.setStatusid(booking.getStatusId());
+			bookingModel.setStatusId(booking.getStatusId());
 			bookingModel.setDoctorid(booking.getDoctorid());
 			bookingModel.setPatientid(booking.getPatientid());
 			bookingModel.setDate(booking.getDate());
@@ -40,6 +41,7 @@ public class BookingService implements IBookingService {
 		}
 		return bookingModelList;
 	}
+	
 	
 	
 	//get list booking
@@ -67,7 +69,7 @@ public class BookingService implements IBookingService {
 			booking.setDate(bookingModel.getDate());
 			booking.setDoctorid(bookingModel.getDoctorid());
 			booking.setPatientid(bookingModel.getPatientid());
-			booking.setStatusId(bookingModel.getStatusid());
+			booking.setStatusId(bookingModel.getStatusId());
 			booking.setTimetype(bookingModel.getTimetype());
 			booking.setUpdateat(bookingModel.getUpdateat());
 			booking.setToken(bookingModel.getToken());
@@ -82,23 +84,22 @@ public class BookingService implements IBookingService {
 	public Booking editBooking(BookingModel bookingModel, int patientID) throws SQLException {
 		if(bookingDAO.getBookingByID(bookingModel.getPatientid()) != null ) {
 			Booking booking = bookingDAO.getBookingByID(patientID);
-			
+		
 			if (!booking.getDate().equals(bookingModel.getDate()) ) {
 					booking.setDate(bookingModel.getDate());
 			}
 			if(booking.getDoctorid() != bookingModel.getDoctorid()) {
-				booking.setDoctorid(bookingModel.getDoctorid());
-			}
-			if(booking.getStatusId().equals(bookingModel.getStatusid())) {
-				booking.setStatusId(bookingModel.getStatusid());
-			}
-			if(booking.getTimetype().equals(bookingModel.getTimetype())) {
-				booking.setTimetype(bookingModel.getTimetype());
-			}
-			if(booking.getToken().equals(bookingModel.getToken())) {
+			booking.setDoctorid(bookingModel.getDoctorid());
+		}
+			booking.setStatusId(bookingModel.getStatusId());
+			booking.setTimetype(bookingModel.getTimetype());
+//			if(!booking.getTimetype().equals(bookingModel.getTimetype())) {
+//				booking.setTimetype(bookingModel.getTimetype());
+//			}
+			if(!booking.getToken().equals(bookingModel.getToken())) {
 				booking.setToken(bookingModel.getToken());
 			}
-			
+
 			booking.setCreateat(bookingModel.getCreateat());
 			booking.setUpdateat(bookingModel.getUpdateat());
 			
@@ -133,6 +134,41 @@ public class BookingService implements IBookingService {
 			}
 		} else {
 			throw new NotFoundException("Khong tim thay nguoi dung nay");
+		}
+	}
+
+
+
+	private BookingModel defineModelToken(Booking booking) {
+		
+		BookingModel bookingModel = new BookingModel();
+		bookingModel.setPatientid(booking.getPatientid());
+		bookingModel.setDoctorid(booking.getDoctorid());
+		bookingModel.setStatusId("S2");
+		bookingModel.setDate(booking.getDate());
+		bookingModel.setToken(booking.getToken());
+		bookingModel.setTimetype(booking.getTimetype());
+		bookingModel.setCreateat(booking.getCreateat());
+		bookingModel.setUpdateat(booking.getUpdateat());
+		
+		return bookingModel;
+	}
+	
+	@Override
+	public Booking VerifyBooking(String token, int patientid) throws SQLException {
+		
+		if (token == null && patientid == 0) {
+			throw new NotFoundException("khong the verify");
+		}else {
+			Booking booking = bookingDAO.verifyBooking(token,patientid);
+			System.out.println("gia tri "+booking);
+			if (booking != null) {
+			BookingModel bookingModel= defineModelToken(booking);
+			Booking UpdateBooking = editBooking(bookingModel, bookingModel.getPatientid());
+			return UpdateBooking;
+			}else {
+				throw new NotFoundException("Khong the nhan lan 2");
+			}
 		}
 	}
 

@@ -22,7 +22,9 @@ public interface IBookingDAO extends JpaRepository<Booking, Integer> {
 		// get thong tin sv by patienid
 		@Query(value = "select * from booking where patientid = :inid", nativeQuery = true)
 		public Booking getBookingByID(@Param("inid") int inid);
-		
+		// verify
+		@Query(value = "select * from booking where token = :tokenin and doctorid = :indoctorid and statusId='S1'", nativeQuery = true)
+		public Booking verifyBooking(@Param("tokenin") String tokenin, @Param("indoctorid") int indoctorid);
 		
 		// xoa sinh vien theo patienid
 		@Modifying
