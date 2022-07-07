@@ -161,11 +161,16 @@ public class BookingService implements IBookingService {
 			throw new NotFoundException("khong the verify");
 		}else {
 			Booking booking = bookingDAO.verifyBooking(token,patientid);
-			System.out.println("gia tri "+booking);
+		
 			if (booking != null) {
 			BookingModel bookingModel= defineModelToken(booking);
-			Booking UpdateBooking = editBooking(bookingModel, bookingModel.getPatientid());
-			return UpdateBooking;
+			System.out.println("gia tri "+booking);
+				if (booking.getStatusId().equals("S1")) {
+					Booking UpdateBooking = editBooking(bookingModel, bookingModel.getDoctorid());
+					return UpdateBooking;
+				}else {
+					throw new NotFoundException("Khong the nhan lan 2");
+				}
 			}else {
 				throw new NotFoundException("Khong the nhan lan 2");
 			}

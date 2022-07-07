@@ -89,7 +89,8 @@ public class BookingController {
 				return "Thông báo : Xác  nhận lịch đặt khám thất bại !";
 			}
 		} catch (Exception e) {
-			 throw new DuplicateRecordException("Da co trong danh sach");		 
+			return "Thông báo : Xác  nhận lịch đặt khám thất bại! Xin vui lòng kiểm tra lại!";
+//			 throw new DuplicateRecordException("Da co trong danh sach");		 
 			}
 		}
 	@PutMapping("api/bookings/{patientID}")
