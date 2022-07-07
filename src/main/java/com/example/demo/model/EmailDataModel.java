@@ -22,4 +22,6 @@ public class EmailDataModel {
 	private String ngaykham;
 	private String doctor_name;
 	private String direct_url;
+	private String date;
+	private String timetype;
 }

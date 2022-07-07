@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.DAO.IBookingDAO;
 import com.example.demo.entity.Booking;
 import com.example.demo.model.BookingModel;
 import com.example.demo.model.EmailDTO;
@@ -32,6 +33,8 @@ public class MailSenderController {
 	
 	@Autowired
 	private BookingService bookingService;
+	@Autowired
+	private IBookingDAO bookingDAO;
 	
 	@Transient
 	private UUID corrId = UUID.randomUUID();
@@ -58,7 +61,7 @@ public class MailSenderController {
 
 		EmailDTO email = new EmailDTO();
 //		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
-		Booking booking = bookingService.getBookingByID(emailDataModel.getDoctorid());
+		Booking booking = bookingDAO.getBookingByDoctorIdandPatienId(emailDataModel.getDoctorid(),emailDataModel.getPatientid(),emailDataModel.getDate(),emailDataModel.getTimetype());
 		BookingModel bookingModel = defineModelToken(booking,corrId);
 		Booking bookingResultBooking = bookingService.editBooking(bookingModel, emailDataModel.getDoctorid());
 		System.out.println("Gia tri cua booking sau khi uodate "+bookingResultBooking);

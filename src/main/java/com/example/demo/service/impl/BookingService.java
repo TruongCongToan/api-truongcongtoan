@@ -58,7 +58,7 @@ public class BookingService implements IBookingService {
 	@Override
 	public Booking addBooking(BookingModel bookingModel) throws SQLException {
 		
-		if(bookingDAO.getBookingByDoctorIdandPatienId(bookingModel.getDoctorid(),bookingModel.getPatientid()) != null) {
+		if(bookingDAO.getBookingByDoctorIdandPatienId(bookingModel.getDoctorid(),bookingModel.getPatientid(),bookingModel.getDate(),bookingModel.getTimetype()) != null) {
 			
 		return editBooking(bookingModel,bookingModel.getPatientid());
 		
@@ -84,7 +84,7 @@ public class BookingService implements IBookingService {
 	//update booking info
 	@Override
 	public Booking editBooking(BookingModel bookingModel, int doctorID) throws SQLException {
-		Booking booking = bookingDAO.getBookingByDoctorIdandPatienId(doctorID,bookingModel.getPatientid());
+		Booking booking = bookingDAO.getBookingByDoctorIdandPatienId(doctorID,bookingModel.getPatientid(),bookingModel.getDate(),bookingModel.getTimetype());
 		if(booking != null ) {		
 			if (!booking.getDate().equals(bookingModel.getDate()) ) {
 					booking.setDate(bookingModel.getDate());
