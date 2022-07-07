@@ -2,6 +2,7 @@ package com.example.demo.service.impl;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -65,13 +66,14 @@ public class BookingService implements IBookingService {
 			
 			Booking booking = new Booking();
 			
-			booking.setCreateat(bookingModel.getCreateat());
+			booking.setCreateat(new Date());
+			booking.setUpdateat(new Date());
+
 			booking.setDate(bookingModel.getDate());
 			booking.setDoctorid(bookingModel.getDoctorid());
 			booking.setPatientid(bookingModel.getPatientid());
 			booking.setStatusId(bookingModel.getStatusId());
 			booking.setTimetype(bookingModel.getTimetype());
-			booking.setUpdateat(bookingModel.getUpdateat());
 			booking.setToken(bookingModel.getToken());
 			
 			return bookingDAO.save(booking);
@@ -82,26 +84,27 @@ public class BookingService implements IBookingService {
 	//update booking info
 	@Override
 	public Booking editBooking(BookingModel bookingModel, int patientID) throws SQLException {
-		if(bookingDAO.getBookingByID(bookingModel.getPatientid()) != null ) {
+		System.out.println(bookingDAO.getBookingByID(bookingModel.getDoctorid()) );
+		if(bookingDAO.getBookingByID(bookingModel.getDoctorid()) != null ) {
 			Booking booking = bookingDAO.getBookingByID(patientID);
 		
-			if (!booking.getDate().equals(bookingModel.getDate()) ) {
-					booking.setDate(bookingModel.getDate());
-			}
-			if(booking.getDoctorid() != bookingModel.getDoctorid()) {
-			booking.setDoctorid(bookingModel.getDoctorid());
-		}
-			booking.setStatusId(bookingModel.getStatusId());
-			booking.setTimetype(bookingModel.getTimetype());
-//			if(!booking.getTimetype().equals(bookingModel.getTimetype())) {
-//				booking.setTimetype(bookingModel.getTimetype());
+//			if (!booking.getDate().equals(bookingModel.getDate()) ) {
+//					booking.setDate(bookingModel.getDate());
 //			}
-			if(!booking.getToken().equals(bookingModel.getToken())) {
-				booking.setToken(bookingModel.getToken());
-			}
-
-			booking.setCreateat(bookingModel.getCreateat());
-			booking.setUpdateat(bookingModel.getUpdateat());
+//			if(booking.getDoctorid() != bookingModel.getDoctorid()) {
+//			booking.setDoctorid(bookingModel.getDoctorid());
+//		}
+//			booking.setStatusId(bookingModel.getStatusId());
+//			booking.setTimetype(bookingModel.getTimetype());
+////			if(!booking.getTimetype().equals(bookingModel.getTimetype())) {
+////				booking.setTimetype(bookingModel.getTimetype());
+////			}
+//			if(!booking.getToken().equals(bookingModel.getToken())) {
+//				booking.setToken(bookingModel.getToken());
+//			}
+//
+//			booking.setCreateat(bookingModel.getCreateat());
+//			booking.setUpdateat(bookingModel.getUpdateat());
 			
 			return bookingDAO.saveAndFlush(booking);
 		}else {

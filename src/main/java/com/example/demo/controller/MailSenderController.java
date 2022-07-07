@@ -58,9 +58,9 @@ public class MailSenderController {
 
 		EmailDTO email = new EmailDTO();
 //		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
-		Booking booking = bookingService.getBookingByID(emailDataModel.getPatientid());
+		Booking booking = bookingService.getBookingByID(emailDataModel.getDoctorid());
 		BookingModel bookingModel = defineModelToken(booking,corrId);
-		Booking bookingResultBooking = bookingService.editBooking(bookingModel, emailDataModel.getPatientid());
+		Booking bookingResultBooking = bookingService.editBooking(bookingModel, emailDataModel.getDoctorid());
 		System.out.println("Gia tri cua booking sau khi uodate "+bookingResultBooking);
 		
 		email.setTo(emailDataModel.getEmail());
@@ -78,7 +78,7 @@ public class MailSenderController {
 				String ngaykham = String.format("Ngày khám : %s", emailDataModel.getNgaykham());
 				String price = String.format("Giá khám : %s VNĐ", emailDataModel.getPrice());
 				String doctor_name = String.format("Bác sĩ khám : Bác sĩ chuyên khoa %s",emailDataModel.getDoctor_name());
-				String direct_url = String.format("http://api-truongcongtoan.herokuapp.com/api/verify-booking/%s/%d",corrId,emailDataModel.getDoctorid());
+				String direct_url = String.format("http://api-truongcongtoan.herokuapp.com/api/	/%s/%d",corrId,emailDataModel.getDoctorid());
 				// List of team members...
 				List<String> booking_info = Arrays.asList(full_name,gender,birth_year,email_address,phone_number,reason,ngaykham,price,doctor_name);
 				
