@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Convert;
@@ -55,7 +54,6 @@ public class ScheduleController {
 	@CrossOrigin(origins = "http://localhost:3000")
 	@Convert
 	public List<ScheduleModel>getByDoctorID(@PathVariable("doctorid") int doctorid) throws SQLException {
-		HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 
 		List<ScheduleModel> schedulesList=scheduleService.getByDoctorID(doctorid);
 //		System.out.println("Gia tri list schedule "+schedulesList.get(0).getDate());

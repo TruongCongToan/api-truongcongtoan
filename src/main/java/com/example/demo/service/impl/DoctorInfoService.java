@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.DAO.IDoctorInfoDAO;
 import com.example.demo.entity.DoctorInfo;
-import com.example.demo.exception.DuplicateRecordException;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.DoctorInfoModel;
 import com.example.demo.service.IDoctorInfoService;

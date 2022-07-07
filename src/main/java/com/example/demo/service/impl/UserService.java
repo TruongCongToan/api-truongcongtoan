@@ -63,9 +63,6 @@ public class UserService implements IUserService {
 		if (userDAO.findByName(userModel.getEmail()) == null) {
 			Users user = new Users();
 			
-			
-//			user.setPassword(userModel.getPassword());
-	
 			user.setAddress(userModel.getAddress());
 			user.setPhone_number(userModel.getPhone_number());
 			user.setGender(userModel.getGender());
