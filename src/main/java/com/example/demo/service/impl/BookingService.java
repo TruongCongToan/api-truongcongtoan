@@ -96,10 +96,10 @@ public class BookingService implements IBookingService {
 			if(!booking.getTimetype().equals(bookingModel.getTimetype())) {
 				booking.setTimetype(bookingModel.getTimetype());
 			}
-			if(!booking.getToken().equals(bookingModel.getToken())) {
-				booking.setToken(bookingModel.getToken());
-			}
-
+//			if(!booking.getToken().equals(bookingModel.getToken())) {
+//				booking.setToken(bookingModel.getToken());
+//			}
+			booking.setToken(bookingModel.getToken());
 //			booking.setCreateat(bookingModel.getCreateat());
 			booking.setUpdateat(new Date());
 			
