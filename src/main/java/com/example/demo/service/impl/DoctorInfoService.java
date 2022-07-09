@@ -48,8 +48,11 @@ public class DoctorInfoService implements IDoctorInfoService{
 			doctorInfo.setNote(doctorInfoModel.getNote());
 			doctorInfo.setCount(doctorInfoModel.getCount());
 			doctorInfo.setPayment(doctorInfoModel.getPayment());
+			doctorInfo.setClinic_id(doctorInfoModel.getClinic_id());
+			doctorInfo.setSpecialty_id(doctorInfoModel.getSpecialty_id());
+			
 			doctorInfo.setCreateat(new Date());
-			doctorInfo.setUpdateat(new Date());
+//			doctorInfo.setUpdateat(new Date());
 			
 			doctorInforDAO.save(doctorInfo);
 			return doctorInforDAO.save(doctorInfo);
@@ -71,8 +74,10 @@ public class DoctorInfoService implements IDoctorInfoService{
 			doctorInfo.setNameclinic(doctorInfoModel.getNameclinic());
 			doctorInfo.setNote(doctorInfoModel.getNote());
 			doctorInfo.setCount(doctorInfoModel.getCount());
-			doctorInfo.setPayment(doctorInfoModel.getPayment());			
-			doctorInfo.setCreateat(new Date());
+			doctorInfo.setPayment(doctorInfoModel.getPayment());		
+			doctorInfo.setClinic_id(doctorInfoModel.getClinic_id());
+			doctorInfo.setSpecialty_id(doctorInfoModel.getSpecialty_id());
+			
 			doctorInfo.setUpdateat(new Date());
 			
 
@@ -92,6 +97,16 @@ public class DoctorInfoService implements IDoctorInfoService{
 		if(doctorInfo != null) {
 			doctorInforDAO.delete(doctorInfo);
 		}
+	}
+	@Override
+	public List<DoctorInfo>  getInforByClinicID(int clinicID) throws SQLException {
+		List<DoctorInfo>  doctorInfo = doctorInforDAO.findByClinicID(clinicID);
+		return doctorInfo;
+	}
+	@Override
+	public List<DoctorInfo>  getInforBySpecialID(int specialID) throws SQLException {
+		List<DoctorInfo>  doctorInfo = doctorInforDAO.findBySpecialID(specialID);
+		return doctorInfo;
 	}
 	
 

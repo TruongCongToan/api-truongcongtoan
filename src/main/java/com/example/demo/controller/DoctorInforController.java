@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -30,8 +31,6 @@ public class DoctorInforController {
 	@Autowired
 	private DoctorInfoService doctorInforService;
 	
-	
-	//get all doctor infor
 	@GetMapping("/api/doctorinfo")
 	@CrossOrigin(origins = "http://localhost:3000")
 	public ResponseEntity<Object> getAllUsers() throws SQLException {
@@ -46,14 +45,41 @@ public class DoctorInforController {
 		return new ResponseEntity<Object>(doctorInfo, httpStatus);
 	}
 	
-	//get doctor info by doctor id
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping("/api/doctorinfo/{doctorID}")
-	public ResponseEntity<Object> editDoctorInfo(@Valid @PathVariable("doctorID") int doctorID) {
+	public ResponseEntity<Object> getdoctorInfoByDoctorID(@Valid @PathVariable("doctorID") int doctorID) {
 			HttpStatus httpStatus = null;
 			DoctorInfo doctorInfo= new DoctorInfo();
 			try {
 				doctorInfo = doctorInforService.getInforByDoctorID(doctorID);
+				httpStatus = HttpStatus.OK;
+
+			} catch (Exception e) {	
+				 throw new InternalServerException("Không được bỏ trống các trường !");
+			}
+			return new ResponseEntity<Object>(doctorInfo, httpStatus);
+	}
+	@CrossOrigin(origins = "http://localhost:3000")
+	@GetMapping("/api/doctorinfo/specialties/{specialID}")
+	public ResponseEntity<Object> getdoctorInfoBySpecialID(@Valid @PathVariable("specialID") int specialID) {
+			HttpStatus httpStatus = null;
+			List<DoctorInfo>  doctorInfo= new ArrayList<DoctorInfo>();
+			try {
+				doctorInfo = doctorInforService.getInforBySpecialID(specialID);
+				httpStatus = HttpStatus.OK;
+
+			} catch (Exception e) {	
+				 throw new InternalServerException("Không được bỏ trống các trường !");
+			}
+			return new ResponseEntity<Object>(doctorInfo, httpStatus);
+	}
+	@CrossOrigin(origins = "http://localhost:3000")
+	@GetMapping("/api/doctorinfo/clinic/{clinicID}")
+	public ResponseEntity<Object> getdoctorInfoByClinicID(@Valid @PathVariable("clinicID") int clinicID) {
+			HttpStatus httpStatus = null;
+			List<DoctorInfo>  doctorInfo= new ArrayList<DoctorInfo>();
+			try {
+				doctorInfo = doctorInforService.getInforByClinicID(clinicID);
 				httpStatus = HttpStatus.OK;
 
 			} catch (Exception e) {	

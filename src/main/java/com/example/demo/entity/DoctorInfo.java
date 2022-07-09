@@ -2,16 +2,22 @@ package com.example.demo.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
@@ -58,6 +64,12 @@ public class DoctorInfo implements Serializable {
 	 @Column(name = "count")
 	 private int count;
 	 
+	 @Column(name = "specialty_id")
+	 private int specialty_id;
+	 
+	 @Column(name = "clinic_id")
+	 private int clinic_id;
+	 
 	  @JsonFormat(pattern = "yyyy-MM-dd",shape = Shape.STRING)
 	  @Column(name = "createat")
 	private Date createat;
@@ -69,11 +81,17 @@ public class DoctorInfo implements Serializable {
 	  @OneToOne(cascade = CascadeType.ALL)
 		@JoinColumn(name = "priceid", referencedColumnName = "key", insertable = false, updatable = false)
 		private AllCode allCodePrice = null;
+	  
 	  @OneToOne(cascade = CascadeType.ALL)
 		@JoinColumn(name = "provinceid", referencedColumnName = "key", insertable = false, updatable = false)
 		private AllCode allCodeProvince = null;
+	  
 	  @OneToOne(cascade = CascadeType.ALL)
 		@JoinColumn(name = "payment", referencedColumnName = "key", insertable = false, updatable = false)
 		private AllCode allCodePayment = null;
 
+	  
+//		@ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
+//		@JoinColumn(name="specialty_id",insertable=false, updatable=false)
+//		   private Specialties specialties;
 }

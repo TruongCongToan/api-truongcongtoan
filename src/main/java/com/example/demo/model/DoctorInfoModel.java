@@ -21,4 +21,7 @@ public class DoctorInfoModel {
 	 private String payment;
 	 private Date createat;
 	 private Date updateat;
+	 private int clinic_id;
+	 private int specialty_id;
+	 
 }

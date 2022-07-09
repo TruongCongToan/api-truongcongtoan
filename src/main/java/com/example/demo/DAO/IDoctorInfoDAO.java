@@ -14,14 +14,18 @@ import com.example.demo.entity.DoctorInfo;
 @Repository
 @Transactional
 public interface IDoctorInfoDAO extends JpaRepository<DoctorInfo, Integer> {
-	// get all users
+	
 	@Query(nativeQuery = true, value = "SELECT * FROM r8kVqeUlJf.doctorinfo;")
 	public List<DoctorInfo> getAllDoctorInfor();
 
-	// get thong tin sv by masv
 	@Query(value = "select * from r8kVqeUlJf.doctorinfo where doctorid = :inid", nativeQuery = true)
 	public  DoctorInfo findByDoctorID(@Param("inid") int inid);
 	
+	@Query(value = "select * from r8kVqeUlJf.doctorinfo where specialty_id = :inid", nativeQuery = true)
+	public  List<DoctorInfo>  findBySpecialID(@Param("inid") int inid);
+	
+	@Query(value = "select * from r8kVqeUlJf.doctorinfo where clinic_id = :inid", nativeQuery = true)
+	public  List<DoctorInfo>  findByClinicID(@Param("inid") int inid);
 	
 
 }
