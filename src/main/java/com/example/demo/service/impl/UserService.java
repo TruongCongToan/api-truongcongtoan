@@ -70,7 +70,7 @@ public class UserService implements IUserService {
 			user.setFull_name(userModel.getFull_name());
 			user.setImage(userModel.getImage());
 			user.setCreated_at(userModel.getCreated_at());
-			user.setUpdated_at(userModel.getUpdated_at());			
+			user.setUpdated_at(userModel.getUpdated_at());		
 			
 			System.out.println("gia tri cuoi cung la :"+userDAO.save(user));
 			return userDAO.save(user);
@@ -106,27 +106,33 @@ public class UserService implements IUserService {
  //update user
 	@Override
 	public void editUser(UserModel userModel, String inname) throws SQLException {
+		System.out.println("gia tri email "+inname);
+		System.out.println("gia tri thu duoc " +userDAO.findByName(inname));
 		if (userDAO.findByName(inname) != null) {
 			Users user = userDAO.findByName(inname);
 
- 			if (!user.getAddress().equals(userModel.getAddress())) {
- 				user.setAddress(userModel.getAddress());
- 			}
- 			if(!user.getPhone_number().equals(userModel.getPhone_number())) {
- 				user.setPhone_number(userModel.getPhone_number());
- 			}
- 			if (!user.getGender().equals(userModel.getGender()) ) {
- 				user.setGender(userModel.getGender());
- 			}
- 			if(!user.getRole().equals(userModel.getRole())) {
- 				user.setRole(userModel.getRole());
- 			}
+// 			if (!user.getAddress().equals(userModel.getAddress())) {
+// 				user.setAddress(userModel.getAddress());
+// 			}
+// 			if(!user.getPhone_number().equals(userModel.getPhone_number())) {
+// 				user.setPhone_number(userModel.getPhone_number());
+// 			}
+// 			if (!user.getGender().equals(userModel.getGender()) ) {
+// 				user.setGender(userModel.getGender());
+// 			}
+// 			if(!user.getRole().equals(userModel.getRole())) {
+// 				user.setRole(userModel.getRole());
+// 			}
 
-
- 			user.setImage(userModel.getImage());	
- 			user.setCreated_at(userModel.getCreated_at());
- 			user.setUpdated_at(userModel.getUpdated_at());
- 			user.setFull_name(userModel.getFull_name());
+// 			if(!user.getPassword().equals(userModel.getPassword())) {
+// 				user.setPassword(userModel.getPassword());
+// 			}
+ 			
+// 			user.setDoctorid(userModel.getDoctorid());
+// 			user.setImage(userModel.getImage());	
+// 			user.setCreated_at(userModel.getCreated_at());
+// 			user.setUpdated_at(userModel.getUpdated_at());
+// 			user.setFull_name(userModel.getFull_name());
  			
  			userDAO.saveAndFlush(user);
 		}else {
