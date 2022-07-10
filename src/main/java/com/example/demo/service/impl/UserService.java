@@ -4,6 +4,7 @@ package com.example.demo.service.impl;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,10 +70,8 @@ public class UserService implements IUserService {
 			user.setRole(userModel.getRole());
 			user.setFull_name(userModel.getFull_name());
 			user.setImage(userModel.getImage());
-			user.setCreated_at(userModel.getCreated_at());
-			user.setUpdated_at(userModel.getUpdated_at());		
+			user.setCreated_at(new Date());
 			
-			System.out.println("gia tri cuoi cung la :"+userDAO.save(user));
 			return userDAO.save(user);
 		}
 		else {
@@ -106,33 +105,56 @@ public class UserService implements IUserService {
  //update user
 	@Override
 	public void editUser(UserModel userModel, String inname) throws SQLException {
-		System.out.println("gia tri email "+inname);
-		System.out.println("gia tri thu duoc " +userDAO.findByName(inname));
+//		System.out.println("gia tri dau vao "+userModel);
 		if (userDAO.findByName(inname) != null) {
 			Users user = userDAO.findByName(inname);
-
-// 			if (!user.getAddress().equals(userModel.getAddress())) {
-// 				user.setAddress(userModel.getAddress());
-// 			}
-// 			if(!user.getPhone_number().equals(userModel.getPhone_number())) {
-// 				user.setPhone_number(userModel.getPhone_number());
-// 			}
-// 			if (!user.getGender().equals(userModel.getGender()) ) {
-// 				user.setGender(userModel.getGender());
-// 			}
-// 			if(!user.getRole().equals(userModel.getRole())) {
-// 				user.setRole(userModel.getRole());
-// 			}
-
-// 			if(!user.getPassword().equals(userModel.getPassword())) {
-// 				user.setPassword(userModel.getPassword());
-// 			}
+			System.out.println("gia tri thu duoc " + user.getAddress() );
  			
-// 			user.setDoctorid(userModel.getDoctorid());
-// 			user.setImage(userModel.getImage());	
-// 			user.setCreated_at(userModel.getCreated_at());
-// 			user.setUpdated_at(userModel.getUpdated_at());
-// 			user.setFull_name(userModel.getFull_name());
+ 			if (user.getAddress() == null) {
+				user.setAddress(userModel.getAddress());
+			}else {
+				if (!user.getAddress().equals(userModel.getAddress())) {
+	 				user.setAddress(userModel.getAddress());
+	 			}
+			}
+ 			if (user.getPhone_number() == null) {
+				user.setPhone_number(userModel.getPhone_number());
+			}else {
+				if (!user.getPhone_number().equals(userModel.getPhone_number())) {
+					user.setPhone_number(userModel.getPhone_number());
+	 			}
+			}
+ 			if (user.getGender() == null) {
+				user.setGender(userModel.getGender());
+			}else {
+	 			if (!user.getGender().equals(userModel.getGender()) ) {
+	 				user.setGender(userModel.getGender());
+	 			}
+			}
+ 			if (user.getRole() == null) {
+				user.setRole(userModel.getRole());
+			}else {
+	 			if(!user.getRole().equals(userModel.getRole())) {
+	 				user.setRole(userModel.getRole());
+	 			}
+			}
+ 			
+ 			if (user.getImage() == null) {
+				user.setImage(userModel.getImage());
+			}else {
+				if(!user.getImage().equals(userModel.getImage())) {
+	 				user.setImage(userModel.getImage());
+	 			}
+			}
+ 			if (user.getFull_name() == null) {
+				user.setFull_name(userModel.getFull_name());
+			}else {
+				if(!user.getFull_name().equals(userModel.getFull_name())) {
+					user.setFull_name(userModel.getFull_name());
+	 			}
+			}
+
+ 			user.setUpdated_at(new Date());
  			
  			userDAO.saveAndFlush(user);
 		}else {
