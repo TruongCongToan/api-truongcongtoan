@@ -11,15 +11,15 @@ import com.example.demo.entity.MarkDown;
 
 public interface IMarkDownDAO extends JpaRepository<MarkDown,Integer> {
 	// get all users
-		@Query(nativeQuery = true, value = "select * from markdown")
+		@Query(nativeQuery = true, value = "select * from `markdown`")
 		public List<MarkDown> getAllMarkDown();
 		
 		// get thong tin sv by masv
-		@Query(value = "select * from markdown where markdown_id = :markdown_id", nativeQuery = true)
+		@Query(value = "select * from `markdown` where markdown_id = :markdown_id", nativeQuery = true)
 		public MarkDown findByMarkDownID(@Param("markdown_id") int markdown_id);
 		
 		// xoa sinh vien theo masv
 		@Modifying
-		@Query(value = "delete from markdown where markdown_id =:markdown_id", nativeQuery = true)
+		@Query(value = "delete from `markdown` where markdown_id =:markdown_id", nativeQuery = true)
 		public void deleteMarkdown(@Param("markdown_id") int markdown_id);
 }

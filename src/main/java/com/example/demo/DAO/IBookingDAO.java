@@ -16,22 +16,22 @@ import com.example.demo.entity.Booking;
 @Transactional
 public interface IBookingDAO extends JpaRepository<Booking, Integer> {
 	// get all Booking
-		@Query(nativeQuery = true, value = "select * from booking")
+		@Query(nativeQuery = true, value = "select * from  `booking`")
 		public List<Booking> getAllBooking();
 		
 		// get thong tin sv by patienid
-		@Query(value = "select * from booking where doctorid = :inid", nativeQuery = true)
+		@Query(value = "select * from  `booking` where doctorid = :inid", nativeQuery = true)
 		public Booking getBookingByID(@Param("inid") int inid);
 		
-		@Query(value = "select * from booking where doctorid = :inid and patientid =:inpatientid and date = :indate and timetype = :intime" , nativeQuery = true)
+		@Query(value = "select * from  `booking` where doctorid = :inid and patientid =:inpatientid and date = :indate and timetype = :intime" , nativeQuery = true)
 		public Booking getBookingByDoctorIdandPatienId(@Param("inid") int inid,@Param("inpatientid") int inpatientid,@Param("indate") String indate,@Param("intime") String intime);
 		// verify
-		@Query(value = "select * from booking where token = :tokenin and doctorid = :indoctorid and statusId='S1'", nativeQuery = true)
+		@Query(value = "select * from  `booking` where token = :tokenin and doctorid = :indoctorid and statusId='S1'", nativeQuery = true)
 		public Booking verifyBooking(@Param("tokenin") String tokenin, @Param("indoctorid") int indoctorid);
 		
 		// xoa sinh vien theo patienid
 		@Modifying
-		@Query(value = "delete from booking where patientid =:inid", nativeQuery = true)
+		@Query(value = "delete from  `booking` where patientid =:inid", nativeQuery = true)
 		public void deleteBooking(@Param("inid") int inid);
 
 

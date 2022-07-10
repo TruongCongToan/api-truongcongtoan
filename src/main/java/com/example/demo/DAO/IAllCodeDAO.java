@@ -16,12 +16,12 @@ import com.example.demo.entity.AllCode;
 @Transactional
 public interface IAllCodeDAO extends JpaRepository<AllCode, Integer>  {
 	//get all Code\
-	@Query(nativeQuery = true, value = "SELECT * FROM r8kVqeUlJf.allcodes;")
+	@Query(nativeQuery = true, value = "SELECT * FROM `allcodes` ORDER BY id;")
 	public List<AllCode> getAllCodeService();
 
 
 	@Modifying
-	@Query(value = "SELECT * FROM r8kVqeUlJf.allcodes WHERE type =:intype",nativeQuery = true)
+	@Query(value = "SELECT * FROM `allcodes` WHERE type =:intype",nativeQuery = true)
 	public List<AllCode> findByType(@Param("intype") String intype);
 
 

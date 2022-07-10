@@ -16,16 +16,16 @@ import com.example.demo.entity.Schedule;
 @Transactional
 public interface IScheduleDAO extends CrudRepository<Schedule, Integer> {
 	//get all schedules
-	@Query(nativeQuery = true, value = "select * from schedules")
+	@Query(nativeQuery = true, value = "select * from `schedules`")
 	public List<Schedule> getAllSchedule();
 	//delete schedule
 	@Modifying
-	@Query(value = "delete from schedules where doctorid =:inid", nativeQuery = true)
+	@Query(value = "delete from `schedules` where doctorid =:inid", nativeQuery = true)
 	public void deleteSchedule(@Param("inid") int inid);
 			
 	
 	//get list schedule by doctorid
-	@Query(nativeQuery = true, value = "SELECT * FROM schedules WHERE doctorid = :inid")
+	@Query(nativeQuery = true, value = "SELECT * FROM `schedules` WHERE doctorid = :inid")
 	public List<Schedule> getScheduleByDoctorID(@Param("inid") int inid);
 	
 	//get schedule by date

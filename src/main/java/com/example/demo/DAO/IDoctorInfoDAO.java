@@ -15,16 +15,16 @@ import com.example.demo.entity.DoctorInfo;
 @Transactional
 public interface IDoctorInfoDAO extends JpaRepository<DoctorInfo, Integer> {
 	
-	@Query(nativeQuery = true, value = "SELECT * FROM r8kVqeUlJf.doctorinfo;")
+	@Query(nativeQuery = true, value = "SELECT * FROM `doctorinfo`")
 	public List<DoctorInfo> getAllDoctorInfor();
 
-	@Query(value = "select * from r8kVqeUlJf.doctorinfo where doctorid = :inid", nativeQuery = true)
+	@Query(value = "select * from `doctorinfo` where doctorid = :inid", nativeQuery = true)
 	public  DoctorInfo findByDoctorID(@Param("inid") int inid);
 	
-	@Query(value = "select * from r8kVqeUlJf.doctorinfo where specialty_id = :inid", nativeQuery = true)
+	@Query(value = "select * from `doctorinfo` where specialty_id = :inid", nativeQuery = true)
 	public  List<DoctorInfo>  findBySpecialID(@Param("inid") int inid);
 	
-	@Query(value = "select * from r8kVqeUlJf.doctorinfo where clinic_id = :inid", nativeQuery = true)
+	@Query(value = "select * from `doctorinfo` where clinic_id = :inid", nativeQuery = true)
 	public  List<DoctorInfo>  findByClinicID(@Param("inid") int inid);
 	
 

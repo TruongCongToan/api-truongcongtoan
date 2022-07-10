@@ -89,10 +89,10 @@ public class DoctorInfo implements Serializable {
 	  @OneToOne(cascade = CascadeType.ALL)
 		@JoinColumn(name = "payment", referencedColumnName = "key", insertable = false, updatable = false)
 		private AllCode allCodePayment = null;
-//
-//	  @ManyToOne
-//	  @JoinColumn(name="specialty_id", nullable=false,insertable = false, updatable =false)
-//	  private Specialties specialties;
+
+	  @ManyToOne
+	  @JoinColumn(name="specialty_id", nullable=false,insertable = false, updatable =false)
+	  private Specialties specialties;
 
 //		@ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
 //		@JoinColumn(name="specialty_id",insertable=false, updatable=false)
