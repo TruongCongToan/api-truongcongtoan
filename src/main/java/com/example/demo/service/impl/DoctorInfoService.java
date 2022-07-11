@@ -28,7 +28,12 @@ public class DoctorInfoService implements IDoctorInfoService{
 	@Override
 	public DoctorInfo getInforByDoctorID(int doctorID) throws SQLException {
 		DoctorInfo doctorInfo = doctorInforDAO.findByDoctorID(doctorID);
-		return doctorInfo;
+		if (doctorInfo == null) {
+			throw new NotFoundException("Khong tim thay nguoi dung nay");
+		}else {
+			return doctorInfo;
+		}
+		
 	}
 	//add doctor info
 	@Override
@@ -101,12 +106,21 @@ public class DoctorInfoService implements IDoctorInfoService{
 	@Override
 	public List<DoctorInfo>  getInforByClinicID(int clinicID) throws SQLException {
 		List<DoctorInfo>  doctorInfo = doctorInforDAO.findByClinicID(clinicID);
-		return doctorInfo;
+		if (doctorInfo.isEmpty()) {
+			throw new NotFoundException("Khong tim thay nguoi dung nay");
+		}else {
+			return doctorInfo;
+		}
 	}
 	@Override
 	public List<DoctorInfo>  getInforBySpecialID(int specialID) throws SQLException {
 		List<DoctorInfo>  doctorInfo = doctorInforDAO.findBySpecialID(specialID);
-		return doctorInfo;
+		System.out.println(doctorInfo);
+		if (doctorInfo.isEmpty()) {
+			throw new NotFoundException("Khong tim thay nguoi dung nay");
+		}else {
+			return doctorInfo;
+		}
 	}
 	
 

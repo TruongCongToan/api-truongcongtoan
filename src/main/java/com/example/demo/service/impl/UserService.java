@@ -55,7 +55,11 @@ public class UserService implements IUserService {
 	public List<UserModel> getListUser() throws SQLException {
 		List<Users> users = userDAO.getAllUsers();
 		List<UserModel> userModels = getListUsersModels(users);
-		return userModels;
+		if (userModels.isEmpty()) {
+			throw new NotFoundException("Khong tim thay nguoi dung nay");
+		}else {
+			return userModels;
+		}
 	}
 //add user 
 

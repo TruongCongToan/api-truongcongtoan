@@ -55,7 +55,7 @@ public class DoctorInforController {
 				httpStatus = HttpStatus.OK;
 
 			} catch (Exception e) {	
-				 throw new InternalServerException("Không được bỏ trống các trường !");
+				 throw new NotFoundException("Không tìm thấy thông tin trong danh sách !");
 			}
 			return new ResponseEntity<Object>(doctorInfo, httpStatus);
 	}
@@ -69,7 +69,7 @@ public class DoctorInforController {
 				httpStatus = HttpStatus.OK;
 
 			} catch (Exception e) {	
-				 throw new InternalServerException("Không được bỏ trống các trường !");
+				 throw new NotFoundException("Không tìm thấy thông tin trong danh sách !");
 			}
 			return new ResponseEntity<Object>(doctorInfo, httpStatus);
 	}
@@ -83,7 +83,7 @@ public class DoctorInforController {
 				httpStatus = HttpStatus.OK;
 
 			} catch (Exception e) {	
-				 throw new InternalServerException("Không được bỏ trống các trường !");
+				 throw new NotFoundException("Không tìm thấy thông tin trong danh sách !");
 			}
 			return new ResponseEntity<Object>(doctorInfo, httpStatus);
 	}
