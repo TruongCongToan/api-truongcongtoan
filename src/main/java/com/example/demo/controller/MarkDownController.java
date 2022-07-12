@@ -76,16 +76,17 @@ public class MarkDownController {
 			public ResponseEntity<Object> editDoctorInfo(@Valid @RequestBody MarkDownModel markDownModel,
 					@PathVariable("doctorID") int doctorID) {
 					HttpStatus httpStatus = null;
+					MarkDown markDown = new MarkDown();
 					try {
-						markDownService.editDoctorInfo(markDownModel, doctorID);
-						httpStatus = HttpStatus.OK;
+						markDown = markDownService.editDoctorInfo(markDownModel, doctorID);
+						httpStatus = HttpStatus.CREATED;
 
 					} catch (Exception e) {
 						
 						 throw new InternalServerException("Không được bỏ trống các trường !");
 
 					}
-					return new ResponseEntity<Object>(httpStatus);
+					return new ResponseEntity<Object>(markDown,httpStatus);
 				}
 			
 		
