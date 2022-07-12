@@ -93,13 +93,14 @@ public class DoctorInforController {
 	public ResponseEntity<Object>  postInforDoctor(
 			@Valid @RequestBody DoctorInfoModel doctorInfoModel) throws SQLException {
 		HttpStatus httpStatus = null;
+		DoctorInfo doctorInfo = new DoctorInfo();
 		try {
-			doctorInforService.postInforDoctor(doctorInfoModel);
+			doctorInfo = doctorInforService.postInforDoctor(doctorInfoModel);
 			httpStatus = HttpStatus.OK;
 		} catch (Exception e) {
 			 throw new DuplicateRecordException("bad resquest !");		 
 		}
-		return new ResponseEntity<Object>(httpStatus);
+		return new ResponseEntity<Object>(doctorInfo,httpStatus);
 	}
 	
 	//edit doctor info
@@ -108,16 +109,16 @@ public class DoctorInforController {
 	public ResponseEntity<Object> editDoctorInfo(@Valid @RequestBody DoctorInfoModel doctorInfoModel,
 			@PathVariable("doctorID") int doctorID) {
 			HttpStatus httpStatus = null;
-			try {
-				doctorInforService.editDoctorInfo(doctorInfoModel, doctorID);
-				httpStatus = HttpStatus.OK;
+			DoctorInfo doctorInfo = new DoctorInfo();
 
+			try {
+				doctorInfo =	doctorInforService.editDoctorInfo(doctorInfoModel, doctorID);
+				httpStatus = HttpStatus.OK;
 			} catch (Exception e) {
 				
 				 throw new InternalServerException("Không được bỏ trống các trường !");
-
 			}
-			return new ResponseEntity<Object>(httpStatus);
+			return new ResponseEntity<Object>(doctorInfo,httpStatus);
 		}
 	
 	//delete doctor info

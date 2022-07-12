@@ -54,10 +54,8 @@ public class MarkDown implements Serializable {
 	  @OneToOne(cascade = CascadeType.ALL)
 		@JoinColumn(name = "doctorid", referencedColumnName = "user_id", insertable = false, updatable = false)
 		private Users user = null;
-	  
-	  @OneToOne(cascade = CascadeType.ALL)
-		@JoinColumn(name = "specialty_id", referencedColumnName = "specialty_id", insertable = false, updatable = false)
-		private DoctorInfo doctorInfo = null;
+//	  
+
 	   
 
 
