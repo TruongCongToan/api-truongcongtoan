@@ -19,7 +19,8 @@ public interface IMarkDownSevice {
 	//edit doctor info
 	public MarkDown editDoctorInfo(MarkDownModel markDownModel, int doctorID) throws SQLException;
 
-	//delete markdown
 	public void deleteMarkdown (int markdown_id) throws SQLException;
+	
+	public List<MarkDown> getMarkDownBySpecialtyID(int specialty_id) throws SQLException;
 }
 

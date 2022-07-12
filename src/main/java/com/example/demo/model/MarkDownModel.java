@@ -13,8 +13,10 @@ public class MarkDownModel {
 	private int markdown_id;
 	private String contentHTML;
 	private String contentMarkDown;
-	private int specialtyID;
-	private int clinicID;
+	private int specialty_id;
+	private int clinic_id;
+	private int doctorid;
+	
 	private String description;
 	private Users users;
 }

@@ -41,8 +41,12 @@ public class MarkDownController {
 		HttpStatus httpStatus = null;
 		List<MarkDown> markDownModels = new ArrayList<MarkDown>();
 	
+		markDownModels = markDownDAO.getAllMarkDown();
+		System.out.println("gia tri lay duoc tu service "+markDownModels);
+		
 		try {
-			markDownModels = markDownDAO.getAllMarkDown();
+			markDownModels = markDownService.getLisMarkDown();
+			System.out.println("gia tri lay duoc tu service "+markDownModels);
 			httpStatus = HttpStatus.OK;
 		} catch (Exception e) {
 			 throw new InternalServerException("Không được bỏ trống các trường !");
@@ -53,17 +57,18 @@ public class MarkDownController {
 	
 	//post doctor Info MarkDown
 			@CrossOrigin(origins = "http://localhost:3000")
-			@PostMapping("/api/markdowns/")
+			@PostMapping("/api/markdowns")
 			public ResponseEntity<Object>  postInforDoctor(
 					@Valid @RequestBody MarkDownModel markDownModel) throws SQLException {
 				HttpStatus httpStatus = null;
+				MarkDown markDown = new MarkDown();
 				try {
-					markDownService.postInforDoctor(markDownModel);
-					httpStatus = HttpStatus.OK;
-				} catch (Exception e) {
+					markDown = markDownService.postInforDoctor(markDownModel);
+					httpStatus = HttpStatus.CREATED;				
+							} catch (Exception e) {
 					 throw new DuplicateRecordException("bad resquest");		 
 				}
-				return new ResponseEntity<Object>(httpStatus);
+				return new ResponseEntity<Object>(markDown,httpStatus);
 		}
 	//edit doctor info
 			@CrossOrigin(origins = "http://localhost:3000")
@@ -83,13 +88,14 @@ public class MarkDownController {
 					return new ResponseEntity<Object>(httpStatus);
 				}
 			
+		
+			
 			//tim user theo doctorID
 			@GetMapping("/api/markdowns/{doctorID}")
 			@CrossOrigin(origins = "http://localhost:3000")
-			public ResponseEntity<Object> getListUsersByName(@PathVariable("doctorID") int doctorID) {
+			public ResponseEntity<Object> getMarkDownbyDoctorid(@PathVariable("doctorID") int doctorID) {
 				HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 				
-
 				MarkDown markDown = new MarkDown();
 				try {
 					markDown = markDownService.getMarkDownByDoctorID(doctorID);
@@ -102,6 +108,25 @@ public class MarkDownController {
 				return new ResponseEntity<Object>(markDown, httpStatus);
 			}
 			
+			
+			@GetMapping("/api/markdowns/specialties/{specialty_id}")
+			@CrossOrigin(origins = "http://localhost:3000")
+			public ResponseEntity<Object> getListUsersBySpecialtyID(@PathVariable("specialty_id") int specialty_id) {
+				HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+				
+
+				List<MarkDown> markDown = new  ArrayList<MarkDown>();
+				try {
+					markDown = markDownService.getMarkDownBySpecialtyID(specialty_id);
+					httpStatus = HttpStatus.OK;
+				} catch (Exception e) {
+					  httpStatus = HttpStatus.NOT_FOUND;
+
+					 throw new NotFoundException("Không tìm thấy thông tin trong danh sách !");
+				}
+				return new ResponseEntity<Object>(markDown, httpStatus);
+			}
+
 		//delete markdown
 			@CrossOrigin(origins = "http://localhost:3000")
 			@DeleteMapping("api/markdowns/{markdown_id}")

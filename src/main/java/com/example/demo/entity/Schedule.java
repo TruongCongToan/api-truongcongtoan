@@ -33,9 +33,9 @@ public class Schedule implements Serializable {
 	private int id;
 
 	@Column(name = "currentnumber")
-	private int currentnumber;
+	private Integer currentnumber;
 	@Column(name = "maxnumber")
-	private int maxnumber;
+	private Integer maxnumber;
 	@Column(name = "timetype")
 	private String timetype;
 
@@ -44,7 +44,7 @@ public class Schedule implements Serializable {
 	@Column(name = "date")
 	private String date;
 	@Column(name = "doctorid")
-	private int doctorid;
+	private Integer doctorid;
 	@JsonFormat(pattern = "yyyy-MM-dd", shape = Shape.STRING)
 	@Column(name = "createat")
 	private Timestamp createat;

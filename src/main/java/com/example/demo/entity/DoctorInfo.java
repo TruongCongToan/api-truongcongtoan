@@ -61,10 +61,10 @@ public class DoctorInfo implements Serializable {
 	 private int count;
 	 
 	 @Column(name = "specialty_id")
-	 private int specialty_id;
+	 private Integer specialty_id;
 	 
 	 @Column(name = "clinic_id")
-	 private int clinic_id;
+	 private Integer clinic_id;
 	 
 	  @JsonFormat(pattern = "yyyy-MM-dd",shape = Shape.STRING)
 	  @Column(name = "createat")
