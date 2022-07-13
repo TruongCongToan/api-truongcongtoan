@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,12 +19,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.DAO.IUserDAO;
+import com.example.demo.JwtUtil.JwtUtil;
 import com.example.demo.entity.Users;
 import com.example.demo.exception.DuplicateRecordException;
 import com.example.demo.exception.InternalServerException;
 import com.example.demo.exception.NotFoundException;
+import com.example.demo.model.Token;
 import com.example.demo.model.UserModel;
+import com.example.demo.model.UserPrincipal;
 import com.example.demo.service.impl.UserService;
+
+
 
 @RestController 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -33,13 +39,40 @@ public class UserController {
 	
 	@Autowired
 	private IUserDAO userDAO;
-	// get all user
+	
+	@Autowired
+    private JwtUtil jwtUtil;
+	
+	
+	 @PostMapping("/api/user/register")
+	    public Users register(@RequestBody UserModel userModel) throws SQLException{
+		 userModel.setPassword(new BCryptPasswordEncoder().encode(userModel.getPassword()));
+		 System.out.println("Psssword "+userModel.getPassword());
+	        return service.addUser(userModel);
+	    }
+	 
+	    @PostMapping("/api/user/login")
+	    public ResponseEntity<Object> login(@RequestBody UserModel userModel){
+	        UserPrincipal userPrincipal = service.findByUserEmail(userModel.getEmail());
+			HttpStatus httpStatus = null;
+
+	        if (null == userModel || !new BCryptPasswordEncoder().matches(userModel.getPassword(), userPrincipal.getPassword())) {
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Tài khoản hoặc mật khẩu không chính xác");
+	        }
+	        Token token = new Token();
+	        token.setToken(jwtUtil.generateTokenLogin(userPrincipal.getUsername()));
+	        token.setTokenExpDate(jwtUtil.generateExpirationDate());
+	        token.setUserid(userPrincipal.getUserId());
+	        httpStatus = HttpStatus.CREATED;
+	        return  new ResponseEntity<Object>(token, httpStatus);
+	    }
+	
+	
 		@GetMapping("/api/users")
 		@CrossOrigin(origins = "http://localhost:3000")
-		public ResponseEntity<Object> getAllUsers() {
+		public ResponseEntity<Object> getAllUsers() throws SQLException {
 			HttpStatus httpStatus = null;
-//			List<UserModel> userModels = new ArrayList<UserModel>();
-			List<Users> users = userDAO.getAllUsers();
+			List<UserModel> users = service.getListUser();
 			try {
 			
 //				userModels = service.getListUser();

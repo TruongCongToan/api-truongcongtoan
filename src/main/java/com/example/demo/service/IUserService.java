@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Users;
 import com.example.demo.model.UserModel;
+import com.example.demo.model.UserPrincipal;
 
 @Service
 public interface IUserService {
@@ -30,6 +31,9 @@ public interface IUserService {
 
 		//pagination doctors
 		public List<Users> findPaginated(int pageNo,int pageSize);
+		
+		UserPrincipal findByUserEmail(String email);
+
 		
 
 }

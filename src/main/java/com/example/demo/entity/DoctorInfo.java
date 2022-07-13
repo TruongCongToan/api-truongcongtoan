@@ -90,8 +90,8 @@ public class DoctorInfo implements Serializable {
 	  @JoinColumn(name="specialty_id", referencedColumnName = "id", nullable=false,insertable = false, updatable =false)
 	  private Specialties specialties;
 
-	  @OneToOne(cascade = CascadeType.ALL)
-		@JoinColumn(name = "doctorid", referencedColumnName = "doctorid", insertable = false, updatable = false)
-		private MarkDown markdown = null;
+//	  @OneToOne(cascade = CascadeType.ALL)
+//		@JoinColumn(name = "doctorid", referencedColumnName = "doctorid", insertable = false, updatable = false)
+//		private MarkDown markdown = null;
 	  
 }

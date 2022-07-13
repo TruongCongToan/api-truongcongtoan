@@ -20,6 +20,7 @@ import com.example.demo.entity.Users;
 import com.example.demo.exception.DuplicateRecordException;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.UserModel;
+import com.example.demo.model.UserPrincipal;
 import com.example.demo.service.IUserService;
 
 @Service
@@ -30,6 +31,8 @@ public class UserService implements IUserService {
 	@Autowired
 	private PagingDAO pagingDAO;
 
+	
+	
 	//  ham lay ra users
 			private List<UserModel> getListUsersModels(List<Users> users) {
 				List<UserModel> userModels = new ArrayList<>();
@@ -40,11 +43,14 @@ public class UserService implements IUserService {
 					userModel.setPhone_number(user.getPhone_number());
 					userModel.setGender(user.getGender());
 					userModel.setRole(user.getRole());
-					userModel.setImage(user.getImage());
+//					userModel.setImage(user.getImage());
 					userModel.setFull_name(user.getFull_name());		
 					userModel.setCreated_at(user.getCreated_at());
 					userModel.setUpdated_at(user.getUpdated_at());
 					
+					
+					userModel.setEmail(user.getEmail());
+					userModel.setPassword(user.getPassword());
 					userModels.add(userModel);
 				}
 				return userModels;
@@ -67,6 +73,9 @@ public class UserService implements IUserService {
 	public Users addUser(UserModel userModel) throws SQLException {
 		if (userDAO.findByName(userModel.getEmail()) == null) {
 			Users user = new Users();
+			
+			user.setPassword(userModel.getPassword());
+			user.setEmail(userModel.getEmail());
 			
 			user.setAddress(userModel.getAddress());
 			user.setPhone_number(userModel.getPhone_number());
@@ -196,6 +205,21 @@ public Users getUserByID(int intID) throws SQLException {
 	} else {
 		throw new NotFoundException("Khong tim thay nguoi dung nay");
 	}
+}
+
+@Override
+public UserPrincipal findByUserEmail(String email) {
+	 Users user = userDAO.findByName(email);
+	 
+     UserPrincipal userPrincipal = new UserPrincipal();
+     if (null != user) {
+       
+         userPrincipal.setUserId(user.getUser_id());
+         userPrincipal.setUsername(user.getEmail());
+         userPrincipal.setPassword(user.getPassword());
+     }
+
+     return userPrincipal;
 }
 
 
