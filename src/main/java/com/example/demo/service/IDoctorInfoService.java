@@ -21,7 +21,8 @@ public interface IDoctorInfoService {
 
 		public List<DoctorInfo> getInforByClinicID(int clinicID) throws SQLException;
 		
-		public List<DoctorInfo>  getInforBySpecialID(int specialID) throws SQLException;
+		public List<DoctorInfo>  getInforBySpecialID(int specialID, String location) throws SQLException;
+		
 
 		public void deleteDoctorInfo (int doctorID) throws SQLException;
 	}

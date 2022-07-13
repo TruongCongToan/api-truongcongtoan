@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.DAO.IDoctorInfoDAO;
 import com.example.demo.entity.DoctorInfo;
+import com.example.demo.exception.DuplicateRecordException;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.DoctorInfoModel;
 import com.example.demo.service.IDoctorInfoService;
@@ -39,12 +40,13 @@ public class DoctorInfoService implements IDoctorInfoService{
 	@Override
 	public DoctorInfo postInforDoctor(DoctorInfoModel doctorInfoModel) throws SQLException {
 	
-		if(getInforByDoctorID(doctorInfoModel.getDoctorid()) != null) {
-			
-			return editDoctorInfo(doctorInfoModel,doctorInfoModel.getDoctorid());
-			
+		if(doctorInforDAO.findByDoctorID(doctorInfoModel.getDoctorid()) != null) {
+			 throw new DuplicateRecordException("Da co user nay trong danh sach");
+
 		}else {
+
 			DoctorInfo doctorInfo = new DoctorInfo();
+			
 			doctorInfo.setDoctorid(doctorInfoModel.getDoctorid());
 			doctorInfo.setProvinceid(doctorInfoModel.getProvinceid());
 			doctorInfo.setPriceid(doctorInfoModel.getPriceid());
@@ -57,12 +59,10 @@ public class DoctorInfoService implements IDoctorInfoService{
 			doctorInfo.setSpecialty_id(doctorInfoModel.getSpecialty_id());
 			
 			doctorInfo.setCreateat(new Date());
-//			doctorInfo.setUpdateat(new Date());
-			
+						
 			doctorInforDAO.save(doctorInfo);
 			return doctorInforDAO.save(doctorInfo);
 		}
-		
 		
 	}
 
@@ -70,7 +70,7 @@ public class DoctorInfoService implements IDoctorInfoService{
 	@Override
 	public DoctorInfo editDoctorInfo(DoctorInfoModel doctorInfoModel, int doctorID) throws SQLException {
 		
-		if (getInforByDoctorID(doctorID) != null) {
+		if (doctorInforDAO.findByDoctorID(doctorID) != null) {
 			DoctorInfo doctorInfo = getInforByDoctorID(doctorID);
 			
 			doctorInfo.setProvinceid(doctorInfoModel.getProvinceid());
@@ -112,14 +112,34 @@ public class DoctorInfoService implements IDoctorInfoService{
 			return doctorInfo;
 		}
 	}
+	
+//	public  DoctorSpecialty DoctorInfoSpecialty (DoctorInfo doctorInfo) throws SQLException{
+//		DoctorSpecialty doctorSpecialty = new  DoctorSpecialty ();
+//		doctorSpecialty.setDoctorid(doctorInfo.getDoctorid());
+//		doctorSpecialty.setProvinceid(doctorInfo.getProvinceid());
+//		return doctorSpecialty;
+//	}
+	
 	@Override
-	public List<DoctorInfo>  getInforBySpecialID(int specialID) throws SQLException {
-		List<DoctorInfo>  doctorInfo = doctorInforDAO.findBySpecialID(specialID);
-		System.out.println(doctorInfo);
-		if (doctorInfo.isEmpty()) {
+	public List<DoctorInfo>  getInforBySpecialID(int specialID,String inprovinceid) throws SQLException {
+		if (specialID == 0 || inprovinceid == null) {
 			throw new NotFoundException("Khong tim thay nguoi dung nay");
 		}else {
-			return doctorInfo;
+			if (inprovinceid.equals("ALL")) {
+				List<DoctorInfo>  doctorInfo = doctorInforDAO.findBySpecialID(specialID);
+				if (doctorInfo.isEmpty()) {
+					throw new NotFoundException("Khong tim thay nguoi dung nay");
+				}else {
+					return doctorInfo;
+				}
+			}else {
+				List<DoctorInfo>  doctorInfo = doctorInforDAO.findBySpecialIDLocation(specialID,inprovinceid);
+				if (doctorInfo.isEmpty()) {
+					throw new NotFoundException("Khong tim thay nguoi dung nay");
+				}else {
+					return doctorInfo;
+				}
+			}
 		}
 	}
 	

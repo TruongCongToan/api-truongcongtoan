@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.DoctorInfo;
-import com.example.demo.exception.DuplicateRecordException;
 import com.example.demo.exception.InternalServerException;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.DoctorInfoModel;
@@ -60,12 +59,12 @@ public class DoctorInforController {
 			return new ResponseEntity<Object>(doctorInfo, httpStatus);
 	}
 	@CrossOrigin(origins = "http://localhost:3000")
-	@GetMapping("/api/doctorinfo/specialties/{specialID}")
-	public ResponseEntity<Object> getdoctorInfoBySpecialID(@Valid @PathVariable("specialID") int specialID) {
+	@GetMapping("/api/doctorinfo/specialties/{specialID}/{provinceid}")
+	public ResponseEntity<Object> getdoctorInfoBySpecialID(@Valid @PathVariable("specialID") int specialID,@PathVariable("provinceid") String provinceid) {
 			HttpStatus httpStatus = null;
 			List<DoctorInfo>  doctorInfo= new ArrayList<DoctorInfo>();
 			try {
-				doctorInfo = doctorInforService.getInforBySpecialID(specialID);
+				doctorInfo = doctorInforService.getInforBySpecialID(specialID,provinceid);
 				httpStatus = HttpStatus.OK;
 
 			} catch (Exception e) {	
@@ -92,14 +91,9 @@ public class DoctorInforController {
 	@PostMapping("/api/doctorinfo/")
 	public ResponseEntity<Object>  postInforDoctor(
 			@Valid @RequestBody DoctorInfoModel doctorInfoModel) throws SQLException {
-		HttpStatus httpStatus = null;
+		HttpStatus httpStatus = HttpStatus.OK;
 		DoctorInfo doctorInfo = new DoctorInfo();
-		try {
-			doctorInfo = doctorInforService.postInforDoctor(doctorInfoModel);
-			httpStatus = HttpStatus.OK;
-		} catch (Exception e) {
-			 throw new DuplicateRecordException("bad resquest !");		 
-		}
+		doctorInfo = doctorInforService.postInforDoctor(doctorInfoModel);
 		return new ResponseEntity<Object>(doctorInfo,httpStatus);
 	}
 	

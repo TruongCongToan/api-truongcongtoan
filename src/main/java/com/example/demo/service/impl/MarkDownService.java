@@ -16,52 +16,24 @@ import com.example.demo.service.IMarkDownSevice;
 public class MarkDownService implements IMarkDownSevice  {
 	@Autowired
 	private IMarkDownDAO markDownDAO;
-//	
-//	//  ham lay ra users
-//	private List<MarkDownModel> getListMarkDownModel(List<MarkDown> markDowns) {
-//		List<MarkDownModel> markDownModels= new ArrayList<>();
-//		for (MarkDown markDown: markDowns) {
-//			MarkDownModel markDownModel = new MarkDownModel();
-//			
-//			markDownModel.setMarkdown_id(markDown.getMarkdown_id());
-//			markDownModel.setContentHTML(markDown.getContentHTML());
-//			markDownModel.setContentMarkDown(markDown.getContentMarkDown());
-//			markDownModel.setDescription(markDown.getDescription());
-////			markDownModel.setDoctorID(markDown.getDoctorID());
-//			
-//			markDownModel.setClinicID(markDown.getClinicID());
-//			markDownModel.setSpecialtyID(markDown.getSpecialtyID());
-//			
-//			markDownModels.add(markDownModel);
-//		}
-//		return markDownModels;
-//	}
-
-	//get all markdown
 	@Override
 	public List<MarkDown> getLisMarkDown() throws SQLException {
 		List<MarkDown> markDowns = markDownDAO.getAllMarkDown();
 		System.out.println("gia tri thu duoc "+markDowns);
-//		List<MarkDownModel> markDownModels = getListMarkDownModel(markDowns);
-//		if (markDowns.isEmpty()) {
-//		throw new NotFoundException("Không tìm thấy thông tin trong danh sách !");
-//		}else {
-//			return markDowns;	
-//		}
-		return markDowns;
+		if (markDowns.isEmpty()) {
+		throw new NotFoundException("Không tìm thấy thông tin trong danh sách !");
+		}else {
+			return markDowns;	
+		}
 	}
 
-	//post doctor infor
 	@Override
 	public MarkDown postInforDoctor(MarkDownModel markDownModel) throws SQLException {
 	
 		MarkDown markDown = new MarkDown();
-//		markDown.setMarkdown_id(markDownModel.getMarkdown_id());
-
 		if (markDownDAO.findByDoctorID(markDownModel.getDoctorid()) != null) {
-			return editDoctorInfo(markDownModel,markDownModel.getDoctorid());
+			 throw new NotFoundException("Không tìm thấy thông tin trong danh sách !");
 		}else {
-			System.out.println(" null");
 
 			markDown.setContentHTML(markDownModel.getContentHTML());
 			markDown.setContentMarkDown(markDownModel.getContentMarkDown());
@@ -70,12 +42,9 @@ public class MarkDownService implements IMarkDownSevice  {
 
 			markDown.setSpecialty_id(markDownModel.getSpecialty_id());
 			markDown.setDoctorid(markDownModel.getDoctorid());
-
 		}
 		return markDownDAO.save(markDown);
 }
-//get markdow by doctorID
-
 @Override
 public MarkDown getMarkDownByDoctorID(int doctorID) throws SQLException {
 	if (doctorID != 0) {
@@ -145,10 +114,7 @@ public MarkDown editDoctorInfo(MarkDownModel markDownModel, int markdown_id) thr
 	public void deleteMarkdown(int markdown_id) throws SQLException {
 
 		if (markDownDAO.findByDoctorID(markdown_id) != null) {
-//			System.out.println(markDownDAO.findByDoctorID(markdown_id) );
-			markDownDAO.deleteMarkdown(markdown_id);
-			
-
+		markDownDAO.deleteMarkdown(markdown_id);
 		}
 		else {
 			throw new NotFoundException("Khong tim thay sinh vien nay");
@@ -158,8 +124,6 @@ public MarkDown editDoctorInfo(MarkDownModel markDownModel, int markdown_id) thr
 	@Override
 	public List<MarkDown> getMarkDownBySpecialtyID(int specialty_id) throws SQLException {
 		if (specialty_id != 0) {
-			
-
 			List<MarkDown> markDown = markDownDAO.findBySpecialtyID(specialty_id);
 			if (markDown.isEmpty()) {
 				 throw new NotFoundException("Không tìm thấy thông tin trong danh sách !");
@@ -170,7 +134,4 @@ public MarkDown editDoctorInfo(MarkDownModel markDownModel, int markdown_id) thr
 			 throw new NotFoundException("Dữ liệu nhập vào không được phép null !");
 		}
 	}
-
-
-
 }
