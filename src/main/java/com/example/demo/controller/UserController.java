@@ -151,7 +151,7 @@ public class UserController {
 		public ResponseEntity<Object> editUser(@Valid @RequestBody UserModel userModel,
 			@PathVariable("inid") int inid) {
 			HttpStatus httpStatus = null;
-			Users user = new Users()	;		
+			UserModel user = new UserModel();		
 			try {
 				user = service.editUser(userModel, inid);
 				httpStatus = HttpStatus.CREATED;
@@ -160,7 +160,7 @@ public class UserController {
 				httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 				 throw new InternalServerException("Không được bỏ trống các trường !");
 			}
-			return new ResponseEntity<Object>(user.getUser_id(),httpStatus);
+			return new ResponseEntity<Object>(user,httpStatus);
 		}
 	//xoa nguoi dung
 		@CrossOrigin(origins = "http://localhost:3000")

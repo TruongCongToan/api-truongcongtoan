@@ -23,7 +23,7 @@ public interface IUserService {
 		//them moi user
 		public Users addUser(UserModel userModel) throws SQLException;
 		//update user
-		public Users editUser(UserModel userModel, int inid) throws SQLException;
+		public UserModel editUser(UserModel userModel, int inid) throws SQLException;
 		//kiem tra nguoi dung nay da dang nhap hay chua
 		
 		//getall doctors
