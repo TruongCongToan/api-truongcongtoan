@@ -16,14 +16,14 @@ public interface IUserService {
 		//tim theo ten
 		public Users getUserByName(String inname) throws SQLException;
 		//get userByID
-		public Users getUserByID(int intID) throws SQLException;
+		public UserModel getUserByID(int intID) throws SQLException;
 
 		//xoa user
-		public void deleteUser(String inname) throws SQLException;
+		public void deleteUser(int inname) throws SQLException;
 		//them moi user
 		public Users addUser(UserModel userModel) throws SQLException;
 		//update user
-		public void editUser(UserModel userModel, String inname) throws SQLException;
+		public void editUser(UserModel userModel, int inid) throws SQLException;
 		//kiem tra nguoi dung nay da dang nhap hay chua
 		
 		//getall doctors

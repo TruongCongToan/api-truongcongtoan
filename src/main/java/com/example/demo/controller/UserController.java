@@ -75,7 +75,6 @@ public class UserController {
 			List<UserModel> users = service.getListUser();
 			try {
 			
-//				userModels = service.getListUser();
 				httpStatus = HttpStatus.OK;
 				
 			} catch (Exception e) {
@@ -84,31 +83,16 @@ public class UserController {
 			return new ResponseEntity<Object>(users, httpStatus);
 		}
 
-//		public ResponseEntity<Object> getAllUsersData() {
-//			HttpStatus httpStatus = null;
-////			List<UserModel> userModels = new ArrayList<UserModel>();
-//			List<UserData> users = userDAO.getAllUsersData();
-//			try {
-//			
-////				userModels = service.getListUser();
-//				httpStatus = HttpStatus.OK;
-//				
-//			} catch (Exception e) {
-//				 throw new InternalServerException("Không được bỏ trống các trường !");
-//			}
-//			return new ResponseEntity<Object>(users, httpStatus);
-//		}
-		
 
 		
 	//tim user theo username
-		@GetMapping("/api/users/{username}")
+		@GetMapping("/api/users/email={email}")
 		@CrossOrigin(origins = "http://localhost:3000")
-		public ResponseEntity<Object> getListUsersByName(@PathVariable("username") String username) {
+		public ResponseEntity<Object> getListUsersByName(@PathVariable("email") String email) {
 			HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 			Users user = new Users();
 			try {
-				user = service.getUserByName(username);
+				user = service.getUserByName(email);
 				httpStatus = HttpStatus.OK;
 			} catch (Exception e) {
 				 throw new NotFoundException("Không tìm thấy thông tin trong danh sách !");
@@ -116,11 +100,11 @@ public class UserController {
 			return new ResponseEntity<Object>(user, httpStatus);
 		}
 		///tim user theo username
-		@GetMapping("/api/users/id={user_id}")
+		@GetMapping("/api/users/{user_id}")
 		@CrossOrigin(origins = "http://localhost:3000")
 		public ResponseEntity<Object> getUserByID(@PathVariable("user_id") int user_id) {
 			HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-			Users user = new Users();
+			UserModel user = new UserModel();
 			try {
 				user = service.getUserByID(user_id);
 				httpStatus = HttpStatus.OK;
@@ -163,13 +147,13 @@ public class UserController {
 		
 	//sua thong tin nguoi dung
 
-		@PutMapping("api/users/{username}")
+		@PutMapping("api/users/{inid}")
 		@CrossOrigin(origins = "http://localhost:3000")
 		public ResponseEntity<Object> editUser(@Valid @RequestBody UserModel userModel,
-			@PathVariable("username") String username) {
+			@PathVariable("inid") int inid) {
 			HttpStatus httpStatus = null;
 			try {
-				service.editUser(userModel, username);
+				service.editUser(userModel, inid);
 				httpStatus = HttpStatus.OK;
 
 			} catch (Exception e) {
@@ -181,12 +165,12 @@ public class UserController {
 		}
 	//xoa nguoi dung
 		@CrossOrigin(origins = "http://localhost:3000")
-		@DeleteMapping("api/users/{username}")
+		@DeleteMapping("api/users/{inid}")
 
-		public ResponseEntity<Object> delUser(@PathVariable("username") String username) {
+		public ResponseEntity<Object> delUser(@PathVariable("inid") int inid) {
 			HttpStatus httpStatus = HttpStatus.FORBIDDEN;
 			try {
-				service.deleteUser(username);
+				service.deleteUser(inid);
 				httpStatus = HttpStatus.ACCEPTED;
 			} catch (Exception e) {
 				
@@ -196,24 +180,7 @@ public class UserController {
 			return new ResponseEntity<Object>(httpStatus);
 		}
 		
-		@CrossOrigin(origins = "http://localhost:3000")
-		@DeleteMapping("api/userdata/{email}")
 
-		public ResponseEntity<Object> delUserData(@PathVariable("email") String email) {
-			HttpStatus httpStatus = HttpStatus.FORBIDDEN;
-			try {
-				userDAO.deleteUserData(email);
-				httpStatus = HttpStatus.ACCEPTED;
-			} catch (Exception e) {
-				
-				  httpStatus = HttpStatus.NOT_FOUND;
-				  throw new NotFoundException("Không tìm thấy thông tin trong danh sách !");
-			}
-			return new ResponseEntity<Object>(httpStatus);
-		}
-		
-		//paginated users
-		
 		@CrossOrigin(origins = "http://localhost:3000")
 		@GetMapping("api/users/{pageNo}/{pageSize}")
 		public List<Users> getPaginatedUser(@PathVariable int pageNo,@PathVariable int pageSize){

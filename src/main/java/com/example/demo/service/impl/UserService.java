@@ -43,20 +43,32 @@ public class UserService implements IUserService {
 					userModel.setPhone_number(user.getPhone_number());
 					userModel.setGender(user.getGender());
 					userModel.setRole(user.getRole());
-//					userModel.setImage(user.getImage());
+					userModel.setImage(user.getImage());
 					userModel.setFull_name(user.getFull_name());		
 					userModel.setCreated_at(user.getCreated_at());
 					userModel.setUpdated_at(user.getUpdated_at());
-					
-					
 					userModel.setEmail(user.getEmail());
-					userModel.setPassword(user.getPassword());
 					userModels.add(userModel);
 				}
 				return userModels;
 			}
 
-			//get list users
+			private UserModel getUsersModels(Users user) {			
+					UserModel userModel = new UserModel();
+					userModel.setUser_id(user.getUser_id());
+					userModel.setAddress(user.getAddress());
+					userModel.setPhone_number(user.getPhone_number());
+					userModel.setGender(user.getGender());
+					userModel.setRole(user.getRole());
+					userModel.setImage(user.getImage());
+					userModel.setFull_name(user.getFull_name());		
+					userModel.setCreated_at(user.getCreated_at());
+					userModel.setUpdated_at(user.getUpdated_at());
+					userModel.setEmail(user.getEmail());
+				
+					userModel.setPassword("************************************");
+				return userModel;
+			}
 	@Override
 	public List<UserModel> getListUser() throws SQLException {
 		List<Users> users = userDAO.getAllUsers();
@@ -107,8 +119,8 @@ public class UserService implements IUserService {
 	}
  //xoa nguoi dung khoi danh sach
 	@Override
-	public void deleteUser(String inname) throws SQLException {
-		if (userDAO.findByName(inname) != null) {
+	public void deleteUser(int inname) throws SQLException {
+		if (userDAO.findbyId(inname) != null) {
 			userDAO.deleteUser(inname);
 		}
 		else {
@@ -117,11 +129,10 @@ public class UserService implements IUserService {
 	}
  //update user
 	@Override
-	public void editUser(UserModel userModel, String inname) throws SQLException {
+	public void editUser(UserModel userModel, int inid) throws SQLException {
 //		System.out.println("gia tri dau vao "+userModel);
-		if (userDAO.findByName(inname) != null) {
-			Users user = userDAO.findByName(inname);
-			System.out.println("gia tri thu duoc " + user.getAddress() );
+		if (userDAO.findbyId(inid) != null) {
+			Users user = userDAO.findbyId(inid);
  			
  			if (user.getAddress() == null) {
 				user.setAddress(userModel.getAddress());
@@ -193,12 +204,11 @@ public List<Users> getListDoctors() throws SQLException {
 }
 //get user by username
 @Override
-public Users getUserByID(int intID) throws SQLException {
+public UserModel getUserByID(int intID) throws SQLException {
 	if (intID != 0) {
-		System.out.println("gia tri id la "+intID);
-		Users user = userDAO.findbyId(intID);
+		Users user = userDAO.findbyId(intID);		
 		if (user != null) {
-			return user;
+			return getUsersModels(user);
 		}else {
 			   throw new NotFoundException("Khong tim thay nguoi dung nay");
 		}
