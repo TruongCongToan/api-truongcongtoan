@@ -14,7 +14,7 @@ public interface IUserService {
 	//lay thong tin nguoi dung
 		public List<UserModel> getListUser() throws SQLException;
 		//tim theo ten
-		public Users getUserByName(String inname) throws SQLException;
+		public UserModel getUserByName(String inname) throws SQLException;
 		//get userByID
 		public UserModel getUserByID(int intID) throws SQLException;
 

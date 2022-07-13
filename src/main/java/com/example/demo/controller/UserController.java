@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.DAO.IUserDAO;
 import com.example.demo.JwtUtil.JwtUtil;
 import com.example.demo.entity.Users;
 import com.example.demo.exception.DuplicateRecordException;
@@ -37,8 +36,8 @@ public class UserController {
 	@Autowired
 	private UserService service;
 	
-	@Autowired
-	private IUserDAO userDAO;
+//	@Autowired
+//	private IUserDAO userDAO;
 	
 	@Autowired
     private JwtUtil jwtUtil;
@@ -90,7 +89,7 @@ public class UserController {
 		@CrossOrigin(origins = "http://localhost:3000")
 		public ResponseEntity<Object> getListUsersByName(@PathVariable("email") String email) {
 			HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-			Users user = new Users();
+			UserModel user = new UserModel();
 			try {
 				user = service.getUserByName(email);
 				httpStatus = HttpStatus.OK;

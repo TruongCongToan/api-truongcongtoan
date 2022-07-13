@@ -105,11 +105,11 @@ public class UserService implements IUserService {
 	}
 	// get user by username
 	@Override
-	public Users getUserByName(String inname) throws SQLException {
+	public UserModel getUserByName(String inname) throws SQLException {
 		if (inname != null) {
 			Users user = userDAO.findByName(inname);
 			if (user != null) {
-				return user;
+				return getUsersModels(user);
 			}else {
 				   throw new NotFoundException("Khong tim thay nguoi dung nay");
 			}
