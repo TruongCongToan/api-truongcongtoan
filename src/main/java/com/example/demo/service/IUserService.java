@@ -12,18 +12,18 @@ import com.example.demo.model.UserPrincipal;
 @Service
 public interface IUserService {
 	//lay thong tin nguoi dung
-		public List<UserModel> getListUser() throws SQLException;
+		public List<Users> getListUser() throws SQLException;
 		//tim theo ten
-		public UserModel getUserByName(String inname) throws SQLException;
+		public Users getUserByName(String inname) throws SQLException;
 		//get userByID
-		public UserModel getUserByID(int intID) throws SQLException;
+		public Users getUserByID(int intID) throws SQLException;
 
 		//xoa user
 		public void deleteUser(int inname) throws SQLException;
 		//them moi user
 		public Users addUser(UserModel userModel) throws SQLException;
 		//update user
-		public UserModel editUser(UserModel userModel, int inid) throws SQLException;
+		public Users editUser(UserModel userModel, int inid) throws SQLException;
 		//kiem tra nguoi dung nay da dang nhap hay chua
 		
 		//getall doctors

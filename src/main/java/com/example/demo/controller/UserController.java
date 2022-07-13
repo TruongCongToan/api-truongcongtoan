@@ -71,7 +71,7 @@ public class UserController {
 		@CrossOrigin(origins = "http://localhost:3000")
 		public ResponseEntity<Object> getAllUsers() throws SQLException {
 			HttpStatus httpStatus = null;
-			List<UserModel> users = service.getListUser();
+			List<Users> users = service.getListUser();
 			try {
 			
 				httpStatus = HttpStatus.OK;
@@ -89,7 +89,7 @@ public class UserController {
 		@CrossOrigin(origins = "http://localhost:3000")
 		public ResponseEntity<Object> getListUsersByName(@PathVariable("email") String email) {
 			HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-			UserModel user = new UserModel();
+			Users user = new Users();
 			try {
 				user = service.getUserByName(email);
 				httpStatus = HttpStatus.OK;
@@ -103,7 +103,7 @@ public class UserController {
 		@CrossOrigin(origins = "http://localhost:3000")
 		public ResponseEntity<Object> getUserByID(@PathVariable("user_id") int user_id) {
 			HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-			UserModel user = new UserModel();
+			Users user = new Users();
 			try {
 				user = service.getUserByID(user_id);
 				httpStatus = HttpStatus.OK;
@@ -151,7 +151,7 @@ public class UserController {
 		public ResponseEntity<Object> editUser(@Valid @RequestBody UserModel userModel,
 			@PathVariable("inid") int inid) {
 			HttpStatus httpStatus = null;
-			UserModel user = new UserModel();		
+			Users user = new Users();		
 			try {
 				user = service.editUser(userModel, inid);
 				httpStatus = HttpStatus.CREATED;

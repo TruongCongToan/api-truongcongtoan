@@ -3,7 +3,6 @@ package com.example.demo.service.impl;
 
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,53 +29,14 @@ public class UserService implements IUserService {
 	
 	@Autowired
 	private PagingDAO pagingDAO;
-
-	
-	
-	//  ham lay ra users
-			private List<UserModel> getListUsersModels(List<Users> users) {
-				List<UserModel> userModels = new ArrayList<>();
-				for (Users user : users) {
-					UserModel userModel = new UserModel();
-					userModel.setUser_id(user.getUser_id());
-					userModel.setAddress(user.getAddress());
-					userModel.setPhone_number(user.getPhone_number());
-					userModel.setGender(user.getGender());
-					userModel.setRole(user.getRole());
-					userModel.setImage(user.getImage());
-					userModel.setFull_name(user.getFull_name());		
-					userModel.setCreated_at(user.getCreated_at());
-					userModel.setUpdated_at(user.getUpdated_at());
-					userModel.setEmail(user.getEmail());
-					userModels.add(userModel);
-				}
-				return userModels;
-			}
-
-			private UserModel getUsersModels(Users user) {			
-					UserModel userModel = new UserModel();
-					userModel.setUser_id(user.getUser_id());
-					userModel.setAddress(user.getAddress());
-					userModel.setPhone_number(user.getPhone_number());
-					userModel.setGender(user.getGender());
-					userModel.setRole(user.getRole());
-					userModel.setImage(user.getImage());
-					userModel.setFull_name(user.getFull_name());		
-					userModel.setCreated_at(user.getCreated_at());
-					userModel.setUpdated_at(user.getUpdated_at());
-					userModel.setEmail(user.getEmail());
-				
-					userModel.setPassword("************************************");
-				return userModel;
-			}
+		
 	@Override
-	public List<UserModel> getListUser() throws SQLException {
+	public List<Users> getListUser() throws SQLException {
 		List<Users> users = userDAO.getAllUsers();
-		List<UserModel> userModels = getListUsersModels(users);
-		if (userModels.isEmpty()) {
+		if (users.isEmpty()) {
 			throw new NotFoundException("Khong tim thay nguoi dung nay");
 		}else {
-			return userModels;
+			return users;
 		}
 	}
 //add user 
@@ -105,11 +65,11 @@ public class UserService implements IUserService {
 	}
 	// get user by username
 	@Override
-	public UserModel getUserByName(String inname) throws SQLException {
+	public Users getUserByName(String inname) throws SQLException {
 		if (inname != null) {
 			Users user = userDAO.findByName(inname);
 			if (user != null) {
-				return getUsersModels(user);
+				return user;
 			}else {
 				   throw new NotFoundException("Khong tim thay nguoi dung nay");
 			}
@@ -129,7 +89,7 @@ public class UserService implements IUserService {
 	}
  //update user
 	@Override
-	public UserModel  editUser(UserModel userModel, int inid) throws SQLException {
+	public Users  editUser(UserModel userModel, int inid) throws SQLException {
 //		System.out.println("gia tri dau vao "+userModel);
 		if (userDAO.findbyId(inid) != null) {
 			Users user = userDAO.findbyId(inid);
@@ -180,7 +140,7 @@ public class UserService implements IUserService {
 
  			user.setUpdated_at(new Date());
  			
- 		 return	getUsersModels(userDAO.saveAndFlush(user));
+ 		 return	userDAO.saveAndFlush(user);
 		}else {
 			throw new NotFoundException("Khong tim thay nguoi dung nay");
 		}
@@ -204,11 +164,11 @@ public List<Users> getListDoctors() throws SQLException {
 }
 //get user by username
 @Override
-public UserModel getUserByID(int intID) throws SQLException {
+public Users getUserByID(int intID) throws SQLException {
 	if (intID != 0) {
 		Users user = userDAO.findbyId(intID);		
 		if (user != null) {
-			return getUsersModels(user);
+			return user;
 		}else {
 			   throw new NotFoundException("Khong tim thay nguoi dung nay");
 		}
