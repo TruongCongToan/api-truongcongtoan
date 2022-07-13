@@ -30,7 +30,7 @@ public interface IUserDAO extends JpaRepository<Users, Integer> {
 	// xoa sinh vien theo masv
 	@Modifying
 	@Query(value = "delete from `users` where user_id =:inid", nativeQuery = true)
-	public void deleteUser(@Param("inid") int inid);
+	public int deleteUser(@Param("inid") int inid);
 	
 	
 	//get all doctors

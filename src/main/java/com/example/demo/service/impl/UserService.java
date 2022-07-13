@@ -129,7 +129,7 @@ public class UserService implements IUserService {
 	}
  //update user
 	@Override
-	public void editUser(UserModel userModel, int inid) throws SQLException {
+	public Users  editUser(UserModel userModel, int inid) throws SQLException {
 //		System.out.println("gia tri dau vao "+userModel);
 		if (userDAO.findbyId(inid) != null) {
 			Users user = userDAO.findbyId(inid);
@@ -180,7 +180,7 @@ public class UserService implements IUserService {
 
  			user.setUpdated_at(new Date());
  			
- 			userDAO.saveAndFlush(user);
+ 		 return	userDAO.saveAndFlush(user);
 		}else {
 			throw new NotFoundException("Khong tim thay nguoi dung nay");
 		}
