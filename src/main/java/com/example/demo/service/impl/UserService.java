@@ -112,7 +112,7 @@ public class UserService implements IUserService {
 		if (inname != null) {
 			Users user = userDAO.findByName(inname);
 			if (user != null) {
-				return defineToUser(user);
+				return user;
 			}else {
 				   throw new NotFoundException("Khong tim thay nguoi dung nay");
 			}
@@ -183,7 +183,7 @@ public class UserService implements IUserService {
 
  			user.setUpdated_at(new Date());
  			
- 		 return	defineToUser(userDAO.saveAndFlush(user));
+ 		 return	 userDAO.saveAndFlush(user);
 		}else {
 			throw new NotFoundException("Khong tim thay nguoi dung nay");
 		}
@@ -211,7 +211,7 @@ public Users getUserByID(int intID) throws SQLException {
 	if (intID != 0) {
 		Users user = userDAO.findbyId(intID);		
 		if (user != null) {
-			return defineToUser(user);
+			return user;
 		}else {
 			   throw new NotFoundException("Khong tim thay nguoi dung nay");
 		}
