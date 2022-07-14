@@ -45,10 +45,24 @@ public class UserController {
 	
 	
 	 @PostMapping("/api/user/register")
-	    public Users register(@RequestBody UserModel userModel) throws SQLException{
+	    public ResponseEntity<Object> register(@RequestBody UserModel userModel) throws SQLException{
 		 userModel.setPassword(new BCryptPasswordEncoder().encode(userModel.getPassword()));
 		 System.out.println("Psssword "+userModel.getPassword());
-	        return service.addUser(userModel);
+		 Users users = new Users();
+			HttpStatus httpStatus = null;
+		 try {
+	        	users = service.addUser(userModel);
+	        	  UserPrincipal userPrincipal = service.findByUserEmail(users.getEmail());
+	        	  
+	        	  Token token = new Token();
+	  	        token.setToken(jwtUtil.generateTokenLogin(userPrincipal.getUsername()));
+	  	        token.setTokenExpDate(jwtUtil.generateExpirationDate());
+	  	        token.setUserid(userPrincipal.getUserId());
+	  	        httpStatus = HttpStatus.CREATED;
+	  	      return  new ResponseEntity<Object>(token, httpStatus);
+			} catch (Exception e) {
+				throw new DuplicateRecordException("Tài khoản đã tồn tại trong hệ thong");
+			}
 	    }
 	 
 	    @PostMapping("/api/user/login")
