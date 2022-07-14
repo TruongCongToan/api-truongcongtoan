@@ -100,7 +100,7 @@ public class UserService implements IUserService {
 			user.setCreated_at(new Date());
 			
 //			 userDAO.save(user);
-			 return defineToUser(userDAO.save(user));
+			 return userDAO.save(user);
 		}
 		else {
 			 throw new DuplicateRecordException("Da co user nay trong danh sach");
