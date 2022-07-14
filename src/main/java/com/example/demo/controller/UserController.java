@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -71,9 +72,9 @@ public class UserController {
 		@CrossOrigin(origins = "http://localhost:3000")
 		public ResponseEntity<Object> getAllUsers() throws SQLException {
 			HttpStatus httpStatus = null;
-			List<Users> users = service.getListUser();
+			List<Users> users = new ArrayList<Users>();
 			try {
-			
+				users = service.getListUser();
 				httpStatus = HttpStatus.OK;
 				
 			} catch (Exception e) {

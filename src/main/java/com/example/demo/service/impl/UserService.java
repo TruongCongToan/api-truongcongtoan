@@ -3,6 +3,7 @@ package com.example.demo.service.impl;
 
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -39,8 +40,49 @@ public class UserService implements IUserService {
 			return users;
 		}
 	}
-//add user 
+	
+	private List<Users> getListUsersOut(List<Users> userIn) {
+		List<Users> users2 = new ArrayList<>();
 
+		Users usersOut = new Users();
+		for(Users users : userIn) {
+			usersOut.setUser_id(users.getUser_id());
+			usersOut.setEmail(users.getEmail());
+			usersOut.setAddress(users.getAddress());
+			usersOut.setGender(users.getGender());
+			usersOut.setRole(users.getRole());
+			usersOut.setFull_name(users.getFull_name());
+			usersOut.setImage(users.getImage());
+			usersOut.setPosition(users.getPosition());
+			usersOut.setCreated_at(users.getCreated_at());
+			usersOut.setUpdated_at(users.getUpdated_at());
+			usersOut.setAllCodeRole(users.getAllCodeRole());
+			usersOut.setAllCodePosition(users.getAllCodePosition());
+			
+			users2.add(usersOut);
+			}
+		
+		System.out.println("Gia tri thu duoc "+users2);
+		return users2;
+	}
+
+	public Users defineToUser(Users users) throws SQLException {
+		Users usersOut = new Users();	
+		usersOut.setUser_id(users.getUser_id());
+		usersOut.setEmail(users.getEmail());
+		usersOut.setAddress(users.getAddress());
+		usersOut.setGender(users.getGender());
+		usersOut.setRole(users.getRole());
+		usersOut.setFull_name(users.getFull_name());
+		usersOut.setImage(users.getImage());
+		usersOut.setPosition(users.getPosition());
+		usersOut.setCreated_at(users.getCreated_at());
+		usersOut.setUpdated_at(users.getUpdated_at());
+		usersOut.setAllCodeRole(users.getAllCodeRole());
+		usersOut.setAllCodePosition(users.getAllCodePosition());
+		return usersOut;
+	}
+	
 	@Override
 	public Users addUser(UserModel userModel) throws SQLException {
 		if (userDAO.findByName(userModel.getEmail()) == null) {
@@ -57,7 +99,8 @@ public class UserService implements IUserService {
 			user.setImage(userModel.getImage());
 			user.setCreated_at(new Date());
 			
-			return userDAO.save(user);
+//			 userDAO.save(user);
+			 return defineToUser(userDAO.save(user));
 		}
 		else {
 			 throw new DuplicateRecordException("Da co user nay trong danh sach");
@@ -69,7 +112,7 @@ public class UserService implements IUserService {
 		if (inname != null) {
 			Users user = userDAO.findByName(inname);
 			if (user != null) {
-				return user;
+				return defineToUser(user);
 			}else {
 				   throw new NotFoundException("Khong tim thay nguoi dung nay");
 			}
@@ -77,7 +120,7 @@ public class UserService implements IUserService {
 			throw new NotFoundException("Khong tim thay nguoi dung nay");
 		}
 	}
- //xoa nguoi dung khoi danh sach
+
 	@Override
 	public void deleteUser(int inname) throws SQLException {
 		if (userDAO.findbyId(inname) != null) {
@@ -140,7 +183,7 @@ public class UserService implements IUserService {
 
  			user.setUpdated_at(new Date());
  			
- 		 return	userDAO.saveAndFlush(user);
+ 		 return	defineToUser(userDAO.saveAndFlush(user));
 		}else {
 			throw new NotFoundException("Khong tim thay nguoi dung nay");
 		}
@@ -168,7 +211,7 @@ public Users getUserByID(int intID) throws SQLException {
 	if (intID != 0) {
 		Users user = userDAO.findbyId(intID);		
 		if (user != null) {
-			return user;
+			return defineToUser(user);
 		}else {
 			   throw new NotFoundException("Khong tim thay nguoi dung nay");
 		}
