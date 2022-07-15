@@ -4,11 +4,14 @@ import java.sql.SQLException;
 //import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.DAO.IMarkDownDAO;
+import com.example.demo.DAO.IUserDAO;
 import com.example.demo.entity.MarkDown;
+import com.example.demo.entity.Users;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.MarkDownModel;
 import com.example.demo.service.IMarkDownSevice;
@@ -16,6 +19,13 @@ import com.example.demo.service.IMarkDownSevice;
 public class MarkDownService implements IMarkDownSevice  {
 	@Autowired
 	private IMarkDownDAO markDownDAO;
+	
+	@Autowired
+	private IUserDAO userDAO;
+	
+	@Autowired
+	private ModelMapper modelMapper;
+	
 	@Override
 	public List<MarkDown> getLisMarkDown() throws SQLException {
 		List<MarkDown> markDowns = markDownDAO.getAllMarkDown();
@@ -30,11 +40,15 @@ public class MarkDownService implements IMarkDownSevice  {
 	@Override
 	public MarkDown postInforDoctor(MarkDownModel markDownModel) throws SQLException {
 	
-		MarkDown markDown = new MarkDown();
-		if (markDownDAO.findByDoctorID(markDownModel.getDoctorid()) != null) {
-			 throw new NotFoundException("Không tìm thấy thông tin trong danh sách !");
-		}else {
+//		MarkDown markDown = new MarkDown();
+		MarkDown markDown = modelMapper.map(markDownModel,MarkDown.class);
 
+		if (markDownDAO.findByDoctorID(markDownModel.getDoctorid()) != null) {
+			 throw new NotFoundException("da co trong danh sach !");
+		}else {
+			
+			markDown.setUsers(userDAO.findbyId(markDownModel.getDoctorid()));
+			
 			markDown.setContentHTML(markDownModel.getContentHTML());
 			markDown.setContentMarkDown(markDownModel.getContentMarkDown());
 			markDown.setDescription(markDownModel.getDescription());

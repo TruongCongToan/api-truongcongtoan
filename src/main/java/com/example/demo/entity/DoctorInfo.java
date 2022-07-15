@@ -62,6 +62,9 @@ public class DoctorInfo implements Serializable {
 	 @Column(name = "clinic_id")
 	 private Integer clinic_id;
 	 
+	 @Column(name = "specialty_id")
+	 private Integer specialty_id;
+	 
 	  @JsonFormat(pattern = "yyyy-MM-dd",shape = Shape.STRING)
 	  @Column(name = "createat")
 	private Date createat;
