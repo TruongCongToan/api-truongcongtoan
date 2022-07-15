@@ -3,7 +3,6 @@ package com.example.demo.service.impl;
 
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,49 +39,7 @@ public class UserService implements IUserService {
 			return users;
 		}
 	}
-	
-	private List<Users> getListUsersOut(List<Users> userIn) {
-		List<Users> users2 = new ArrayList<>();
 
-		Users usersOut = new Users();
-		for(Users users : userIn) {
-			usersOut.setUser_id(users.getUser_id());
-			usersOut.setEmail(users.getEmail());
-			usersOut.setAddress(users.getAddress());
-			usersOut.setGender(users.getGender());
-			usersOut.setRole(users.getRole());
-			usersOut.setFull_name(users.getFull_name());
-			usersOut.setImage(users.getImage());
-			usersOut.setPosition(users.getPosition());
-			usersOut.setCreated_at(users.getCreated_at());
-			usersOut.setUpdated_at(users.getUpdated_at());
-			usersOut.setAllCodeRole(users.getAllCodeRole());
-			usersOut.setAllCodePosition(users.getAllCodePosition());
-			
-			users2.add(usersOut);
-			}
-		
-		System.out.println("Gia tri thu duoc "+users2);
-		return users2;
-	}
-
-	public Users defineToUser(Users users) throws SQLException {
-		Users usersOut = new Users();	
-		usersOut.setUser_id(users.getUser_id());
-		usersOut.setEmail(users.getEmail());
-		usersOut.setAddress(users.getAddress());
-		usersOut.setGender(users.getGender());
-		usersOut.setRole(users.getRole());
-		usersOut.setFull_name(users.getFull_name());
-		usersOut.setImage(users.getImage());
-		usersOut.setPosition(users.getPosition());
-		usersOut.setCreated_at(users.getCreated_at());
-		usersOut.setUpdated_at(users.getUpdated_at());
-		usersOut.setAllCodeRole(users.getAllCodeRole());
-		usersOut.setAllCodePosition(users.getAllCodePosition());
-		return usersOut;
-	}
-	
 	@Override
 	public Users addUser(UserModel userModel) throws SQLException {
 		if (userDAO.findByName(userModel.getEmail()) == null) {
@@ -98,6 +55,7 @@ public class UserService implements IUserService {
 			user.setFull_name(userModel.getFull_name());
 			user.setImage(userModel.getImage());
 			user.setCreated_at(new Date());
+			user.setSpecialty_id(userModel.getSpecialty_id());
 			
 //			 userDAO.save(user);
 			 return userDAO.save(user);
@@ -181,6 +139,13 @@ public class UserService implements IUserService {
 	 			}
 			}
 
+ 			if (user.getSpecialty_id() == null) {
+				user.setSpecialty_id(userModel.getSpecialty_id());
+			}else {
+				if(user.getSpecialty_id() != userModel.getSpecialty_id()) {
+					user.setSpecialty_id(userModel.getSpecialty_id());
+	 			}
+			}
  			user.setUpdated_at(new Date());
  			
  		 return	 userDAO.saveAndFlush(user);

@@ -23,6 +23,7 @@ public class UserModel {
 	private String gender;
 	private String role;
 	private String image;
+	private Integer specialty_id;
 	private String full_name;
 	@JsonFormat(pattern = "yyyy-MM-dd",shape = Shape.STRING)
 	  @Column(name = "created_at")

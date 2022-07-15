@@ -76,6 +76,7 @@ public class MarkDownController {
 			public ResponseEntity<Object> editDoctorInfo(@Valid @RequestBody MarkDownModel markDownModel,
 					@PathVariable("doctorID") int doctorID) {
 					HttpStatus httpStatus = null;
+					System.out.println("gia tri dau vao " +markDownModel);
 					MarkDown markDown = new MarkDown();
 					try {
 						markDown = markDownService.editDoctorInfo(markDownModel, doctorID);

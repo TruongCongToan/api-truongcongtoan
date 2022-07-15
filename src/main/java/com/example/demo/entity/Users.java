@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -59,6 +60,10 @@ public class Users implements Serializable {
 	  @Column(name = "full_name")
 	private String full_name;
 	  
+	  @Column(name = "specialty_id")
+	private Integer specialty_id;
+		  
+	  
 	  @Lob
 	  @Column(name = "image",length = Integer.MAX_VALUE,nullable = true)
 	private String image ;
@@ -81,6 +86,10 @@ public class Users implements Serializable {
 	  @OneToOne(cascade = CascadeType.ALL)
 		@JoinColumn(name = "role", referencedColumnName = "key", insertable = false, updatable = false)
 		private AllCode allCodeRole = null;
+	  
+	  @ManyToOne
+	  @JoinColumn(name="specialty_id", referencedColumnName = "id", nullable=false,insertable = false, updatable =false)
+	  private Specialties specialties;
 	  
 //	  @Column(name = "doctorid")
 //		private int doctorid;
