@@ -36,7 +36,7 @@ public class Users implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 		@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	 private int user_id;
 
 	  @Column(name = "email")
@@ -60,16 +60,15 @@ public class Users implements Serializable {
 	  @Column(name = "full_name")
 	private String full_name;
 	  
-	  @Column(name = "specialty_id")
-	private Integer specialty_id;
-		  
-	  
 	  @Lob
 	  @Column(name = "image",length = Integer.MAX_VALUE,nullable = true)
 	private String image ;
 	  
 	  @Column(name = "position")
 	private String position;
+	  
+//	  @Column(name = "doctorid")
+//		private int doctorid;
 	  
 	  @JsonFormat(pattern = "yyyy-MM-dd",shape = Shape.STRING)
 	  @Column(name = "created_at")
@@ -87,18 +86,7 @@ public class Users implements Serializable {
 		@JoinColumn(name = "role", referencedColumnName = "key", insertable = false, updatable = false)
 		private AllCode allCodeRole = null;
 	  
-	  @ManyToOne
-	  @JoinColumn(name="specialty_id", referencedColumnName = "id", nullable=false,insertable = false, updatable =false)
-	  private Specialties specialties;
-	  
-//	  @Column(name = "doctorid")
-//		private int doctorid;
-//	  
-//	  @Column(name = "password")
-//		private String password;
-//	  
-	  
-//	  @OneToMany(mappedBy="users", fetch = FetchType.LAZY,
-//	            cascade = CascadeType.ALL)
-//	  private List<Schedule> schedules ;
+//	  @OneToOne(cascade = CascadeType.ALL)
+//			@JoinColumn(name = "doctorid")
+//			private MarkDown markDown;
 	  }

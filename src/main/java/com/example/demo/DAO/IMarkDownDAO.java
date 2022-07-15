@@ -11,7 +11,7 @@ import com.example.demo.entity.MarkDown;
 
 public interface IMarkDownDAO extends JpaRepository<MarkDown,Integer> {
 	// get all users
-		@Query(nativeQuery = true, value = "select * from markdown")
+		@Query(nativeQuery = true, value = "SELECT * FROM heroku_e703500be6bb113.markdown;")
 		public List<MarkDown> getAllMarkDown();
 		
 		// get thong tin sv by masv

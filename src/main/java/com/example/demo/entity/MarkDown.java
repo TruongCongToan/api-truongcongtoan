@@ -27,10 +27,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MarkDown implements Serializable {
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	 private int markdown_id;
 		@Lob
 	  @Column(name = "contentHTML")
@@ -42,20 +44,15 @@ public class MarkDown implements Serializable {
 	  @Lob
 	private String description;
 	 
-	  @Column(name = "specialty_id")
-		 private Integer specialty_id;
-
 	  @Column(name = "clinic_id")
 		 private Integer clinic_id;
 	 
-	  @Column(name = "doctorid")
-		 private Integer doctorid;
-	  
+//	  @Column(name = "doctorid")
+//		 private Integer doctorid;
 	  @OneToOne(cascade = CascadeType.ALL)
-		@JoinColumn(name = "doctorid", referencedColumnName = "user_id", insertable = false, updatable = false)
-		private Users user = null;
-//	  
-
+		@JoinColumn(name = "doctorid")
+		private Users users;
+	
 	   
 
 

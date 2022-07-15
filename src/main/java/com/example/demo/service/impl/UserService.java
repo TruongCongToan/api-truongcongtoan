@@ -55,7 +55,7 @@ public class UserService implements IUserService {
 			user.setFull_name(userModel.getFull_name());
 			user.setImage(userModel.getImage());
 			user.setCreated_at(new Date());
-			user.setSpecialty_id(userModel.getSpecialty_id());
+//			user.setSpecialty_id(userModel.getSpecialty_id());
 			
 //			 userDAO.save(user);
 			 return userDAO.save(user);
@@ -138,14 +138,14 @@ public class UserService implements IUserService {
 					user.setFull_name(userModel.getFull_name());
 	 			}
 			}
-
- 			if (user.getSpecialty_id() == null) {
-				user.setSpecialty_id(userModel.getSpecialty_id());
-			}else {
-				if(user.getSpecialty_id() != userModel.getSpecialty_id()) {
-					user.setSpecialty_id(userModel.getSpecialty_id());
-	 			}
-			}
+//
+// 			if (user.getSpecialty_id() == null) {
+//				user.setSpecialty_id(userModel.getSpecialty_id());
+//			}else {
+//				if(user.getSpecialty_id() != userModel.getSpecialty_id()) {
+//					user.setSpecialty_id(userModel.getSpecialty_id());
+//	 			}
+//			}
  			user.setUpdated_at(new Date());
  			
  		 return	 userDAO.saveAndFlush(user);

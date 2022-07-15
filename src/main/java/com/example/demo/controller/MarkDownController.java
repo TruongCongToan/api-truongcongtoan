@@ -41,13 +41,12 @@ public class MarkDownController {
 		HttpStatus httpStatus = null;
 		List<MarkDown> markDownModels = new ArrayList<MarkDown>();
 	
-		markDownModels = markDownDAO.getAllMarkDown();
-		System.out.println("gia tri lay duoc tu service "+markDownModels);
-		
+		httpStatus = HttpStatus.OK;
+//		markDownModels = markDownDAO.getAllMarkDown();
 		try {
 			markDownModels = markDownService.getLisMarkDown();
 			System.out.println("gia tri lay duoc tu service "+markDownModels);
-			httpStatus = HttpStatus.OK;
+			
 		} catch (Exception e) {
 			 throw new InternalServerException("Không được bỏ trống các trường !");
 		

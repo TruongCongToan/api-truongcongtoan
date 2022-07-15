@@ -38,10 +38,10 @@ public class MarkDownService implements IMarkDownSevice  {
 			markDown.setContentHTML(markDownModel.getContentHTML());
 			markDown.setContentMarkDown(markDownModel.getContentMarkDown());
 			markDown.setDescription(markDownModel.getDescription());
-			markDown.setUser(markDownModel.getUsers());
+//			markDown.setUser(markDownModel.getUsers());
 
-			markDown.setSpecialty_id(markDownModel.getSpecialty_id());
-			markDown.setDoctorid(markDownModel.getDoctorid());
+//			markDown.setSpecialty_id(markDownModel.getSpecialty_id());
+//			markDown.setDoctorid(markDownModel.getDoctorid());
 		}
 		return markDownDAO.save(markDown);
 }
@@ -75,13 +75,13 @@ public MarkDown editDoctorInfo(MarkDownModel markDownModel, int markdown_id) thr
 				markDown.setContentMarkDown(markDownModel.getContentMarkDown());
  			}
 		}
-		if (markDown.getSpecialty_id() == null) {
-			markDown.setSpecialty_id(markDownModel.getSpecialty_id());
-		}else {
-			if (!markDown.getSpecialty_id().equals(markDownModel.getSpecialty_id())) {
-				markDown.setSpecialty_id(markDownModel.getSpecialty_id());
- 			}
-		}
+//		if (markDown.getSpecialty_id() == null) {
+//			markDown.setSpecialty_id(markDownModel.getSpecialty_id());
+//		}else {
+//			if (!markDown.getSpecialty_id().equals(markDownModel.getSpecialty_id())) {
+//				markDown.setSpecialty_id(markDownModel.getSpecialty_id());
+// 			}
+//		}
 		if (markDown.getDescription() == null) {
 			markDown.setDescription(markDownModel.getDescription());
 		}else {

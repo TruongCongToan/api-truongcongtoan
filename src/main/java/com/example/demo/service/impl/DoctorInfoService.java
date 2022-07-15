@@ -47,7 +47,7 @@ public class DoctorInfoService implements IDoctorInfoService{
 
 			DoctorInfo doctorInfo = new DoctorInfo();
 			
-			doctorInfo.setDoctorid(doctorInfoModel.getDoctorid());
+//			doctorInfo.setDoctorid(doctorInfoModel.getDoctorid());
 			doctorInfo.setProvinceid(doctorInfoModel.getProvinceid());
 			doctorInfo.setPriceid(doctorInfoModel.getPriceid());
 			doctorInfo.setAddressclinicid(doctorInfoModel.getAddressclinicid());
@@ -56,7 +56,7 @@ public class DoctorInfoService implements IDoctorInfoService{
 			doctorInfo.setCount(doctorInfoModel.getCount());
 			doctorInfo.setPayment(doctorInfoModel.getPayment());
 			doctorInfo.setClinic_id(doctorInfoModel.getClinic_id());
-			doctorInfo.setSpecialty_id(doctorInfoModel.getSpecialty_id());
+//			doctorInfo.setSpecialty_id(doctorInfoModel.getSpecialty_id());
 			
 			doctorInfo.setCreateat(new Date());
 						
@@ -81,7 +81,7 @@ public class DoctorInfoService implements IDoctorInfoService{
 			doctorInfo.setCount(doctorInfoModel.getCount());
 			doctorInfo.setPayment(doctorInfoModel.getPayment());		
 			doctorInfo.setClinic_id(doctorInfoModel.getClinic_id());
-			doctorInfo.setSpecialty_id(doctorInfoModel.getSpecialty_id());
+//			doctorInfo.setSpecialty_id(doctorInfoModel.getSpecialty_id());
 			
 			doctorInfo.setUpdateat(new Date());
 			

@@ -33,11 +33,11 @@ import lombok.Setter;
 public class DoctorInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
-	 @Column(name = "doctorid")
-	 private int doctorid;
+//	
+//	 @Column(name = "doctorid")
+//	 private int doctorid;
 	 
 	 @Column(name = "priceid")
 	 private String priceid;
@@ -90,8 +90,13 @@ public class DoctorInfo implements Serializable {
 	  @JoinColumn(name="specialty_id", referencedColumnName = "id", nullable=false,insertable = false, updatable =false)
 	  private Specialties specialties;
 
+	 
 //	  @OneToOne(cascade = CascadeType.ALL)
-//		@JoinColumn(name = "doctorid", referencedColumnName = "doctorid", insertable = false, updatable = false)
-//		private MarkDown markdown = null;
-	  
+//		@JoinColumn(name = "doctorid", referencedColumnName = "user_id", insertable = false, updatable = false)
+//		private Users user = null;
+
+	  @OneToOne(cascade = CascadeType.ALL)
+			@JoinColumn(name = "doctorid")
+			private Users user;
+		  
 }
