@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -60,9 +59,6 @@ public class DoctorInfo implements Serializable {
 	 @Column(name = "count")
 	 private int count;
 	 
-	 @Column(name = "specialty_id")
-	 private Integer specialty_id;
-	 
 	 @Column(name = "clinic_id")
 	 private Integer clinic_id;
 	 
@@ -86,9 +82,6 @@ public class DoctorInfo implements Serializable {
 		@JoinColumn(name = "payment", referencedColumnName = "key", insertable = false, updatable = false)
 		private AllCode allCodePayment = null;
 
-	  @ManyToOne
-	  @JoinColumn(name="specialty_id", referencedColumnName = "id", nullable=false,insertable = false, updatable =false)
-	  private Specialties specialties;
 
 	 
 //	  @OneToOne(cascade = CascadeType.ALL)
