@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -62,8 +63,8 @@ public class DoctorInfo implements Serializable {
 	 @Column(name = "clinic_id")
 	 private Integer clinic_id;
 	 
-	 @Column(name = "specialty_id")
-	 private Integer specialty_id;
+//	 @Column(name = "specialty_id")
+//	 private Integer specialty_id;
 	 
 	  @JsonFormat(pattern = "yyyy-MM-dd",shape = Shape.STRING)
 	  @Column(name = "createat")
@@ -85,14 +86,16 @@ public class DoctorInfo implements Serializable {
 		@JoinColumn(name = "payment", referencedColumnName = "key", insertable = false, updatable = false)
 		private AllCode allCodePayment = null;
 
-
-	 
-//	  @OneToOne(cascade = CascadeType.ALL)
-//		@JoinColumn(name = "doctorid", referencedColumnName = "user_id", insertable = false, updatable = false)
-//		private Users user = null;
-
+	  @ManyToOne(cascade = CascadeType.ALL)
+		@JoinColumn(name = "specialty_id")
+		private Specialties specialties;
+	  
 	  @OneToOne(cascade = CascadeType.ALL)
 			@JoinColumn(name = "doctorid")
 			private Users user;
+	  
+//	  @OneToOne(cascade = CascadeType.ALL)
+//			@JoinColumn(name = "markdownid")
+//			private MarkDown markDown;
 		  
 }

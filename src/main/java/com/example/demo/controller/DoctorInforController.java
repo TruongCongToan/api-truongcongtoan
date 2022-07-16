@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.DoctorInfo;
+import com.example.demo.entity.MarkDown;
 import com.example.demo.exception.InternalServerException;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.DoctorInfoModel;
@@ -62,7 +63,7 @@ public class DoctorInforController {
 	@GetMapping("/api/doctorinfo/specialties/{specialID}/{provinceid}")
 	public ResponseEntity<Object> getdoctorInfoBySpecialID(@Valid @PathVariable("specialID") int specialID,@PathVariable("provinceid") String provinceid) {
 			HttpStatus httpStatus = null;
-			List<DoctorInfo>  doctorInfo= new ArrayList<DoctorInfo>();
+			List<MarkDown>  doctorInfo= new ArrayList<MarkDown>();
 			try {
 				doctorInfo = doctorInforService.getInforBySpecialID(specialID,provinceid);
 				httpStatus = HttpStatus.OK;
@@ -91,7 +92,7 @@ public class DoctorInforController {
 	@PostMapping("/api/doctorinfo/")
 	public ResponseEntity<Object>  postInforDoctor(
 			@Valid @RequestBody DoctorInfoModel doctorInfoModel) throws SQLException {
-		HttpStatus httpStatus = HttpStatus.OK;
+		HttpStatus httpStatus = HttpStatus.CREATED;
 		DoctorInfo doctorInfo = new DoctorInfo();
 		doctorInfo = doctorInforService.postInforDoctor(doctorInfoModel);
 		return new ResponseEntity<Object>(doctorInfo,httpStatus);

@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -8,7 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.DAO.IDoctorInfoDAO;
+import com.example.demo.DAO.IMarkDownDAO;
+import com.example.demo.DAO.ISpecialtiesDAO;
+import com.example.demo.DAO.IUserDAO;
 import com.example.demo.entity.DoctorInfo;
+import com.example.demo.entity.MarkDown;
 import com.example.demo.exception.DuplicateRecordException;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.DoctorInfoModel;
@@ -20,6 +25,16 @@ public class DoctorInfoService implements IDoctorInfoService{
 
 	@Autowired
 	private IDoctorInfoDAO doctorInforDAO;
+	
+	@Autowired
+	private IUserDAO userDAO;
+	
+	@Autowired
+	private IMarkDownDAO markDownDAO;
+	
+	@Autowired
+	private ISpecialtiesDAO specialtiesDAO;
+	
 	//get all infor doctor
 	public List<DoctorInfo> getListDoctorInfo() throws SQLException {
 		List<DoctorInfo> doctorInfo = doctorInforDAO.findAll();
@@ -47,7 +62,7 @@ public class DoctorInfoService implements IDoctorInfoService{
 
 			DoctorInfo doctorInfo = new DoctorInfo();
 			
-//			doctorInfo.setDoctorid(doctorInfoModel.getDoctorid());
+			doctorInfo.setUser(userDAO.findbyId(doctorInfoModel.getDoctorid()));
 			doctorInfo.setProvinceid(doctorInfoModel.getProvinceid());
 			doctorInfo.setPriceid(doctorInfoModel.getPriceid());
 			doctorInfo.setAddressclinicid(doctorInfoModel.getAddressclinicid());
@@ -56,7 +71,7 @@ public class DoctorInfoService implements IDoctorInfoService{
 			doctorInfo.setCount(doctorInfoModel.getCount());
 			doctorInfo.setPayment(doctorInfoModel.getPayment());
 			doctorInfo.setClinic_id(doctorInfoModel.getClinic_id());
-//			doctorInfo.setSpecialty_id(doctorInfoModel.getSpecialty_id());
+			doctorInfo.setSpecialties(specialtiesDAO.getSpecialtiesByID(doctorInfoModel.getSpecialty_id()));
 			
 			doctorInfo.setCreateat(new Date());
 						
@@ -113,15 +128,8 @@ public class DoctorInfoService implements IDoctorInfoService{
 		}
 	}
 	
-//	public  DoctorSpecialty DoctorInfoSpecialty (DoctorInfo doctorInfo) throws SQLException{
-//		DoctorSpecialty doctorSpecialty = new  DoctorSpecialty ();
-//		doctorSpecialty.setDoctorid(doctorInfo.getDoctorid());
-//		doctorSpecialty.setProvinceid(doctorInfo.getProvinceid());
-//		return doctorSpecialty;
-//	}
-	
 	@Override
-	public List<DoctorInfo>  getInforBySpecialID(int specialID,String inprovinceid) throws SQLException {
+	public List<MarkDown>  getInforBySpecialID(int specialID,String inprovinceid) throws SQLException {
 		if (specialID == 0 || inprovinceid == null) {
 			throw new NotFoundException("Khong tim thay nguoi dung nay");
 		}else {
@@ -130,14 +138,26 @@ public class DoctorInfoService implements IDoctorInfoService{
 				if (doctorInfo.isEmpty()) {
 					throw new NotFoundException("Khong tim thay nguoi dung nay");
 				}else {
-					return doctorInfo;
-				}
+					List<MarkDown> markDowns = new ArrayList<MarkDown>();
+
+					for(DoctorInfo each : doctorInfo) {
+						MarkDown markDown = markDownDAO.findByDoctorInfoID(each.getId());	
+						markDowns.add(markDown);
+						}
+					return markDowns;			
+					}
 			}else {
 				List<DoctorInfo>  doctorInfo = doctorInforDAO.findBySpecialIDLocation(specialID,inprovinceid);
 				if (doctorInfo.isEmpty()) {
 					throw new NotFoundException("Khong tim thay nguoi dung nay");
 				}else {
-					return doctorInfo;
+					List<MarkDown> markDowns = new ArrayList<MarkDown>();
+
+					for(DoctorInfo each : doctorInfo) {
+						MarkDown markDown = markDownDAO.findByDoctorInfoID(each.getId());	
+						markDowns.add(markDown);
+						}
+					return markDowns;
 				}
 			}
 		}

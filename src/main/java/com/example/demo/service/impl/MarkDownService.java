@@ -10,9 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.DAO.IMarkDownDAO;
-import com.example.demo.DAO.IUserDAO;
 import com.example.demo.entity.MarkDown;
-import com.example.demo.entity.Users;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.MarkDownModel;
 import com.example.demo.service.IMarkDownSevice;
@@ -23,11 +21,8 @@ public class MarkDownService implements IMarkDownSevice  {
 	private IMarkDownDAO markDownDAO;
 	
 	@Autowired
-	private IUserDAO userDAO;
-	
-//	@Autowired
-//	private ModelMapper modelMapper;
-	
+	private DoctorInfoService doctorInfoService;
+
 	@Override
 	public List<MarkDown> getLisMarkDown() throws SQLException {
 		List<MarkDown> markDowns = markDownDAO.getAllMarkDown();
@@ -43,29 +38,19 @@ public class MarkDownService implements IMarkDownSevice  {
 	public MarkDown postInforDoctor(MarkDownModel markDownModel) throws SQLException {
 	
 		MarkDown markDown = new MarkDown();
-//		MarkDown markDown = modelMapper.map(markDownModel,MarkDown.class);
-
-		if (markDownDAO.findByDoctorID(markDownModel.getDoctorid()) != null) {
-			 throw new NotFoundException("da co trong danh sach !");
-		}else {
-			
-			markDown.setUsers(userDAO.findbyId(markDownModel.getDoctorid()));
-			
-			markDown.setContentHTML(markDownModel.getContentHTML());
+		
+			markDown.setDoctorInfo(doctorInfoService.getInforByDoctorID(markDownModel.getDoctorid()));
+//			markDown.setContentHTML(markDownModel.getContentHTML());
 			markDown.setContentMarkDown(markDownModel.getContentMarkDown());
 			markDown.setDescription(markDownModel.getDescription());
-//			markDown.setUser(markDownModel.getUsers());
 
-//			markDown.setSpecialty_id(markDownModel.getSpecialty_id());
-//			markDown.setDoctorid(markDownModel.getDoctorid());
-		}
 		return markDownDAO.save(markDown);
 }
 @Override
 public MarkDown getMarkDownByDoctorID(int doctorID) throws SQLException {
 	if (doctorID != 0) {
 		
-		MarkDown markDown = markDownDAO.findByDoctorID(doctorID);
+		MarkDown markDown = markDownDAO.findByDoctorInfoID(doctorID);
 		if (markDown != null) {
 			return markDown;
 		}else {
@@ -129,7 +114,7 @@ public MarkDown editDoctorInfo(MarkDownModel markDownModel, int markdown_id) thr
 	@Override
 	public void deleteMarkdown(int markdown_id) throws SQLException {
 
-		if (markDownDAO.findByDoctorID(markdown_id) != null) {
+		if (markDownDAO.findByDoctorInfoID(markdown_id) != null) {
 		markDownDAO.deleteMarkdown(markdown_id);
 		}
 		else {

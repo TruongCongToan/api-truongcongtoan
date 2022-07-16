@@ -46,12 +46,14 @@ public class MarkDown implements Serializable {
 	 
 	  @Column(name = "clinic_id")
 		 private Integer clinic_id;
-	 
-//	  @Column(name = "doctorid")
-//		 private Integer doctorid;
+//	 
+//	  @OneToOne(cascade = CascadeType.ALL)
+//		@JoinColumn(name = "doctorid")
+//		private Users users;
+	  
 	  @OneToOne(cascade = CascadeType.ALL)
-		@JoinColumn(name = "doctorid")
-		private Users users;
+			@JoinColumn(name = "doctorinfoid")
+			private DoctorInfo doctorInfo;
 	
 	   
 

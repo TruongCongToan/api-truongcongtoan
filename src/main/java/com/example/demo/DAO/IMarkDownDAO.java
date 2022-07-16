@@ -15,8 +15,8 @@ public interface IMarkDownDAO extends JpaRepository<MarkDown,Integer> {
 		public List<MarkDown> getAllMarkDown();
 		
 		// get thong tin sv by masv
-		@Query(value = "select * from `markdown` where doctorid = :indoctorid", nativeQuery = true)
-		public MarkDown findByDoctorID(@Param("indoctorid") int indoctorid);
+		@Query(value = "select * from `markdown` where doctorinfoid = :indoctorid", nativeQuery = true)
+		public MarkDown findByDoctorInfoID(@Param("indoctorid") int indoctorid);
 //		
 //		@Query(value = "select * from `markdown` where doctorid = :indoctorid", nativeQuery = true)
 //		public MarkDown findByDoctorID(@Param("indoctorid") int indoctorid);
