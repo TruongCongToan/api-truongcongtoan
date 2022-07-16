@@ -4,7 +4,7 @@ import java.sql.SQLException;
 //import java.util.ArrayList;
 import java.util.List;
 
-import org.modelmapper.ModelMapper;
+//import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -25,8 +25,8 @@ public class MarkDownService implements IMarkDownSevice  {
 	@Autowired
 	private IUserDAO userDAO;
 	
-	@Autowired
-	private ModelMapper modelMapper;
+//	@Autowired
+//	private ModelMapper modelMapper;
 	
 	@Override
 	public List<MarkDown> getLisMarkDown() throws SQLException {
@@ -42,8 +42,8 @@ public class MarkDownService implements IMarkDownSevice  {
 	@Override
 	public MarkDown postInforDoctor(MarkDownModel markDownModel) throws SQLException {
 	
-//		MarkDown markDown = new MarkDown();
-		MarkDown markDown = modelMapper.map(markDownModel,MarkDown.class);
+		MarkDown markDown = new MarkDown();
+//		MarkDown markDown = modelMapper.map(markDownModel,MarkDown.class);
 
 		if (markDownDAO.findByDoctorID(markDownModel.getDoctorid()) != null) {
 			 throw new NotFoundException("da co trong danh sach !");
