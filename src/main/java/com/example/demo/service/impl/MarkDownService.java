@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.DAO.IMarkDownDAO;
@@ -16,6 +17,7 @@ import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.MarkDownModel;
 import com.example.demo.service.IMarkDownSevice;
 @Service
+@Component
 public class MarkDownService implements IMarkDownSevice  {
 	@Autowired
 	private IMarkDownDAO markDownDAO;
