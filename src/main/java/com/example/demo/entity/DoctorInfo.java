@@ -35,10 +35,7 @@ public class DoctorInfo implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-//	
-//	 @Column(name = "doctorid")
-//	 private int doctorid;
-	 
+
 	 @Column(name = "priceid")
 	 private String priceid;
 	 
@@ -59,13 +56,7 @@ public class DoctorInfo implements Serializable {
 	 
 	 @Column(name = "count")
 	 private int count;
-	 
-	 @Column(name = "clinic_id")
-	 private Integer clinic_id;
-	 
-//	 @Column(name = "specialty_id")
-//	 private Integer specialty_id;
-	 
+
 	  @JsonFormat(pattern = "yyyy-MM-dd",shape = Shape.STRING)
 	  @Column(name = "createat")
 	private Date createat;
@@ -93,6 +84,10 @@ public class DoctorInfo implements Serializable {
 	  @OneToOne(cascade = CascadeType.ALL)
 			@JoinColumn(name = "doctorid")
 			private Users user;
+	  
+	  @ManyToOne(cascade = CascadeType.ALL)
+	  @JoinColumn(name = "clinic_id")
+	  private Clinic clinic;
 	  
 //	  @OneToOne(cascade = CascadeType.ALL)
 //			@JoinColumn(name = "markdownid")

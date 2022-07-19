@@ -11,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -66,9 +65,6 @@ public class Users implements Serializable {
 	  
 	  @Column(name = "position")
 	private String position;
-	  
-//	  @Column(name = "doctorid")
-//		private int doctorid;
 	  
 	  @JsonFormat(pattern = "yyyy-MM-dd",shape = Shape.STRING)
 	  @Column(name = "created_at")

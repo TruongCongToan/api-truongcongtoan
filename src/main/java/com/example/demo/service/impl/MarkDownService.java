@@ -40,7 +40,6 @@ public class MarkDownService implements IMarkDownSevice  {
 		MarkDown markDown = new MarkDown();
 		
 			markDown.setDoctorInfo(doctorInfoService.getInforByDoctorID(markDownModel.getDoctorid()));
-//			markDown.setContentHTML(markDownModel.getContentHTML());
 			markDown.setContentMarkDown(markDownModel.getContentMarkDown());
 			markDown.setDescription(markDownModel.getDescription());
 

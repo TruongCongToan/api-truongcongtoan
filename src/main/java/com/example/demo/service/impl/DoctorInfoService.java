@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.DAO.IClinicDAO;
 import com.example.demo.DAO.IDoctorInfoDAO;
 import com.example.demo.DAO.IMarkDownDAO;
 import com.example.demo.DAO.ISpecialtiesDAO;
@@ -35,12 +36,13 @@ public class DoctorInfoService implements IDoctorInfoService{
 	@Autowired
 	private ISpecialtiesDAO specialtiesDAO;
 	
-	//get all infor doctor
+	@Autowired
+	private IClinicDAO clinicDAO;
+	
 	public List<DoctorInfo> getListDoctorInfo() throws SQLException {
 		List<DoctorInfo> doctorInfo = doctorInforDAO.findAll();
 		return doctorInfo;
 	}
-	//get by doctor id
 	@Override
 	public DoctorInfo getInforByDoctorID(int doctorID) throws SQLException {
 		DoctorInfo doctorInfo = doctorInforDAO.findByDoctorID(doctorID);
@@ -51,7 +53,6 @@ public class DoctorInfoService implements IDoctorInfoService{
 		}
 		
 	}
-	//add doctor info
 	@Override
 	public DoctorInfo postInforDoctor(DoctorInfoModel doctorInfoModel) throws SQLException {
 	
@@ -70,7 +71,7 @@ public class DoctorInfoService implements IDoctorInfoService{
 			doctorInfo.setNote(doctorInfoModel.getNote());
 			doctorInfo.setCount(doctorInfoModel.getCount());
 			doctorInfo.setPayment(doctorInfoModel.getPayment());
-			doctorInfo.setClinic_id(doctorInfoModel.getClinic_id());
+			doctorInfo.setClinic(clinicDAO.getClinicByID(doctorInfoModel.getClinic_id()));
 			doctorInfo.setSpecialties(specialtiesDAO.getSpecialtiesByID(doctorInfoModel.getSpecialty_id()));
 			
 			doctorInfo.setCreateat(new Date());
@@ -87,20 +88,75 @@ public class DoctorInfoService implements IDoctorInfoService{
 		
 		if (doctorInforDAO.findByDoctorID(doctorID) != null) {
 			DoctorInfo doctorInfo = getInforByDoctorID(doctorID);
+
+			if (doctorInfo.getProvinceid() == null) {
+				doctorInfo.setProvinceid(doctorInfoModel.getProvinceid());
+			}else {
+				if (!doctorInfo.getProvinceid().equals(doctorInfoModel.getProvinceid())) {
+					doctorInfo.setProvinceid(doctorInfoModel.getProvinceid());
+	 			}
+			}
+			if (doctorInfo.getPriceid() == null) {
+				doctorInfo.setPriceid(doctorInfoModel.getPriceid());
+			}else {
+				if (!doctorInfo.getPriceid().equals(doctorInfoModel.getPriceid())) {
+					doctorInfo.setPriceid(doctorInfoModel.getPriceid());
+	 			}
+			}
+			if (doctorInfo.getAddressclinicid() == null) {
+				doctorInfo.setAddressclinicid(doctorInfoModel.getAddressclinicid());
+			}else {
+				if (!doctorInfo.getAddressclinicid().equals(doctorInfoModel.getAddressclinicid())) {
+					doctorInfo.setAddressclinicid(doctorInfoModel.getAddressclinicid());
+	 			}
+			}
+			if (doctorInfo.getNameclinic() == null) {
+				doctorInfo.setNameclinic(doctorInfoModel.getNameclinic());
+			}else {
+				if (!doctorInfo.getNameclinic().equals(doctorInfoModel.getNameclinic())) {
+					doctorInfo.setNameclinic(doctorInfoModel.getNameclinic());
+	 			}
+			}
+			if (doctorInfo.getNote() == null) {
+				doctorInfo.setNote(doctorInfoModel.getNote());
+			}else {
+				if (!doctorInfo.getNote().equals(doctorInfoModel.getNote())) {
+					doctorInfo.setNote(doctorInfoModel.getNote());
+	 			}
+			}
+
+			if (doctorInfo.getCount() == 0) {
+				doctorInfo.setCount(doctorInfoModel.getCount());
+			}else {
+				if (doctorInfo.getCount() != doctorInfoModel.getCount()) {
+					doctorInfo.setCount(doctorInfoModel.getCount());
+	 			}
+			}
+			if (doctorInfo.getPayment() == null) {
+				doctorInfo.setPayment(doctorInfoModel.getPayment());		
+			}else {
+				if (!doctorInfo.getPayment().equals(doctorInfoModel.getPayment())) {
+					doctorInfo.setPayment(doctorInfoModel.getPayment());		
+	 			}
+			}
 			
-			doctorInfo.setProvinceid(doctorInfoModel.getProvinceid());
-			doctorInfo.setPriceid(doctorInfoModel.getPriceid());
-			doctorInfo.setAddressclinicid(doctorInfoModel.getAddressclinicid());
-			doctorInfo.setNameclinic(doctorInfoModel.getNameclinic());
-			doctorInfo.setNote(doctorInfoModel.getNote());
-			doctorInfo.setCount(doctorInfoModel.getCount());
-			doctorInfo.setPayment(doctorInfoModel.getPayment());		
-			doctorInfo.setClinic_id(doctorInfoModel.getClinic_id());
-//			doctorInfo.setSpecialty_id(doctorInfoModel.getSpecialty_id());
-			
+			if (doctorInfo.getClinic() == null) {
+				doctorInfo.setClinic(clinicDAO.getClinicByID(doctorInfoModel.getClinic_id()));		
+			}else {
+				if (!doctorInfo.getClinic().equals(clinicDAO.getClinicByID(doctorInfoModel.getClinic_id()))) {
+					doctorInfo.setClinic(clinicDAO.getClinicByID(doctorInfoModel.getClinic_id()));		
+	 			}
+			}
+			if (doctorInfo.getSpecialties() == null) {
+				doctorInfo.setSpecialties(specialtiesDAO.getSpecialtiesByID(doctorInfoModel.getSpecialty_id()));		
+			}else {
+				if (!doctorInfo.getSpecialties().equals(specialtiesDAO.getSpecialtiesByID(doctorInfoModel.getSpecialty_id()))) {
+					doctorInfo.setSpecialties(specialtiesDAO.getSpecialtiesByID(doctorInfoModel.getSpecialty_id()));		
+	 			}
+			}
+
 			doctorInfo.setUpdateat(new Date());
 			
-
 			return doctorInforDAO.saveAndFlush(doctorInfo);
 			
 		}else {
@@ -109,7 +165,6 @@ public class DoctorInfoService implements IDoctorInfoService{
 		
 	}
 
-	//delete doctor info
 	@Override
 	public void deleteDoctorInfo(int doctorID) throws SQLException {
 		DoctorInfo doctorInfo = getInforByDoctorID(doctorID);
