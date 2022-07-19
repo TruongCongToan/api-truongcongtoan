@@ -30,6 +30,7 @@ public class ClinicService implements IClinicService{
 			ClinicModel.setName(specialty.getName());
 			ClinicModel.setImage(specialty.getImage());
 			ClinicModel.setContentMarkDown(specialty.getContentMarkDown());
+			ClinicModel.setThemanhchuyenkhoa(specialty.getThemanhchuyenkhoa());
 			ClinicModel.setCreated_at(specialty.getCreated_at());
 			ClinicModel.setUpdated_at(specialty.getUpdated_at());
 			
@@ -80,6 +81,7 @@ public class ClinicService implements IClinicService{
 			Clinic.setName(ClinicModel.getName());
 			Clinic.setImage(ClinicModel.getImage());
 			Clinic.setContentMarkDown(ClinicModel.getContentMarkDown());
+			Clinic.setThemanhchuyenkhoa(ClinicModel.getThemanhchuyenkhoa());
 			Clinic.setCreated_at(new Date());
 						
 			return ClinicDAO.save(Clinic);
@@ -98,10 +100,16 @@ public class ClinicService implements IClinicService{
 			if (!Clinic.getName().equals(ClinicModel.getName())) {
  				Clinic.setName(ClinicModel.getName());
  			}
-			Clinic.setImage(ClinicModel.getImage());
+			
+			if (!Clinic.getImage().equals(ClinicModel.getImage())) {
+				Clinic.setImage(ClinicModel.getImage());
+ 			}
 			
 			if (!Clinic.getContentMarkDown().equals(ClinicModel.getContentMarkDown())) {
  				Clinic.setName(ClinicModel.getName());
+ 			}
+			if (!Clinic.getThemanhchuyenkhoa().equals(ClinicModel.getThemanhchuyenkhoa())) {
+ 				Clinic.setThemanhchuyenkhoa(ClinicModel.getThemanhchuyenkhoa());
  			}
 			Clinic.setUpdated_at(new Date());
 			

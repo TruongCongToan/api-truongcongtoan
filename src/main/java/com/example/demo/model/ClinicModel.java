@@ -14,6 +14,7 @@ public class ClinicModel {
 		private String name;
 		private String image ;
 		private String contentMarkDown;
+		private String themanhchuyenkhoa;
 		private Date created_at;
 		private Date updated_at;
 

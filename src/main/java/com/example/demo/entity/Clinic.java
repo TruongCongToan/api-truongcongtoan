@@ -43,6 +43,10 @@ public class Clinic implements Serializable {
 	  @Column(name = "contentMarkDown")
 	private String contentMarkDown;
 	
+	@Lob
+	 @Column(name = "themanhchuyenkhoa")
+	private String themanhchuyenkhoa;
+	
 	 @JsonFormat(pattern = "yyyy-MM-dd",shape = Shape.STRING)
 	  @Column(name = "created_at")
 	private Date created_at;
