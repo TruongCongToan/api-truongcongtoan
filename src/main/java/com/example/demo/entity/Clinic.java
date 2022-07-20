@@ -74,5 +74,5 @@ public class Clinic implements Serializable {
 				)
 	  @JsonManagedReference
 	  private Set<Specialties> likedSpecialties;
-	
+	  
 }

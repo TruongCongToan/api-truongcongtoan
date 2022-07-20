@@ -77,20 +77,17 @@ public class DoctorInfo implements Serializable {
 		@JoinColumn(name = "payment", referencedColumnName = "key", insertable = false, updatable = false)
 		private AllCode allCodePayment = null;
 
+	  @OneToOne(cascade = CascadeType.ALL)
+		@JoinColumn(name = "doctorid")
+		private Users user;
+	  
 	  @ManyToOne(cascade = CascadeType.ALL)
 		@JoinColumn(name = "specialty_id")
 		private Specialties specialties;
-	  
-	  @OneToOne(cascade = CascadeType.ALL)
-			@JoinColumn(name = "doctorid")
-			private Users user;
 	  
 	  @ManyToOne(cascade = CascadeType.ALL)
 	  @JoinColumn(name = "clinic_id")
 	  private Clinic clinic;
 	  
-//	  @OneToOne(cascade = CascadeType.ALL)
-//			@JoinColumn(name = "markdownid")
-//			private MarkDown markDown;
 		  
 }
