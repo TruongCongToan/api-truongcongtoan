@@ -1,7 +1,7 @@
 package com.example.demo.service.impl;
 
 import java.sql.SQLException;
-
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -119,6 +119,18 @@ public class ClinicService implements IClinicService{
 			throw new NotFoundException("Khong tim thay nguoi dung nay");
 		}
 		
+	}
+
+	@Override
+	public List<Clinic> getAllClinicWithSpecialties() throws SQLException {
+		List<Clinic> listClinics = getAllClinic();
+		List<Clinic> listClinicsSpecialties = new ArrayList<>();
+		for(Clinic each :listClinics ) {
+			if (each.getLikedSpecialties().isEmpty() != true) {
+				listClinicsSpecialties.add(each);
+			}
+		}
+		return listClinicsSpecialties;
 	}
 
 }

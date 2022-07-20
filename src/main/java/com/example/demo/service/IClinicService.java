@@ -13,6 +13,8 @@ public interface IClinicService {
 	
 	public List<Clinic> getAllClinic() throws SQLException;
 	
+	public List<Clinic> getAllClinicWithSpecialties() throws SQLException;
+	
 	public Clinic getClinicbyID(int intID) throws SQLException;
 	
 	public void deleteClinic(int id) throws SQLException;
