@@ -2,16 +2,22 @@ package com.example.demo.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 import lombok.AllArgsConstructor;
@@ -59,5 +65,14 @@ public class Clinic implements Serializable {
 	  @JsonFormat(pattern = "yyyy-MM-dd",shape = Shape.STRING)
 	  @Column(name = "updated_at")
 	private Date updated_at;
+	 
+	  
+	  @ManyToMany(cascade = CascadeType.ALL)
+		@JoinTable(name = "specialties_clinic",
+		joinColumns = @JoinColumn(name = "clinic_id"),
+		inverseJoinColumns = @JoinColumn(name = "specialty_id")
+				)
+	  @JsonManagedReference
+	  private Set<Specialties> likedSpecialties;
 	
 }

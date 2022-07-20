@@ -11,13 +11,13 @@ import com.example.demo.model.ClinicModel;
 @Service
 public interface IClinicService {
 	
-	public List<ClinicModel> getAllClinic() throws SQLException;
+	public List<Clinic> getAllClinic() throws SQLException;
 	
 	public Clinic getClinicbyID(int intID) throws SQLException;
 	
 	public void deleteClinic(int id) throws SQLException;
 	
-	public Clinic addClinic(ClinicModel ClinicModel) throws SQLException;
+	public Clinic addClinic(ClinicModel ClinicModel,String[] listSpecialtyID) throws SQLException;
 	
 	public void editClinic(ClinicModel ClinicModel, int id) throws SQLException;
 

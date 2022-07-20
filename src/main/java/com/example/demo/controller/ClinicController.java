@@ -32,7 +32,7 @@ public class ClinicController {
 	@GetMapping("/api/Clinic")
 	public ResponseEntity<Object> getAllClinic() {
 		HttpStatus httpStatus = null;
-		List<ClinicModel> ClinicModels = new ArrayList<ClinicModel>();
+		List<Clinic> ClinicModels = new ArrayList<Clinic>();
 		try {
 			
 			httpStatus = HttpStatus.OK;
@@ -57,13 +57,14 @@ public class ClinicController {
 		return new ResponseEntity<Object>(Clinic, httpStatus);
 	}
 	
-	@PostMapping("/api/Clinic")
-	public ResponseEntity<Object> addSpeciatlties(@Valid @RequestBody ClinicModel ClinicModel){
+	@PostMapping("/api/Clinic/{listSpecialtiesID}")
+	public ResponseEntity<Object> addSpeciatlties(@Valid @RequestBody ClinicModel ClinicModel,
+			@PathVariable("listSpecialtiesID") String[] listSpecialtiesID){
 		HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 		ClinicModel ClinicModelR = new ClinicModel();
 		
 		try {
-			Clinic Clinic = service.addClinic(ClinicModel);
+			Clinic Clinic = service.addClinic(ClinicModel,listSpecialtiesID);
 			if (Clinic != null) {
 				httpStatus = HttpStatus.CREATED;
 				
@@ -94,12 +95,13 @@ public class ClinicController {
 		}
 		return new ResponseEntity<Object>(httpStatus);
 	}
-	@DeleteMapping("api/Clinic/{id}")
+	@DeleteMapping("api/Clinic/{idList}")
 
-	public ResponseEntity<Object> delClinic(@PathVariable("id") int id) {
+	public ResponseEntity<Object> delClinic(@PathVariable("idList") int idList) {
 		HttpStatus httpStatus = HttpStatus.FORBIDDEN;
 		try {
-			service.deleteClinic(id);
+			  
+			service.deleteClinic(idList);
 			httpStatus = HttpStatus.ACCEPTED;
 		} catch (Exception e) {
 			

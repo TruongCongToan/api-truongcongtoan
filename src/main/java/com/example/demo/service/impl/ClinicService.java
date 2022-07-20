@@ -1,15 +1,19 @@
 package com.example.demo.service.impl;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
+
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.DAO.IClinicDAO;
+import com.example.demo.DAO.ISpecialtiesDAO;
 import com.example.demo.entity.Clinic;
+import com.example.demo.entity.Specialties;
 import com.example.demo.exception.DuplicateRecordException;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.ClinicModel;
@@ -20,31 +24,14 @@ public class ClinicService implements IClinicService{
 
 	@Autowired
 	IClinicDAO ClinicDAO;
-	
-	private List<ClinicModel> getListClinicModel(List<Clinic> Clinic) {
-		List<ClinicModel> ClinicModels = new ArrayList<>();
-		for (Clinic specialty : Clinic) {
-			ClinicModel ClinicModel = new ClinicModel();
-			
-			ClinicModel.setId(specialty.getId());
-			ClinicModel.setName(specialty.getName());
-			ClinicModel.setImage(specialty.getImage());
-			ClinicModel.setContentMarkDown(specialty.getContentMarkDown());
-			ClinicModel.setThemanhchuyenkhoa(specialty.getThemanhchuyenkhoa());
-			ClinicModel.setAddress(specialty.getAddress());
-			ClinicModel.setCreated_at(specialty.getCreated_at());
-			ClinicModel.setUpdated_at(specialty.getUpdated_at());
-			
-			ClinicModels.add(ClinicModel);
-		}
-		return ClinicModels;
-	}
-	
+	@Autowired
+	ISpecialtiesDAO specialtiesDAO;
+
 	@Override
-	public List<ClinicModel> getAllClinic() throws SQLException {
+	public List<Clinic> getAllClinic() throws SQLException {
 		List<Clinic> Clinic = ClinicDAO.getAllClinic();
-		List<ClinicModel> ClinicModels = getListClinicModel(Clinic);
-		return ClinicModels;
+//		List<ClinicModel> ClinicModels = getListClinicModel(Clinic);
+		return Clinic;
 	}
 
 	@Override
@@ -72,7 +59,9 @@ public class ClinicService implements IClinicService{
 	}
 
 	@Override
-	public Clinic addClinic(ClinicModel ClinicModel) throws SQLException {
+	public Clinic addClinic(ClinicModel ClinicModel,String[] listSpecialtyID) throws SQLException {
+
+//		List<Integer> specialtyList = Arrays.asList(listSpecialtyID.split(","));
 
 		if (ClinicDAO.getClinicName(ClinicModel.getName()) == null
 	
@@ -87,6 +76,12 @@ public class ClinicService implements IClinicService{
 			Clinic.setAddress(ClinicModel.getAddress());
 			Clinic.setCreated_at(new Date());
 						
+			Set<Specialties> specialtiesList = new HashSet<>();
+			for(String specialty_id : listSpecialtyID) {
+				Specialties specialties = specialtiesDAO.getSpecialtiesByID(Integer.parseInt(specialty_id));
+				specialtiesList.add(specialties);
+			}
+			Clinic.setLikedSpecialties(specialtiesList);
 			return ClinicDAO.save(Clinic);
 		}
 		else {

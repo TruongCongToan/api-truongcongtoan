@@ -3,15 +3,13 @@ package com.example.demo.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -54,7 +52,4 @@ public class Specialties implements Serializable {
 	  @Column(name = "updated_at")
 	private Date updated_at;
 	
-	  @ManyToOne(cascade = CascadeType.ALL)
-		@JoinColumn(name = "clinic_id")
-		private Clinic clinic;
 }
