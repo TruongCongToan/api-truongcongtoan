@@ -47,6 +47,11 @@ public class Clinic implements Serializable {
 	 @Column(name = "themanhchuyenkhoa")
 	private String themanhchuyenkhoa;
 	
+
+	@Lob
+	 @Column(name = "address")
+	private String address;
+	
 	 @JsonFormat(pattern = "yyyy-MM-dd",shape = Shape.STRING)
 	  @Column(name = "created_at")
 	private Date created_at;

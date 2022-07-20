@@ -31,6 +31,7 @@ public class ClinicService implements IClinicService{
 			ClinicModel.setImage(specialty.getImage());
 			ClinicModel.setContentMarkDown(specialty.getContentMarkDown());
 			ClinicModel.setThemanhchuyenkhoa(specialty.getThemanhchuyenkhoa());
+			ClinicModel.setAddress(specialty.getAddress());
 			ClinicModel.setCreated_at(specialty.getCreated_at());
 			ClinicModel.setUpdated_at(specialty.getUpdated_at());
 			
@@ -72,9 +73,10 @@ public class ClinicService implements IClinicService{
 
 	@Override
 	public Clinic addClinic(ClinicModel ClinicModel) throws SQLException {
-		System.out.println(ClinicDAO.getClinicName(ClinicModel.getName()));
 
-		if (ClinicDAO.getClinicName(ClinicModel.getName()) == null) {
+		if (ClinicDAO.getClinicName(ClinicModel.getName()) == null
+	
+				) {
 			
 			Clinic Clinic = new Clinic();
 			
@@ -82,6 +84,7 @@ public class ClinicService implements IClinicService{
 			Clinic.setImage(ClinicModel.getImage());
 			Clinic.setContentMarkDown(ClinicModel.getContentMarkDown());
 			Clinic.setThemanhchuyenkhoa(ClinicModel.getThemanhchuyenkhoa());
+			Clinic.setAddress(ClinicModel.getAddress());
 			Clinic.setCreated_at(new Date());
 						
 			return ClinicDAO.save(Clinic);
@@ -110,6 +113,9 @@ public class ClinicService implements IClinicService{
  			}
 			if (!Clinic.getThemanhchuyenkhoa().equals(ClinicModel.getThemanhchuyenkhoa())) {
  				Clinic.setThemanhchuyenkhoa(ClinicModel.getThemanhchuyenkhoa());
+ 			}
+			if (!Clinic.getAddress().equals(ClinicModel.getAddress())) {
+ 				Clinic.setAddress(ClinicModel.getAddress());
  			}
 			Clinic.setUpdated_at(new Date());
 			
