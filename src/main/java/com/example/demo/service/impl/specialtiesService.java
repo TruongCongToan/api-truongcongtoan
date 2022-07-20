@@ -112,4 +112,18 @@ public class specialtiesService implements ISpecialties{
 		
 	}
 
+	@Override
+	public List<Specialties> getClinicSpecialties(int clinic_id) throws SQLException {
+		if (clinic_id == 0){
+			throw new NotFoundException("Gia tri nhap vao khong hop le");
+		}else {
+			List<Specialties> clinicSpecialties = specialtiesDAO.getSpecialtiesByCLinicID(clinic_id);
+			if (clinicSpecialties != null) {
+				return clinicSpecialties;
+			}else {
+				   throw new NotFoundException("Khong tim thay nguoi dung nay");
+			}
+		}
+	}
+
 }

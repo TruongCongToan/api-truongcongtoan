@@ -217,6 +217,24 @@ public class DoctorInfoService implements IDoctorInfoService{
 			}
 		}
 	}
+	@Override
+	public List<MarkDown> getInforByClinicID(int clinicID, int specialID) throws SQLException {
+		if (specialID == 0 || specialID == 0) {
+			throw new NotFoundException("Khong tim thay nguoi dung nay");
+		}else {
+			List<MarkDown> markDowns = new ArrayList<MarkDown>();
+			List<DoctorInfo>  doctorInfo = doctorInforDAO.findByClinicIDSpecialID(clinicID,specialID);
+			if (doctorInfo.isEmpty()) {
+				throw new NotFoundException("Khong tim thay nguoi dung nay");
+			}else {
+				for(DoctorInfo  each : doctorInfo) {
+					MarkDown markDown = markDownDAO.findByDoctorInfoID(each.getId());	
+					markDowns.add(markDown);
+					}
+				return markDowns;
+			}
+		}
+	}
 	
 
 }

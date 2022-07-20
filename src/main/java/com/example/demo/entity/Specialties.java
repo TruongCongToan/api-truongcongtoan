@@ -55,6 +55,6 @@ public class Specialties implements Serializable {
 	private Date updated_at;
 	
 	  @ManyToOne(cascade = CascadeType.ALL)
-		@JoinColumn(name = "specialty_id")
-		private Specialties specialties;
+		@JoinColumn(name = "clinic_id")
+		private Clinic clinic;
 }

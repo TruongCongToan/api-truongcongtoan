@@ -15,6 +15,8 @@ public interface ISpecialties {
 	
 	public Specialties getSpecialtiesbyID(int intID) throws SQLException;
 	
+	public List<Specialties> getClinicSpecialties(int clinic_id) throws SQLException;
+
 	public void deleteSpecialties(int id) throws SQLException;
 	
 	public Specialties addSpecialties(SpecialtiesModel specialtiesModel) throws SQLException;

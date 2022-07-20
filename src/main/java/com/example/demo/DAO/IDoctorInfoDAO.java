@@ -27,6 +27,10 @@ public interface IDoctorInfoDAO extends JpaRepository<DoctorInfo, Integer> {
 	@Query(value = "select * from doctorinfo where specialty_id = :inid", nativeQuery = true)
 	public  List<DoctorInfo>  findBySpecialID(@Param("inid") int inid);
 	
+	@Query(value = "select * from doctorinfo where  clinic_id = :incid and specialty_id = :insid", nativeQuery = true)
+	public  List<DoctorInfo>  findByClinicIDSpecialID(@Param("incid") int incid,@Param("insid") int insid);
+	
+	
 	@Query(value = "select * from doctorinfo where clinic_id = :inid", nativeQuery = true)
 	public  List<DoctorInfo>  findByClinicID(@Param("inid") int inid);
 	

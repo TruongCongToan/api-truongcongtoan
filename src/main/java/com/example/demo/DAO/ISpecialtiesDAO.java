@@ -21,6 +21,9 @@ public interface ISpecialtiesDAO extends JpaRepository<Specialties, Integer> {
 	@Query(value = "select * from `specialties` where id = :inid", nativeQuery = true)
 	public Specialties getSpecialtiesByID(@Param("inid") int inid);
 	
+	@Query(value = "select * from `specialties` where clinic_id = :inid", nativeQuery = true)
+	public List<Specialties> getSpecialtiesByCLinicID(@Param("inid") int inid);
+	
 	@Query(value = "select * from `specialties` where name = :inname", nativeQuery = true)
 	public Specialties getSpecialtiesName(@Param("inname") String inname);
 	

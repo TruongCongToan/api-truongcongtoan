@@ -58,6 +58,19 @@ public class SpecialtiesController {
 		return new ResponseEntity<Object>(specialties, httpStatus);
 	}
 	
+	@GetMapping("/api/specialties/clinics/{id}")
+	public ResponseEntity<Object> getSpecialtiesByClinicID(@PathVariable("id") int id) {
+		HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+		List<Specialties> specialties = new ArrayList<Specialties>();
+		try {
+			specialties = service.getClinicSpecialties(id);
+			httpStatus = HttpStatus.OK;
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
+		return new ResponseEntity<Object>(specialties, httpStatus);
+	}
+	
 	@PostMapping("/api/specialties")
 	public ResponseEntity<Object> addSpeciatlties(@Valid @RequestBody SpecialtiesModel specialtiesModel){
 		HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
