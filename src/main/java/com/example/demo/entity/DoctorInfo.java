@@ -45,9 +45,6 @@ public class DoctorInfo implements Serializable {
 	 @Column(name = "addressclinicid")
 	 private String addressclinicid;
 	 
-	 @Column(name = "nameclinic")
-	 private String nameclinic;
-	 
 	 @Column(name = "note")
 	 private String note;
 	 

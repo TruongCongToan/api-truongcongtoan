@@ -67,7 +67,6 @@ public class DoctorInfoService implements IDoctorInfoService{
 			doctorInfo.setProvinceid(doctorInfoModel.getProvinceid());
 			doctorInfo.setPriceid(doctorInfoModel.getPriceid());
 			doctorInfo.setAddressclinicid(doctorInfoModel.getAddressclinicid());
-			doctorInfo.setNameclinic(doctorInfoModel.getNameclinic());
 			doctorInfo.setNote(doctorInfoModel.getNote());
 			doctorInfo.setCount(doctorInfoModel.getCount());
 			doctorInfo.setPayment(doctorInfoModel.getPayment());
@@ -110,13 +109,7 @@ public class DoctorInfoService implements IDoctorInfoService{
 					doctorInfo.setAddressclinicid(doctorInfoModel.getAddressclinicid());
 	 			}
 			}
-			if (doctorInfo.getNameclinic() == null) {
-				doctorInfo.setNameclinic(doctorInfoModel.getNameclinic());
-			}else {
-				if (!doctorInfo.getNameclinic().equals(doctorInfoModel.getNameclinic())) {
-					doctorInfo.setNameclinic(doctorInfoModel.getNameclinic());
-	 			}
-			}
+		
 			if (doctorInfo.getNote() == null) {
 				doctorInfo.setNote(doctorInfoModel.getNote());
 			}else {

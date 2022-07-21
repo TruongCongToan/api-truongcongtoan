@@ -15,7 +15,6 @@ public class DoctorInfoModel {
 	 private String priceid;
 	 private String addressclinicid;
 	 private String provinceid;
-	 private String nameclinic;
 	 private String note;
 	 private int count;
 	 private String payment;
