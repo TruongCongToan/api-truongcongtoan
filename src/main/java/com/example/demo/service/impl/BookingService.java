@@ -46,10 +46,10 @@ public class BookingService implements IBookingService {
 	
 	//get list booking
 	@Override
-	public List<BookingModel> getListBooking() throws SQLException {
+	public List<Booking> getListBooking() throws SQLException {
 		List<Booking> bookingList = bookingDAO.getAllBooking();
-	List<BookingModel> bookingModels = getListBookingModels(bookingList);
-		return bookingModels;
+//	List<BookingModel> bookingModels = getListBookingModels(bookingList);
+		return bookingList;
 	}
 
 
@@ -91,7 +91,9 @@ public class BookingService implements IBookingService {
 			if(booking.getDoctorid() != bookingModel.getDoctorid()) {
 			booking.setDoctorid(bookingModel.getDoctorid());
 		}
-			booking.setStatusId(bookingModel.getStatusId());
+			if (booking.getStatusId() != bookingModel.getStatusId()) {
+				booking.setStatusId(bookingModel.getStatusId());
+			}
 			if(!booking.getTimetype().equals(bookingModel.getTimetype())) {
 				booking.setTimetype(bookingModel.getTimetype());
 			}
@@ -111,21 +113,21 @@ public class BookingService implements IBookingService {
 
 	@Override
 	public void deleteBooking(int inID) throws SQLException {
-		if (getBookingByID(inID) != null) {
-			bookingDAO.deleteBooking(inID);
-		}
-		else {
-			throw new NotFoundException("Khong tim thay nguoi dung nay");
-		}
+//		if (getBookingByID(inID) != null) {
+//			bookingDAO.deleteBooking(inID);
+//		}
+//		else {
+//			throw new NotFoundException("Khong tim thay nguoi dung nay");
+//		}
 		
 	}
 
 
 	@Override
-	public Booking getBookingByID(int intID) throws SQLException {
+	public List<Booking> getBookingByDoctorID(int intID,String date) throws SQLException {
 		if (intID != 0) {
-			Booking booking = bookingDAO.getBookingByID(intID);
-			if (booking != null) {
+			List<Booking> booking = bookingDAO.getBookingByDoctorID(intID,date);
+			if (booking.isEmpty() == false) {
 				return booking;
 			}else {
 				   throw new NotFoundException("Khong tim thay nguoi dung nay");

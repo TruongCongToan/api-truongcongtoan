@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.DAO.IBookingDAO;
 import com.example.demo.entity.Booking;
 import com.example.demo.exception.DuplicateRecordException;
 import com.example.demo.exception.InternalServerException;
@@ -29,14 +30,15 @@ import com.example.demo.service.impl.BookingService;
 public class BookingController {
 	@Autowired
 	BookingService bookingService;
-	
+	@Autowired
+	IBookingDAO bookingDAO;
 
 	//get all booking
 	@GetMapping("/api/bookings")
 	@CrossOrigin(origins = "http://localhost:3000")
 	public ResponseEntity<Object> getAllUsers() {
 		HttpStatus httpStatus = null;
-		List<BookingModel> bookingList = new ArrayList<BookingModel> ();
+		List<Booking> bookingList = new ArrayList<> ();
 		
 		try {
 			bookingList = bookingService.getListBooking();
@@ -48,7 +50,7 @@ public class BookingController {
 		return new ResponseEntity<Object>(bookingList, httpStatus);
 	}
 
-	//add new booking
+		//add new booking
 
 	@PostMapping("/api/bookings")
 	@CrossOrigin(origins = "http://localhost:3000")
@@ -110,21 +112,50 @@ public class BookingController {
 			}
 			return new ResponseEntity<Object>(booking,httpStatus);
 	}
-	
-	///tim user theo username
-			@GetMapping("/api/bookings/id={patient_id}")
+	@GetMapping("/api/bookings/admin/{indate}")
+	@CrossOrigin(origins = "http://localhost:3000")
+	public ResponseEntity<Object> getBookingByAmind(@Valid @PathVariable("indate") String indate) {
+		HttpStatus httpStatus = null;
+		List<Booking> bookingList = new ArrayList<> ();
+		bookingList = bookingDAO.getBookingByAdmin(indate);
+		try {
+			bookingList = bookingDAO.getBookingByAdmin(indate);
+			httpStatus = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			 throw new InternalServerException("Không được bỏ trống các trường !");
+	}
+		return new ResponseEntity<Object>(bookingList, httpStatus);
+	}
+
+			@GetMapping("/api/bookings/patient/{patient_id}/{date}")
 			@CrossOrigin(origins = "http://localhost:3000")
-			public ResponseEntity<Object> getBookingByID(@PathVariable("patient_id") int patient_id) {
+			public ResponseEntity<Object> getBookingByPatientID(@PathVariable("patient_id") int patient_id,@PathVariable("date") String date) {
 				HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-				Booking booking = new Booking();
+				List<Booking> booking = new ArrayList<>();
+				booking = bookingDAO.getBookingByPatientID(patient_id,date);
 				try {
-					booking = bookingService.getBookingByID(patient_id);
 					httpStatus = HttpStatus.OK;
 				} catch (Exception e) {
 					 throw new NotFoundException("Không tìm thấy thông tin trong danh sách !");
 				}
 				return new ResponseEntity<Object>(booking, httpStatus);
 			}
+			
+			@GetMapping("/api/bookings/doctor/{patient_id}/{date}")
+			@CrossOrigin(origins = "http://localhost:3000")
+			public ResponseEntity<Object> getBookingByDoctorID(@PathVariable("patient_id") int patient_id,@PathVariable("date") String date) {
+				HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+				List<Booking> booking = new ArrayList<>();
+				booking = bookingDAO.getBookingByDoctorID(patient_id, date);
+				try {
+					httpStatus = HttpStatus.OK;
+				} catch (Exception e) {
+					 throw new NotFoundException("Không tìm thấy thông tin trong danh sách !");
+				}
+				return new ResponseEntity<Object>(booking, httpStatus);
+			}
+
 	
 
 }

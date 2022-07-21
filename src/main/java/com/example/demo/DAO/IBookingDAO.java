@@ -20,8 +20,14 @@ public interface IBookingDAO extends JpaRepository<Booking, Integer> {
 		public List<Booking> getAllBooking();
 		
 		// get thong tin sv by patienid
-		@Query(value = "select * from  `booking` where doctorid = :inid", nativeQuery = true)
-		public Booking getBookingByID(@Param("inid") int inid);
+		@Query(value = "select * from  `booking` where doctorid = :inid and date = :indate", nativeQuery = true)
+		public List<Booking> getBookingByDoctorID(@Param("inid") int inid,@Param("indate") String indate);
+		
+		@Query(value = "select * from  `booking` where date = :indate", nativeQuery = true)
+		public List<Booking> getBookingByAdmin(@Param("indate") String indate);
+		
+		@Query(value = "select * from  `booking` where patientid = :inid and date = :indate", nativeQuery = true)
+		public List<Booking> getBookingByPatientID(@Param("inid") int inid,@Param("indate") String indate);
 		
 		@Query(value = "select * from  `booking` where doctorid = :inid and patientid =:inpatientid and date = :indate and timetype = :intime" , nativeQuery = true)
 		public Booking getBookingByDoctorIdandPatienId(@Param("inid") int inid,@Param("inpatientid") int inpatientid,@Param("indate") String indate,@Param("intime") String intime);

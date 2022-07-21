@@ -10,7 +10,7 @@ import com.example.demo.model.BookingModel;
 @Service
 public interface IBookingService {
 	//get list booking
-	public  List<BookingModel> getListBooking() throws SQLException; 
+	public  List<Booking> getListBooking() throws SQLException; 
 	
 	//add new booking
 	public Booking addBooking(BookingModel bookingModel) throws SQLException;
@@ -21,7 +21,7 @@ public interface IBookingService {
 	public void deleteBooking(int inID) throws SQLException;
 	
 	//get patientID
-	public Booking getBookingByID(int intID) throws SQLException;
+	public List<Booking> getBookingByDoctorID(int intID,String date) throws SQLException;
 	
 	public Booking VerifyBooking(String token,int patientid) throws SQLException;
 

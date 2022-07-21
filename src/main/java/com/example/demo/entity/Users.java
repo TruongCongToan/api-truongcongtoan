@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -82,6 +84,9 @@ public class Users implements Serializable {
 		@JoinColumn(name = "role", referencedColumnName = "key", insertable = false, updatable = false)
 		private AllCode allCodeRole = null;
 	  
+//	  @OneToMany(mappedBy="users") 
+//	  private Set<Booking> bookings;
+//	  
 //	  @OneToOne(cascade = CascadeType.ALL)
 //			@JoinColumn(name = "doctorid")
 //			private MarkDown markDown;
