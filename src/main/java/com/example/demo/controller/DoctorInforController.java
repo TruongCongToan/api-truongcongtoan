@@ -90,6 +90,24 @@ public class DoctorInforController {
 	}
 	
 	@CrossOrigin(origins = "http://localhost:3000")
+	@GetMapping("/api/doctorinfo/clinics/{clinicid}/{specialID}/{provinceid}")
+	public ResponseEntity<Object> findByClinicSpecialByLocation(@Valid @PathVariable("clinicid") int clinicid
+			,@PathVariable("specialID") int specialID
+			,@PathVariable("provinceid") String provinceid) {
+			HttpStatus httpStatus = null;
+			List<MarkDown>  doctorInfo= new ArrayList<MarkDown>();
+			try {
+				doctorInfo = doctorInforService.findByClinicSpecialByLocation(clinicid,specialID,provinceid);
+				httpStatus = HttpStatus.OK;
+
+			} catch (Exception e) {	
+				 throw new NotFoundException("Không tìm thấy thông tin trong danh sách !");
+			}
+			return new ResponseEntity<Object>(doctorInfo, httpStatus);
+	}
+	
+	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping("/api/doctorinfo/clinic/{clinicID}")
 	public ResponseEntity<Object> getdoctorInfoByClinicID(@Valid @PathVariable("clinicID") int clinicID) {
 			HttpStatus httpStatus = null;

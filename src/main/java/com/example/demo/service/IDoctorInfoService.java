@@ -24,6 +24,9 @@ public interface IDoctorInfoService {
 		
 		public List<MarkDown>  getInforBySpecialID(int specialID, String location) throws SQLException;
 		
+		
+		public List<MarkDown>  findByClinicSpecialByLocation(int clinicID, int specialID,String location) throws SQLException;
+
 		public List<MarkDown>  getInforByClinicID(int clinicID, int specialID) throws SQLException;
 		public void deleteDoctorInfo (int doctorID) throws SQLException;
 	}
