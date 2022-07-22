@@ -83,7 +83,10 @@ public class EmailService implements IEmailService {
 			emailData.setPatientid(emailDataModel.getPatientid());
 			emailData.setDate(emailDataModel.getDate());
 			emailData.setCreated_at(new Date());
-			return emailDAO.save(emailData);
+			emailData.setTimetype(emailDataModel.getTimetype());
+			emailData.setBooking(bookingDAO.getBookingByID(emailDataModel.getBooking_id()));
+			
+		 return	emailDAO.save(emailData);
 
 		}else {
 			throw new DuplicateRecordException("Da co user nay trong danh sach");
@@ -130,10 +133,15 @@ public class EmailService implements IEmailService {
 			if (emailData.getPatientid() != emailDataModel.getPatientid()) {
 				emailData.setPatientid(emailDataModel.getPatientid());
  			}
+			if (emailData.getPatientid() != emailDataModel.getPatientid()) {
+				emailData.setTimetype(emailDataModel.getTimetype());
+ 			}
+			if (emailData.getBooking().equals(bookingDAO.getBookingByID(emailDataModel.getBooking_id())) == false) {
+				emailData.setBooking(bookingDAO.getBookingByID(emailDataModel.getBooking_id()));
+ 			}
 			emailData.setUpdated_at(new Date());
 			
 			return emailDAO.saveAndFlush(emailData);
-//			emailData.setBooking(bookingDAO.getBookingByPatientDoctorID(emailDataModel.getPatientid(),emailDataModel.getDate(),emailDataModel.getDoctorid()));
 		}else {
 			throw new NotFoundException("Khong tim thay nguoi dung nay");
 		}

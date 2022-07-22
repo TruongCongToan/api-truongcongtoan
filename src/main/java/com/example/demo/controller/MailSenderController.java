@@ -91,7 +91,7 @@ public class MailSenderController {
 				String phone_number = String.format("Số điện thoại : %s",emailDataModel.getPhone_number());
 				String reason = String.format("Lý do khám : %s ", emailDataModel.getReason());
 				String ngaykham = String.format("Ngày khám : %s", emailDataModel.getNgaykham());
-				String price = String.format("Giá khám : %s VNĐ", emailDataModel.getPrice());
+				String price = String.format("Giá khám : %s", emailDataModel.getPrice());
 				String doctor_name = String.format("Bác sĩ khám : Bác sĩ chuyên khoa %s",emailDataModel.getDoctor_name());
 				String direct_url = String.format("http://api-truongcongtoan.herokuapp.com/api/verify-booking/%s/%d",corrId,emailDataModel.getDoctorid());
 				// List of team members...
@@ -109,10 +109,12 @@ public class MailSenderController {
 	public ResponseEntity<Object> getAllEMailData(@Valid @PathVariable("patientid") int patientid) {
 		HttpStatus httpStatus = null;
 		List<EmailData> emailDatas = new ArrayList<EmailData>();
+		emailDatas = emailDAO.getByPatientID(patientid);
+		
 		try {
 			
 			httpStatus = HttpStatus.OK;
-			emailDatas = emailDAO.getByPatientID(patientid);
+//			emailDatas = emailDAO.getByPatientID(patientid);
 			
 		} catch (Exception e) {
 			 throw new InternalServerException("Không được bỏ trống các trường !");

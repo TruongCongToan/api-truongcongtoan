@@ -26,6 +26,7 @@ public class EmailDataModel {
 	private String doctor_name;
 	private String direct_url;
 	private String date;
+	private int booking_id;
 	private String timetype;
 	private Date created_at;
 	private Date updated_at;
