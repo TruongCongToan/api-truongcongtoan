@@ -66,7 +66,7 @@ public class EmailService implements IEmailService {
 
 	@Override
 	public EmailData addEmailData(EmailDataModel emailDataModel) throws SQLException {
-		if (emailDAO.getByDoctorID(emailDataModel.getPatientid(),emailDataModel.getDate(),emailDataModel.getDoctorid()) == null) {
+		if (emailDAO.getByDoctorID(emailDataModel.getPatientid(),emailDataModel.getDate(),emailDataModel.getDoctorid(),emailDataModel.getTimetype()) == null) {
 			EmailData emailData = new EmailData();
 			
 			emailData.setFull_name(emailDataModel.getFull_name());
@@ -95,8 +95,8 @@ public class EmailService implements IEmailService {
 
 	@Override
 	public EmailData editClinic(EmailDataModel emailDataModel, int patientid,String date,int doctorid) throws SQLException {
-		if (emailDAO.getByDoctorID(patientid,date,doctorid) != null) {
-			EmailData emailData = emailDAO.getByDoctorID(patientid,date,doctorid);
+		if (emailDAO.getByDoctorID(patientid,date,doctorid,emailDataModel.getTimetype()) != null) {
+			EmailData emailData = emailDAO.getByDoctorID(patientid,date,doctorid,emailDataModel.getTimetype());
 			
 			if (!emailData.getFull_name().equals(emailDataModel.getFull_name())) {
 				emailData.setFull_name(emailDataModel.getFull_name());
