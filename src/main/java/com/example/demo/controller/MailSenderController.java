@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -11,13 +12,22 @@ import javax.persistence.Transient;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.DAO.IBookingDAO;
+import com.example.demo.DAO.IEmailDAO;
 import com.example.demo.entity.Booking;
+import com.example.demo.entity.EmailData;
+import com.example.demo.exception.DuplicateRecordException;
+import com.example.demo.exception.InternalServerException;
 import com.example.demo.model.BookingModel;
 import com.example.demo.model.EmailDTO;
 import com.example.demo.model.EmailDataModel;
@@ -35,6 +45,8 @@ public class MailSenderController {
 	private BookingService bookingService;
 	@Autowired
 	private IBookingDAO bookingDAO;
+	@Autowired
+	private IEmailDAO emailDAO;
 	
 	@Transient
 	private UUID corrId = UUID.randomUUID();
@@ -92,4 +104,50 @@ public class MailSenderController {
 				emailService.sendWelcomeEmail(email);
 				
 	}
+	
+	@GetMapping("/api/mail/{patientid}")
+	public ResponseEntity<Object> getAllEMailData(@Valid @PathVariable("patientid") int patientid) {
+		HttpStatus httpStatus = null;
+		List<EmailData> emailDatas = new ArrayList<EmailData>();
+		try {
+			
+			httpStatus = HttpStatus.OK;
+			emailDatas = emailDAO.getByPatientID(patientid);
+			
+		} catch (Exception e) {
+			 throw new InternalServerException("Không được bỏ trống các trường !");
+		}
+		return new ResponseEntity<Object>(emailDatas, httpStatus);
+	}
+	
+	@PostMapping("/api/emaildata/}")
+	public ResponseEntity<Object> addSpeciatlties(@Valid @RequestBody EmailDataModel emailDataModel){
+		HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+		EmailData emailData = new EmailData();
+		
+		try {
+			emailData = emailService.addEmailData(emailDataModel);
+			httpStatus = HttpStatus.CREATED;
+		} catch (Exception e) {
+			 throw new DuplicateRecordException("Da co DotorID nay trong danh sach");		 
+		}
+		return new ResponseEntity<Object>(emailData, httpStatus);
+	}
+	@PutMapping("api/emaildata/{patientid}/{date}/{doctorid}")
+	public ResponseEntity<Object> editClinic(@Valid @RequestBody EmailDataModel emailDataModel,
+		@PathVariable("patientid") int patientid,
+		@PathVariable("date") String date,
+		@PathVariable("doctorid") int doctorid) {
+		HttpStatus httpStatus = null;
+		try {
+			emailService.editClinic(emailDataModel, patientid,date,doctorid);
+			httpStatus = HttpStatus.OK;
+
+		} catch (Exception e) {
+			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+			 throw new InternalServerException("Không được bỏ trống các trường !");
+		}
+		return new ResponseEntity<Object>(httpStatus);
+	}
+	
 }

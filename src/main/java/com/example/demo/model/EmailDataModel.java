@@ -1,6 +1,8 @@
 
 package com.example.demo.model;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,4 +26,6 @@ public class EmailDataModel {
 	private String direct_url;
 	private String date;
 	private String timetype;
+	private Date created_at;
+	private Date updated_at;
 }
