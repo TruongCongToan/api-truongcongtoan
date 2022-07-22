@@ -66,6 +66,7 @@ public class EmailService implements IEmailService {
 
 	@Override
 	public EmailData addEmailData(EmailDataModel emailDataModel) throws SQLException {
+		System.out.println("Gia tri check "+emailDAO.getByDoctorID(emailDataModel.getPatientid(),emailDataModel.getDate(),emailDataModel.getDoctorid(),emailDataModel.getTimetype()));
 		if (emailDAO.getByDoctorID(emailDataModel.getPatientid(),emailDataModel.getDate(),emailDataModel.getDoctorid(),emailDataModel.getTimetype()) == null) {
 			EmailData emailData = new EmailData();
 			
@@ -82,9 +83,6 @@ public class EmailService implements IEmailService {
 			emailData.setPatientid(emailDataModel.getPatientid());
 			emailData.setDate(emailDataModel.getDate());
 			emailData.setCreated_at(new Date());
-			
-			
-//			emailData.setBooking(bookingDAO.getBookingByPatientDoctorID(emailDataModel.getPatientid(),emailDataModel.getDate(),emailDataModel.getDoctorid()));
 			return emailDAO.save(emailData);
 
 		}else {

@@ -45,6 +45,9 @@ public class EmailData implements Serializable  {
 		private String phone_number;
 	 @Column(name = "date")
 		private String date;
+	  
+	  @Column(name = "timetype")
+	  private String timetype;
 	@Lob
 	@Column(name = "reason")
 	private String reason;
