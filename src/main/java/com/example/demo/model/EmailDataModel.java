@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmailDataModel {
+	
 	private int doctorid;
 	private int patientid;
 	private String full_name;

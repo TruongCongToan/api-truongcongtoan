@@ -120,7 +120,7 @@ public class MailSenderController {
 		return new ResponseEntity<Object>(emailDatas, httpStatus);
 	}
 	
-	@PostMapping("/api/emaildata/}")
+	@PostMapping("/api/emaildata/")
 	public ResponseEntity<Object> addSpeciatlties(@Valid @RequestBody EmailDataModel emailDataModel){
 		HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 		EmailData emailData = new EmailData();

@@ -80,18 +80,21 @@ public class EmailService implements IEmailService {
 			emailData.setPrice(emailDataModel.getPrice());
 			emailData.setDoctorid(emailDataModel.getDoctorid());
 			emailData.setPatientid(emailDataModel.getPatientid());
+			emailData.setDate(emailDataModel.getDate());
 			emailData.setCreated_at(new Date());
 			
-			emailData.setBooking(bookingDAO.getBookingByPatientDoctorID(emailDataModel.getPatientid(),emailDataModel.getDate(),emailDataModel.getDoctorid()));
+			
+//			emailData.setBooking(bookingDAO.getBookingByPatientDoctorID(emailDataModel.getPatientid(),emailDataModel.getDate(),emailDataModel.getDoctorid()));
+			return emailDAO.save(emailData);
+
 		}else {
 			throw new DuplicateRecordException("Da co user nay trong danh sach");
 		}
 		
-		return null;
 	}
 
 	@Override
-	public void editClinic(EmailDataModel emailDataModel, int patientid,String date,int doctorid) throws SQLException {
+	public EmailData editClinic(EmailDataModel emailDataModel, int patientid,String date,int doctorid) throws SQLException {
 		if (emailDAO.getByDoctorID(patientid,date,doctorid) != null) {
 			EmailData emailData = emailDAO.getByDoctorID(patientid,date,doctorid);
 			
@@ -130,7 +133,9 @@ public class EmailService implements IEmailService {
 				emailData.setPatientid(emailDataModel.getPatientid());
  			}
 			emailData.setUpdated_at(new Date());
-			emailData.setBooking(bookingDAO.getBookingByPatientDoctorID(emailDataModel.getPatientid(),emailDataModel.getDate(),emailDataModel.getDoctorid()));
+			
+			return emailDAO.saveAndFlush(emailData);
+//			emailData.setBooking(bookingDAO.getBookingByPatientDoctorID(emailDataModel.getPatientid(),emailDataModel.getDate(),emailDataModel.getDoctorid()));
 		}else {
 			throw new NotFoundException("Khong tim thay nguoi dung nay");
 		}
