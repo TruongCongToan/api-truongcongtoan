@@ -59,7 +59,7 @@ public class BookingService implements IBookingService {
 		
 		if(bookingDAO.getBookingByDoctorIdandPatienId(bookingModel.getDoctorid(),bookingModel.getPatientid(),bookingModel.getDate(),bookingModel.getTimetype()) != null) {
 			
-		return editBooking(bookingModel,bookingModel.getPatientid());
+			throw new NotFoundException("Khong tim thay nguoi dung nay");
 		
 		}else {
 			
