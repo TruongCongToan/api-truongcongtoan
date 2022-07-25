@@ -1,10 +1,12 @@
 package com.example.demo.controller;
 
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.validation.Valid;
 
@@ -258,7 +260,15 @@ public class UserController {
 			
 			return new ResponseEntity<Object>(users,httpStatus);
 			}
-		
+		@GetMapping("/api/users/getOTP/{userID}")
+		public String GetOTP(@Valid @PathVariable("userID") int userID) throws SQLException{
+			if (userDAO.getOTP(userID) != null) {
+				return userDAO.getOTP(userID);
+			}else {
+				throw new NotFoundException("Khong tim thay ma OTP cua nguoi dung nay");
+			}
+	}
+
 		
 		@GetMapping("/api/users/forgotpassword/{email}")
 		@CrossOrigin(origins = "http://localhost:3000")
@@ -270,14 +280,15 @@ public class UserController {
 			
 			emailDTO.setTo(email);
 			emailDTO.setSubject("BKHcare xin thông báo reset mật khẩu người dùng");
-				
+			String otp= new DecimalFormat("000000").format(new Random().nextInt(999999));
+
 			 try {
 				if(users != null) {
-					 service.updateResetPasswordToken(token, email);
+					 service.updateResetPasswordToken(token, email,otp);
 					 Map<String, Object> templateData = new HashMap<>();
-					String direct_url = String.format("http://api-truongcongtoan.herokuapp.com/api/verify-user/%s/%s",token,email);
+//					String direct_url = String.format("http://api-truongcongtoan.herokuapp.com/api/verify-user/%s/%s",token,email);
 					 templateData.put("name", users.getFull_name());
-					 templateData.put("direct_url", direct_url);
+					 templateData.put("otp", otp);
 					 
 					 emailDTO.setEmailData(templateData);
 						emailService.sendResetPasswordEmail(emailDTO);

@@ -196,14 +196,16 @@ public UserPrincipal findByUserEmail(String email) {
      return userPrincipal;
 }
 
-public void updateResetPasswordToken(String token, String email) throws NotFoundException {
+public void updateResetPasswordToken(String token, String email,String OTP) throws NotFoundException {
     Users users = userDAO.findByEmail(email);
     if (users != null) {
     	if (users.getResetPasswordToken() == null) {
     		users.setResetPasswordToken(token);
+    		users.setStatusId(OTP);
             userDAO.save(users);
 		}else {
 			users.setResetPasswordToken(token);
+			users.setStatusId(OTP);
             userDAO.saveAndFlush(users);
 		}
     } else {
