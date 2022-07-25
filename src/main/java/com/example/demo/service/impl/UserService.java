@@ -8,16 +8,18 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.DAO.IUserDAO;
 import com.example.demo.DAO.PagingDAO;
+import com.example.demo.entity.Booking;
 import com.example.demo.entity.Users;
 import com.example.demo.exception.DuplicateRecordException;
 import com.example.demo.exception.NotFoundException;
+import com.example.demo.model.BookingModel;
 import com.example.demo.model.UserModel;
 import com.example.demo.model.UserPrincipal;
 import com.example.demo.service.IUserService;
@@ -138,14 +140,7 @@ public class UserService implements IUserService {
 					user.setFull_name(userModel.getFull_name());
 	 			}
 			}
-//
-// 			if (user.getSpecialty_id() == null) {
-//				user.setSpecialty_id(userModel.getSpecialty_id());
-//			}else {
-//				if(user.getSpecialty_id() != userModel.getSpecialty_id()) {
-//					user.setSpecialty_id(userModel.getSpecialty_id());
-//	 			}
-//			}
+
  			user.setUpdated_at(new Date());
  			
  		 return	 userDAO.saveAndFlush(user);
@@ -200,5 +195,49 @@ public UserPrincipal findByUserEmail(String email) {
      return userPrincipal;
 }
 
+public void updateResetPasswordToken(String token, String email) throws NotFoundException {
+    Users users = userDAO.findByEmail(email);
+    if (users != null) {
+    	if (users.getResetPasswordToken() == null) {
+    		users.setResetPasswordToken(token);
+            userDAO.save(users);
+		}else {
+			users.setResetPasswordToken(token);
+            userDAO.saveAndFlush(users);
+		}
+    } else {
+        throw new NotFoundException("Could not find any customer with the email " + email);
+    }
+}
+
+public Users getByResetPasswordToken(String token) {
+    return userDAO.findByResetPasswordToken(token);
+}
+ 
+public void updatePassword(Users customer, String newPassword) {
+    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    String encodedPassword = passwordEncoder.encode(newPassword);
+    customer.setPassword(encodedPassword);
+     
+    customer.setResetPasswordToken(null);
+    userDAO.save(customer);
+}
+@Override
+public Users VerifyResetPassword(String token, String email) throws SQLException {
+	
+	if (token == null && email == null) {
+		throw new NotFoundException("khong the verify");
+	}else {
+		Users users = userDAO.verifyResetPassword(token,email);
+		System.out.println("gia tri "+users);
+		if (users != null && users.getResetPasswordToken() != null && users.getStatusId().equals("V1") != true ) {
+		
+			users.setStatusId("V1");
+			return userDAO.save(users);
+			}else {
+			throw new NotFoundException("Khong the nhan lan 2");
+		}
+	}
+}
 
 }

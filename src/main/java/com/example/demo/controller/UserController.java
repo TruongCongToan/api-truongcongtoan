@@ -2,10 +2,13 @@ package com.example.demo.controller;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.aspectj.apache.bcel.classfile.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,15 +22,22 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.DAO.IUserDAO;
 import com.example.demo.JwtUtil.JwtUtil;
+import com.example.demo.entity.Booking;
 import com.example.demo.entity.Users;
 import com.example.demo.exception.DuplicateRecordException;
 import com.example.demo.exception.InternalServerException;
 import com.example.demo.exception.NotFoundException;
+import com.example.demo.model.EmailDTO;
+import com.example.demo.model.EmailDataModel;
 import com.example.demo.model.Token;
 import com.example.demo.model.UserModel;
 import com.example.demo.model.UserPrincipal;
+import com.example.demo.service.impl.EmailService;
 import com.example.demo.service.impl.UserService;
+
+import net.bytebuddy.utility.RandomString;
 
 
 
@@ -37,12 +47,17 @@ public class UserController {
 	@Autowired
 	private UserService service;
 	
-//	@Autowired
-//	private IUserDAO userDAO;
+	@Autowired
+	private IUserDAO userDAO;
 	
 	@Autowired
     private JwtUtil jwtUtil;
 	
+
+	@Autowired
+	private EmailService emailService;
+	
+	String token = RandomString.make(45);
 	
 	 @PostMapping("/api/user/register")
 	    public ResponseEntity<Object> register(@RequestBody UserModel userModel) throws SQLException{
@@ -81,7 +96,9 @@ public class UserController {
 	        return  new ResponseEntity<Object>(token, httpStatus);
 	    }
 	
-	
+		
+	    
+	    
 		@GetMapping("/api/users")
 		@CrossOrigin(origins = "http://localhost:3000")
 		public ResponseEntity<Object> getAllUsers() throws SQLException {
@@ -97,9 +114,6 @@ public class UserController {
 			return new ResponseEntity<Object>(users, httpStatus);
 		}
 
-
-		
-	//tim user theo username
 		@GetMapping("/api/users/email={email}")
 		@CrossOrigin(origins = "http://localhost:3000")
 		public ResponseEntity<Object> getListUsersByName(@PathVariable("email") String email) {
@@ -113,7 +127,7 @@ public class UserController {
 			}
 			return new ResponseEntity<Object>(user, httpStatus);
 		}
-		///tim user theo username
+		
 		@GetMapping("/api/users/{user_id}")
 		@CrossOrigin(origins = "http://localhost:3000")
 		public ResponseEntity<Object> getUserByID(@PathVariable("user_id") int user_id) {
@@ -207,6 +221,55 @@ public class UserController {
 		public List<Users> getAllDoctors() throws SQLException {
 	
 		return service.getListDoctors();
+		}
+		
+		@GetMapping("/api/verify-user/{token}/{email}")
+		@CrossOrigin(origins = "http://localhost:3000")
+		public String VerifyBooking(@Valid @PathVariable("token") String token,  @PathVariable("email") String email) {
+			Users users = new Users();
+			
+			try {
+				users = service.VerifyResetPassword(token,email);
+				 if (users != null) {
+						return "Bạn đã xác nhận reset mật khẩu thành công! Bước tiếp theo xin mời đổi mật khẩu tại màn hình ứng dụng BKHcare .Xin cảm ơn và chúc bạn nhiều điều tốt đẹp.";
+				}else {
+					return "Thông báo : Xác  nhận reset mật khẩu thất bại !";
+				}
+			} catch (Exception e) {
+				return "Thông báo : Xác  nhận reset mật khẩu thất bại! Xin vui lòng kiểm tra lại!";
+				}
+			}
+		
+		@GetMapping("/api/users/forgotpassword/{email}")
+		@CrossOrigin(origins = "http://localhost:3000")
+		public ResponseEntity<Object> ForgotPassword(@Valid @PathVariable("email") String email) throws SQLException {
+			HttpStatus httpStatus = null;
+			Users users = new Users();
+			users = userDAO.findByEmail(email);
+			EmailDTO emailDTO = new EmailDTO();
+			
+			emailDTO.setTo(email);
+			emailDTO.setSubject("BKHcare xin thông báo reset mật khẩu người dùng");
+				
+			 try {
+				if(users != null) {
+					 service.updateResetPasswordToken(token, email);
+					 Map<String, Object> templateData = new HashMap<>();
+					String direct_url = String.format("http://api-truongcongtoan.herokuapp.com/api/verify-user/%s/%s",token,email);
+					 templateData.put("name", users.getFull_name());
+					 templateData.put("direct_url", direct_url);
+					 
+					 emailDTO.setEmailData(templateData);
+						emailService.sendResetPasswordEmail(emailDTO);
+					 httpStatus = HttpStatus.OK;
+				}else {
+					throw new InternalServerException("Không được bỏ trống các trường !");
+				}
+				
+			} catch (Exception e) {
+				 throw new InternalServerException("Không được bỏ trống các trường !");
+			}
+			return new ResponseEntity<Object>(users, httpStatus);
 		}
 		
 }

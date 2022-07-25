@@ -79,7 +79,7 @@ public class MailSenderController {
 		System.out.println("Gia tri cua booking sau khi uodate "+bookingResultBooking);
 		
 		email.setTo(emailDataModel.getEmail());
-		email.setSubject("Health care xin thông báo đặt lịch khám thành công");
+		email.setSubject("BKHcare xin thông báo đặt lịch khám thành công");
 		// Populate the template data
 				Map<String, Object> templateData = new HashMap<>();
 				templateData.put("name", emailDataModel.getFull_name());

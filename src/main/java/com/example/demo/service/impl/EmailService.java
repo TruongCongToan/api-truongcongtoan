@@ -64,6 +64,32 @@ public class EmailService implements IEmailService {
 		}
 	}
 
+	public void sendResetPasswordEmail(EmailDTO emailDTO) {
+		System.out.println("##### Started sending welcome email ####");
+
+		MimeMessage mimeMessage = mailSender.createMimeMessage();
+		try {
+
+			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage,
+					MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+					StandardCharsets.UTF_8.name());
+
+			String templateContent = FreeMarkerTemplateUtils
+					.processTemplateIntoString(freemarkerConfig.getConfiguration()
+							.getTemplate("/email/resetpassword.ftlh"),
+							emailDTO.getEmailData());
+
+			helper.setTo(emailDTO.getTo());
+			helper.setSubject(emailDTO.getSubject());
+			helper.setText(templateContent, true);
+			mailSender.send(mimeMessage);
+
+			System.out.println("######## Welcome email sent ######");
+		} catch (Exception e) {
+			System.out.println("Sending welcome email failed, check log...");
+			e.printStackTrace();
+		}
+	}
 	@Override
 	public EmailData addEmailData(EmailDataModel emailDataModel) throws SQLException {
 		System.out.println("Gia tri check "+emailDAO.getByDoctorID(emailDataModel.getPatientid(),emailDataModel.getDate(),emailDataModel.getDoctorid(),emailDataModel.getTimetype()));

@@ -1,7 +1,6 @@
 package com.example.demo.service.impl;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,31 +18,8 @@ public class BookingService implements IBookingService {
 
 	@Autowired
 	private IBookingDAO bookingDAO;
-	
-	//to convert from booking to bookingModel
-	private List<BookingModel> getListBookingModels(List<Booking> bookings) {
-		List<BookingModel> bookingModelList = new ArrayList<>();
-		for (Booking booking : bookings) {
-			BookingModel bookingModel = new BookingModel();
-			
-			bookingModel.setStatusId(booking.getStatusId());
-			bookingModel.setDoctorid(booking.getDoctorid());
-			bookingModel.setPatientid(booking.getPatientid());
-			bookingModel.setDate(booking.getDate());
-			bookingModel.setTimetype(booking.getTimetype());
-			bookingModel.setUpdateat(booking.getUpdateat());
-			bookingModel.setCreateat(booking.getCreateat());
-			bookingModel.setToken(booking.getToken());
-			bookingModel.setId(booking.getId());
-			
-			
-			bookingModelList.add(bookingModel);
-		}
-		return bookingModelList;
-	}
-	
-	
-	
+
+		
 	//get list booking
 	@Override
 	public List<Booking> getListBooking() throws SQLException {

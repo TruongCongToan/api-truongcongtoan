@@ -2,7 +2,6 @@ package com.example.demo.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -61,6 +59,9 @@ public class Users implements Serializable {
 	  @Column(name = "full_name")
 	private String full_name;
 	  
+	  @Column(name = "statusid")
+		private String statusId;
+	  
 	  @Lob
 	  @Column(name = "image",length = Integer.MAX_VALUE,nullable = true)
 	private String image ;
@@ -83,6 +84,9 @@ public class Users implements Serializable {
 	  @OneToOne(cascade = CascadeType.ALL)
 		@JoinColumn(name = "role", referencedColumnName = "key", insertable = false, updatable = false)
 		private AllCode allCodeRole = null;
+	  
+	  @Column(name = "reset_password_token")
+	    private String resetPasswordToken;
 	  
 //	  @OneToMany(mappedBy="users") 
 //	  private Set<Booking> bookings;

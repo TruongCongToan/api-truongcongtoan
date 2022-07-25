@@ -32,6 +32,8 @@ public interface IUserService {
 		//pagination doctors
 		public List<Users> findPaginated(int pageNo,int pageSize);
 		
+		public Users VerifyResetPassword(String token,String email) throws SQLException;
+		
 		UserPrincipal findByUserEmail(String email);
 
 		

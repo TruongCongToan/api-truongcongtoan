@@ -41,4 +41,14 @@ public interface IUserDAO extends JpaRepository<Users, Integer> {
 	@Query(nativeQuery = true, value = "SELECT * FROM `users` WHERE role='R2' and email = :inname")
 	public Users getDoctorByName(@Param("inname") String inname);
 
+	
+	@Query(nativeQuery = true, value = "SELECT * FROM `users` WHERE email = :email")
+	public Users findByEmail(@Param("email") String email);
+	
+	public Users findByResetPasswordToken(String token);
+	
+	@Query(value = "select * from  `users` where reset_password_token = :tokenin and email = :email", nativeQuery = true)
+	public Users verifyResetPassword(@Param("tokenin") String tokenin, @Param("email") String email);
+	
+
 }
