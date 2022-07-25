@@ -8,7 +8,6 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.aspectj.apache.bcel.classfile.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,13 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.DAO.IUserDAO;
 import com.example.demo.JwtUtil.JwtUtil;
-import com.example.demo.entity.Booking;
 import com.example.demo.entity.Users;
 import com.example.demo.exception.DuplicateRecordException;
 import com.example.demo.exception.InternalServerException;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.EmailDTO;
-import com.example.demo.model.EmailDataModel;
 import com.example.demo.model.Token;
 import com.example.demo.model.UserModel;
 import com.example.demo.model.UserPrincipal;
@@ -239,6 +236,29 @@ public class UserController {
 				return "Thông báo : Xác  nhận reset mật khẩu thất bại! Xin vui lòng kiểm tra lại!";
 				}
 			}
+		
+		@GetMapping("/api/resetpassword/{userId}/{newpass}")
+		@CrossOrigin(origins = "http://localhost:3000")
+		ResponseEntity<Object>  UpdatePassword(@Valid @PathVariable("userId") int userId,  @PathVariable("newpass") String newpass) {
+			Users users = new Users();
+			HttpStatus httpStatus = HttpStatus.FORBIDDEN;
+
+			try {
+				users = service.updatPassword(userId,new BCryptPasswordEncoder().encode(newpass));
+				 if (users != null) {
+					 httpStatus = HttpStatus.ACCEPTED;
+					 }else {
+						  httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+						 throw new InternalServerException("Không được bỏ trống các trường !");
+				}
+			} catch (Exception e) {
+				  httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+				 throw new InternalServerException("Không được bỏ trống các trường !");
+				}
+			
+			return new ResponseEntity<Object>(users,httpStatus);
+			}
+		
 		
 		@GetMapping("/api/users/forgotpassword/{email}")
 		@CrossOrigin(origins = "http://localhost:3000")

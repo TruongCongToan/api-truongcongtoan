@@ -15,11 +15,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.DAO.IUserDAO;
 import com.example.demo.DAO.PagingDAO;
-import com.example.demo.entity.Booking;
 import com.example.demo.entity.Users;
 import com.example.demo.exception.DuplicateRecordException;
 import com.example.demo.exception.NotFoundException;
-import com.example.demo.model.BookingModel;
 import com.example.demo.model.UserModel;
 import com.example.demo.model.UserPrincipal;
 import com.example.demo.service.IUserService;
@@ -91,6 +89,9 @@ public class UserService implements IUserService {
 		}		
 	}
  //update user
+	
+	
+	
 	@Override
 	public Users  editUser(UserModel userModel, int inid) throws SQLException {
 //		System.out.println("gia tri dau vao "+userModel);
@@ -207,6 +208,16 @@ public void updateResetPasswordToken(String token, String email) throws NotFound
 		}
     } else {
         throw new NotFoundException("Could not find any customer with the email " + email);
+    }
+}
+
+public Users updatPassword( int id,String newPass) throws NotFoundException {
+    Users users = userDAO.findbyId(id);
+    if (users != null) {
+    	users.setPassword(newPass);   
+    	return userDAO.saveAndFlush(users);
+    	} else {
+        throw new NotFoundException("Could not find any customer with the email ");
     }
 }
 
