@@ -58,10 +58,56 @@ public class UserController {
 	
 	String token = RandomString.make(45);
 	
+	 @PostMapping("/api/user/registerQR")
+	    public ResponseEntity<Object> registerByQR(@RequestBody UserModel userModel) throws SQLException{
+		 Users users = new Users();
+			HttpStatus httpStatus = null;
+			 try {
+				 users = service.addUser(userModel);
+				 httpStatus = HttpStatus.CREATED;
+		  	      return  new ResponseEntity<Object>(users, httpStatus);
+			 } catch (Exception e) {
+					throw new DuplicateRecordException("Tài khoản đã tồn tại trong hệ thong");
+		}
+	 }
+	
+		@GetMapping("/api/users/sendQRCodeEmail/{email}")
+		@CrossOrigin(origins = "http://localhost:3000")
+		public ResponseEntity<Object> SendQRCodeEmail(@Valid @PathVariable("email") String email) throws SQLException {
+			HttpStatus httpStatus = null;
+			Users users = new Users();
+			users = userDAO.findByEmail(email);
+			EmailDTO emailDTO = new EmailDTO();
+			
+			emailDTO.setTo(email);
+			emailDTO.setSubject("BKHcare xin thông báo mã QR đăng nhập vào hệ thống");
+
+			 try {
+				if(users != null) {
+					 Map<String, Object> templateData = new HashMap<>();
+					 templateData.put("name", users.getEmail());
+					 templateData.put("qrcode", users.getQrcode());
+					 
+					 emailDTO.setEmailData(templateData);
+					 
+					emailService.sendQRCodeEmail(emailDTO,users.getQrcode());
+					 httpStatus = HttpStatus.OK;
+				}else {
+					throw new InternalServerException("Không được bỏ trống các trường !");
+				}
+				
+			} catch (Exception e) {
+				 throw new InternalServerException("Không được bỏ trống các trường !");
+			}
+			return new ResponseEntity<Object>(users, httpStatus);
+		}
+
+	 
+	 
+	 
 	 @PostMapping("/api/user/register")
 	    public ResponseEntity<Object> register(@RequestBody UserModel userModel) throws SQLException{
 		 userModel.setPassword(new BCryptPasswordEncoder().encode(userModel.getPassword()));
-		 System.out.println("Psssword "+userModel.getPassword());
 		 Users users = new Users();
 			HttpStatus httpStatus = null;
 		 try {
@@ -154,9 +200,6 @@ public class UserController {
 				if (null != user) {
 					httpStatus = HttpStatus.CREATED;
 					
-//					userModel.setUser_id(user.getUser_id());
-//					userModel.setEmail(user.getEmail());
-//					userModel.setPassword(user.getPassword());
 					userModel.setAddress(user.getAddress());
 					userModel.setGender(user.getGender());
 					userModel.setRole(user.getRole());
@@ -286,7 +329,6 @@ public class UserController {
 				if(users != null) {
 					 service.updateResetPasswordToken(token, email,otp);
 					 Map<String, Object> templateData = new HashMap<>();
-//					String direct_url = String.format("http://api-truongcongtoan.herokuapp.com/api/verify-user/%s/%s",token,email);
 					 templateData.put("name", users.getFull_name());
 					 templateData.put("otp", otp);
 					 
@@ -303,4 +345,5 @@ public class UserController {
 			return new ResponseEntity<Object>(users, httpStatus);
 		}
 		
+	
 }

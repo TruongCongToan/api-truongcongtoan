@@ -54,10 +54,13 @@ public class UserService implements IUserService {
 			user.setRole(userModel.getRole());
 			user.setFull_name(userModel.getFull_name());
 			user.setImage(userModel.getImage());
-			user.setCreated_at(new Date());
-//			user.setSpecialty_id(userModel.getSpecialty_id());
 			
-//			 userDAO.save(user);
+			user.setUuid(userModel.getUuid());
+			user.setQrcode(userModel.getQrcode());
+			
+			
+			user.setCreated_at(new Date());
+
 			 return userDAO.save(user);
 		}
 		else {
@@ -98,50 +101,101 @@ public class UserService implements IUserService {
 		if (userDAO.findbyId(inid) != null) {
 			Users user = userDAO.findbyId(inid);
  			
- 			if (user.getAddress() == null) {
-				user.setAddress(userModel.getAddress());
+			if (userModel.getAddress() == null) {
+				user.setAddress(user.getAddress());
 			}else {
-				if (!user.getAddress().equals(userModel.getAddress())) {
-	 				user.setAddress(userModel.getAddress());
-	 			}
-			}
- 			if (user.getPhone_number() == null) {
-				user.setPhone_number(userModel.getPhone_number());
-			}else {
-				if (!user.getPhone_number().equals(userModel.getPhone_number())) {
-					user.setPhone_number(userModel.getPhone_number());
-	 			}
-			}
- 			if (user.getGender() == null) {
-				user.setGender(userModel.getGender());
-			}else {
-	 			if (!user.getGender().equals(userModel.getGender()) ) {
-	 				user.setGender(userModel.getGender());
-	 			}
-			}
- 			if (user.getRole() == null) {
-				user.setRole(userModel.getRole());
-			}else {
-	 			if(!user.getRole().equals(userModel.getRole())) {
-	 				user.setRole(userModel.getRole());
-	 			}
+				if (user.getAddress() == null) {
+					user.setAddress(userModel.getAddress());
+				}else {
+					if (!user.getAddress().equals(userModel.getAddress())) {
+		 				user.setAddress(userModel.getAddress());
+		 			}
+				}
 			}
  			
- 			if (user.getImage() == null) {
-				user.setImage(userModel.getImage());
+			if (userModel.getPhone_number() == null) {
+				user.setPhone_number(user.getPhone_number());
 			}else {
-				if(!user.getImage().equals(userModel.getImage())) {
-	 				user.setImage(userModel.getImage());
-	 			}
+				if (user.getPhone_number() == null) {
+					user.setPhone_number(userModel.getPhone_number());
+				}else {
+					if (!user.getPhone_number().equals(userModel.getPhone_number())) {
+						user.setPhone_number(userModel.getPhone_number());
+		 			}
+				}
 			}
- 			if (user.getFull_name() == null) {
-				user.setFull_name(userModel.getFull_name());
+ 			if  (userModel.getGender() == null) {
+				user.setGender(user.getGender());
 			}else {
-				if(!user.getFull_name().equals(userModel.getFull_name())) {
+				if (user.getGender() == null) {
+					user.setGender(userModel.getGender());
+				}else {
+		 			if (!user.getGender().equals(userModel.getGender()) ) {
+		 				user.setGender(userModel.getGender());
+		 			}
+				}
+			}
+ 			if (userModel.getRole() == null) {
+				user.setRole(user.getRole());
+			}else {
+				 if (user.getRole() == null) {
+						user.setRole(userModel.getRole());
+					}else {
+			 			if(!user.getRole().equals(userModel.getRole())) {
+			 				user.setRole(userModel.getRole());
+			 			}
+					}
+			}
+ 			
+ 			if (userModel.getImage() == null) {
+				user.setImage(user.getImage());
+			}else {
+				if (user.getImage() == null) {
+					user.setImage(userModel.getImage());
+				}else {
+					if(!user.getImage().equals(userModel.getImage())) {
+		 				user.setImage(userModel.getImage());
+		 			}
+				}
+			}
+ 			
+ 			if (userModel.getFull_name() == null) {
+				user.setFull_name(user.getFull_name());
+			}else {
+				if (user.getFull_name() == null) {
 					user.setFull_name(userModel.getFull_name());
-	 			}
+				}else {
+					if(!user.getFull_name().equals(userModel.getFull_name())) {
+						user.setFull_name(userModel.getFull_name());
+		 			}
+				}
 			}
-
+ 			
+ 			if (userModel.getUuid() == null) {
+				user.setUuid(user.getUuid());
+			}else {
+				
+				if (user.getUuid() == null) {
+					user.setUuid(userModel.getUuid());
+				}else {
+					if(!user.getUuid().equals(userModel.getUuid())) {
+						user.setUuid(userModel.getUuid());
+		 			}
+				}
+				
+			}
+ 			if (userModel.getQrcode() == null) {
+ 				user.setQrcode(user.getQrcode());
+			}else {
+				if (user.getQrcode() == null) {
+					user.setQrcode(userModel.getQrcode());
+				}else {
+					if(!user.getQrcode().equals(userModel.getQrcode())) {
+						user.setQrcode(userModel.getQrcode());
+		 			}
+				}
+				
+			}
  			user.setUpdated_at(new Date());
  			
  		 return	 userDAO.saveAndFlush(user);

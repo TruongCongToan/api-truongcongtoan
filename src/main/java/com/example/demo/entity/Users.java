@@ -88,10 +88,11 @@ public class Users implements Serializable {
 	  @Column(name = "reset_password_token")
 	    private String resetPasswordToken;
 	  
-//	  @OneToMany(mappedBy="users") 
-//	  private Set<Booking> bookings;
-//	  
-//	  @OneToOne(cascade = CascadeType.ALL)
-//			@JoinColumn(name = "doctorid")
-//			private MarkDown markDown;
+	  @Column(name = "uuid")
+	    private String uuid;
+	  
+	  @Lob
+	  @Column(name = "qrcode",length = Integer.MAX_VALUE,nullable = true)
+	private String qrcode ;
+	  
 	  }

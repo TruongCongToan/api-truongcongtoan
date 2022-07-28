@@ -26,6 +26,9 @@ public class UserModel {
 	private Integer specialty_id;
 	private String full_name;
 	private String statusid;
+	private String qrcode;
+	private String uuid;
+	
 	@JsonFormat(pattern = "yyyy-MM-dd",shape = Shape.STRING)
 	  @Column(name = "created_at")
 	private Date created_at;
