@@ -92,7 +92,6 @@ public class BookingController {
 			}
 		} catch (Exception e) {
 			return "Thông báo : Xác  nhận lịch đặt khám thất bại! Xin vui lòng kiểm tra lại!";
-//			 throw new DuplicateRecordException("Da co trong danh sach");		 
 			}
 		}
 	@PutMapping("api/bookings/{patientID}")
@@ -126,6 +125,25 @@ public class BookingController {
 			 throw new InternalServerException("Không được bỏ trống các trường !");
 	}
 		return new ResponseEntity<Object>(bookingList, httpStatus);
+	}
+	
+	@GetMapping("/api/bookings/{intimetype}/{indate}/{doctorid}")
+	@CrossOrigin(origins = "http://localhost:3000")
+	public ResponseEntity<Object> getBookingByTDDoctor(@Valid 
+			@PathVariable("intimetype") String intimetype,
+			@PathVariable("indate") String indate,
+			@PathVariable("doctorid") int doctorid
+			) {
+		HttpStatus httpStatus = null;
+		Booking booking = new Booking();
+		try {
+			booking = bookingDAO.getBookingByDoctorIAdd(doctorid,indate,intimetype);
+			httpStatus = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			 throw new InternalServerException("Không được bỏ trống các trường !");
+	}
+		return new ResponseEntity<Object>(booking, httpStatus);
 	}
 
 			@GetMapping("/api/bookings/patient/{patient_id}/{date}")
