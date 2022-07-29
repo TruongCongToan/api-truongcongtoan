@@ -23,6 +23,9 @@ public interface IUserDAO extends JpaRepository<Users, Integer> {
 	@Query(value = "select * from `users` where email = :inname", nativeQuery = true)
 	public Users findByName(@Param("inname") String inname);
 	
+	@Query(value = "select * from `users` where uuid = :inuuid", nativeQuery = true)
+	public Users findByUUID(@Param("inuuid") String inuuid);
+	
 	// get thong tin sv by masv
 	@Query(value = "select * from `users` where user_id = :inid", nativeQuery = true)
 	public Users findbyId(@Param("inid") int inid);

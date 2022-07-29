@@ -86,8 +86,9 @@ public class UserController {
 				if(users != null) {
 					 Map<String, Object> templateData = new HashMap<>();
 					 templateData.put("name", users.getEmail());
-					 templateData.put("qrcode", users.getQrcode());
-					 
+			
+						String direct_url = String.format("https://qrcodedoctorapp.herokuapp.com/qrcode/%s",email);
+						 templateData.put("direct_url",direct_url );
 					 emailDTO.setEmailData(templateData);
 					 
 					emailService.sendQRCodeEmail(emailDTO,users.getQrcode());
@@ -167,6 +168,19 @@ public class UserController {
 			try {
 				user = service.getUserByName(email);
 				httpStatus = HttpStatus.OK;
+			} catch (Exception e) {
+				 throw new NotFoundException("Không tìm thấy thông tin trong danh sách !");
+			}
+			return new ResponseEntity<Object>(user, httpStatus);
+		}
+		@GetMapping("/api/users/uuid={uuid}")
+		@CrossOrigin(origins = "https://qrcodedoctorapp.herokuapp.com")
+		public ResponseEntity<Object> getListUsersByUUID(@PathVariable("uuid") String uuid) {
+			HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+			Users user = new Users();
+			try {
+				user = userDAO.findByUUID(uuid);
+			httpStatus = HttpStatus.OK;
 			} catch (Exception e) {
 				 throw new NotFoundException("Không tìm thấy thông tin trong danh sách !");
 			}
