@@ -33,7 +33,8 @@ public class BookingService implements IBookingService {
 	@Override
 	public Booking addBooking(BookingModel bookingModel) throws SQLException {
 		
-		if(bookingDAO.getBookingByDoctorIdandPatienId(bookingModel.getDoctorid(),bookingModel.getPatientid(),bookingModel.getDate(),bookingModel.getTimetype()) != null) {
+		if(bookingDAO.getBookingByDoctorIAdd(bookingModel.getDoctorid(),bookingModel.getDate(),
+				bookingModel.getTimetype()) != null) {
 			
 			throw new NotFoundException("Khong tim thay nguoi dung nay");
 		
@@ -42,7 +43,6 @@ public class BookingService implements IBookingService {
 			Booking booking = new Booking();
 			
 			booking.setCreateat(new Date());
-//			booking.setUpdateat(new Date());
 
 			booking.setDate(bookingModel.getDate());
 			booking.setDoctorid(bookingModel.getDoctorid());
