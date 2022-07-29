@@ -160,7 +160,7 @@ public class UserController {
 		}
 
 		@GetMapping("/api/users/email={email}")
-		@CrossOrigin(origins = "http://localhost:3000")
+		@CrossOrigin(origins = "https://qrcodedoctorapp.herokuapp.com")
 		public ResponseEntity<Object> getListUsersByName(@PathVariable("email") String email) {
 			HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 			Users user = new Users();
