@@ -26,7 +26,6 @@ import com.example.demo.model.DoctorInfoModel;
 import com.example.demo.service.impl.DoctorInfoService;
 
 @RestController 
-@CrossOrigin(origins = "https://itss-random.herokuapp.com")
 public class DoctorInforController {
 	@Autowired
 	private DoctorInfoService doctorInforService;
