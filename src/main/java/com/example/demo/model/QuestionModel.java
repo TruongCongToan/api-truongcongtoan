@@ -17,6 +17,7 @@ public class QuestionModel {
 	private String question;
 	private String subject;
 	 private int user_id;
+	 private String image ;
 	 private Date createat;
 	 private Date updateat;
 }

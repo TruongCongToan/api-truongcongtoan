@@ -41,6 +41,7 @@ public class QuestionService implements IQuestionService {
 			question.setQuestion(questionModel.getQuestion());
 			question.setSubject(questionModel.getSubject());
 			question.setUsers(userDAO.findbyId(questionModel.getUser_id()));
+			question.setImage(questionModel.getImage());
 			question.setCreateat(new Date());
 			return questionDAO.save(question);
 		}else {
@@ -85,6 +86,19 @@ public class QuestionService implements IQuestionService {
 					}
 				}
 			}
+			
+			if (questionModel.getImage() == null) {
+				question.setImage(question.getImage());
+			} else {
+				if (question.getImage() == null) {
+					question.setImage(questionModel.getImage());
+				}else {
+					if (!question.getImage().equals(questionModel.getImage()) ) {
+						question.setImage(questionModel.getImage());
+					}
+				}
+			}
+			
 			
 			question.setUpdateat(new Date());
 			

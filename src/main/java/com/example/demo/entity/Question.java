@@ -47,6 +47,9 @@ public class Question implements Serializable {
 	@Column(name = "question")
 	private String question;
 		  
+	@Lob
+	  @Column(name = "image",length = Integer.MAX_VALUE,nullable = true)
+	private String image ;
 	
 	 @JsonFormat(pattern = "yyyy-MM-dd",shape = Shape.STRING)
 	  @Column(name = "createat")
