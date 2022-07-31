@@ -2,7 +2,6 @@ package com.example.demo.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,14 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 import lombok.AllArgsConstructor;
@@ -55,9 +51,9 @@ public class Answer implements Serializable {
 	private Date updateat;
 	   
 	  
-//	  @ManyToOne(cascade = CascadeType.ALL)
-//	  @JoinColumn(name = "user_id")
-//	  private Users users;
+	  @ManyToOne(cascade = CascadeType.ALL)
+	  @JoinColumn(name = "user_id")
+	  private Users users;
 	  
 	  @ManyToOne(cascade = CascadeType.ALL)
 	  @JoinColumn(name = "question_id")

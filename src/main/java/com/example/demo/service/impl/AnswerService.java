@@ -45,6 +45,8 @@ public class AnswerService implements IAnswerService{
 			
 			answer.setAnswer(answerModel.getAnswer());
 			answer.setQuestions(questionDAO.findByID(answerModel.getQuestion_id()));
+			answer.setUsers(userDAO.findbyId(answerModel.getUser_id()));
+			
 			answer.setCreateat(new Date());
 			
 			
