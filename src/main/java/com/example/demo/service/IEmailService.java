@@ -15,5 +15,5 @@ public interface IEmailService {
 	public void sendWelcomeEmail(EmailDTO emailDTO) throws SQLException;
 public EmailData addEmailData( EmailDataModel emailDataModel) throws SQLException;
 	
-	public Booking editClinic(EmailDataModel emailDataModel, int patientid,String date,int doctorid) throws SQLException;
+	public Booking editClinic(String timetype, int patientid,String date,int doctorid) throws SQLException;
 }

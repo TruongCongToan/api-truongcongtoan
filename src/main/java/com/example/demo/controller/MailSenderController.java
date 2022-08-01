@@ -151,15 +151,16 @@ public class MailSenderController {
 		}
 		return new ResponseEntity<Object>(emailData, httpStatus);
 	}
-	@PutMapping("api/emaildata/{patientid}/{date}/{doctorid}")
-	public ResponseEntity<Object> editClinic(@Valid @RequestBody EmailDataModel emailDataModel,
+	@PutMapping("api/emaildata/{patientid}/{date}/{doctorid}/{timetype}")
+	public ResponseEntity<Object> editClinic(@Valid 
 		@PathVariable("patientid") int patientid,
 		@PathVariable("date") String date,
-		@PathVariable("doctorid") int doctorid) {
+		@PathVariable("doctorid") int doctorid,
+		@PathVariable("timetype") String timetype) {
 		HttpStatus httpStatus = null;
 		Booking booking = new Booking();
 		try {
-			booking =	emailService.editClinic(emailDataModel, patientid,date,doctorid);
+			booking =	emailService.editClinic(timetype, patientid,date,doctorid);
 			httpStatus = HttpStatus.CREATED;
 
 		} catch (Exception e) {
