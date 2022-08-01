@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.DAO.IMarkDownDAO;
 import com.example.demo.entity.MarkDown;
 import com.example.demo.exception.DuplicateRecordException;
 import com.example.demo.exception.InternalServerException;
@@ -31,8 +30,8 @@ import com.example.demo.service.impl.MarkDownService;
 public class MarkDownController {
 	@Autowired
 	private MarkDownService markDownService;
-	@Autowired 
-	private IMarkDownDAO markDownDAO;
+//	@Autowired 
+//	private IMarkDownDAO markDownDAO;
 	
 	// get all markdowns
 	@GetMapping("/api/markdowns")

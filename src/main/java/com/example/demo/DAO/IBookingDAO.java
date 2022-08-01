@@ -29,6 +29,9 @@ public interface IBookingDAO extends JpaRepository<Booking, Integer> {
 		@Query(value = "select * from  `booking` where date = :indate", nativeQuery = true)
 		public List<Booking> getBookingByAdmin(@Param("indate") String indate);
 		
+		@Query(value = "select * from  `booking` where token = :intoken", nativeQuery = true)
+		public Booking getBookingByToken(@Param("intoken") String intoken);
+		
 		@Query(value = "select * from  `booking` where patientid = :inid and date = :indate", nativeQuery = true)
 		public List<Booking> getBookingByPatientID(@Param("inid") int inid,@Param("indate") String indate);
 		

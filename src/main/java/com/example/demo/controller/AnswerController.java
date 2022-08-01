@@ -17,13 +17,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.DAO.IAnswerDAO;
 import com.example.demo.entity.Answer;
-import com.example.demo.entity.Question;
 import com.example.demo.exception.InternalServerException;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.AnswerModel;
-import com.example.demo.model.QuestionModel;
 import com.example.demo.service.impl.AnswerService;
 
 @RestController 

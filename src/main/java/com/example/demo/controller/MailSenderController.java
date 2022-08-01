@@ -122,7 +122,7 @@ public class MailSenderController {
 		return new ResponseEntity<Object>(emailDatas, httpStatus);
 	}
 	@GetMapping("/api/mail/doctorID/{doctorid}")
-	public ResponseEntity<Object> getAllEMailDataByDoctorID(@Valid @PathVariable("doctorid") int doctorid) {
+	public ResponseEntity<Object> getAllEMailDataByDoctorid(@Valid @PathVariable("doctorid") int doctorid) {
 		HttpStatus httpStatus = null;
 		List<EmailData> emailDatas = new ArrayList<EmailData>();
 		emailDatas = emailDAO.getByDoctorID(doctorid);

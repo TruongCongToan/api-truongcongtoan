@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.DAO.IScheduleDAO;
+//import com.example.demo.DAO.IScheduleDAO;
 import com.example.demo.entity.BulkSchedule;
 import com.example.demo.entity.Schedule;
 import com.example.demo.exception.InternalServerException;
@@ -30,8 +30,8 @@ import com.example.demo.service.impl.ScheduleService;
 public class ScheduleController {
 	@Autowired
 	private ScheduleService scheduleService;
-	@Autowired
-	private IScheduleDAO scheduleDAO;
+//	@Autowired
+//	private IScheduleDAO scheduleDAO;
 	
 	//get all schedule
 	@GetMapping("/api/schedules")

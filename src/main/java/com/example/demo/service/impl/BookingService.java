@@ -24,7 +24,6 @@ public class BookingService implements IBookingService {
 	@Override
 	public List<Booking> getListBooking() throws SQLException {
 		List<Booking> bookingList = bookingDAO.getAllBooking();
-//	List<BookingModel> bookingModels = getListBookingModels(bookingList);
 		return bookingList;
 	}
 
@@ -73,11 +72,8 @@ public class BookingService implements IBookingService {
 			if(!booking.getTimetype().equals(bookingModel.getTimetype())) {
 				booking.setTimetype(bookingModel.getTimetype());
 			}
-//			if(!booking.getToken().equals(bookingModel.getToken())) {
-//				booking.setToken(bookingModel.getToken());
-//			}
+
 			booking.setToken(bookingModel.getToken());
-//			booking.setCreateat(bookingModel.getCreateat());
 			booking.setUpdateat(new Date());
 			
 			return bookingDAO.saveAndFlush(booking);

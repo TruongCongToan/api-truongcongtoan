@@ -15,6 +15,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import com.example.demo.DAO.IBookingDAO;
 import com.example.demo.DAO.IEmailDAO;
+import com.example.demo.entity.Booking;
 import com.example.demo.entity.EmailData;
 import com.example.demo.exception.DuplicateRecordException;
 import com.example.demo.exception.NotFoundException;
@@ -150,53 +151,14 @@ public class EmailService implements IEmailService {
 	}
 
 	@Override
-	public EmailData editClinic(EmailDataModel emailDataModel, int patientid,String date,int doctorid) throws SQLException {
+	public Booking editClinic(EmailDataModel emailDataModel, int patientid,String date,int doctorid) throws SQLException {
 		if (emailDAO.getByDoctorID(patientid,date,doctorid,emailDataModel.getTimetype()) != null) {
 			EmailData emailData = emailDAO.getByDoctorID(patientid,date,doctorid,emailDataModel.getTimetype());
 			
-			if (!emailData.getFull_name().equals(emailDataModel.getFull_name())) {
-				emailData.setFull_name(emailDataModel.getFull_name());
- 			}
-			if (!emailData.getGender().equals(emailDataModel.getGender())) {
-				emailData.setGender(emailDataModel.getGender());
- 			}
-			if (!emailData.getBirth_year().equals(emailDataModel.getBirth_year())) {
-				emailData.setBirth_year(emailDataModel.getBirth_year());
- 			}
-			if (!emailData.getEmail_address().equals(emailDataModel.getEmail())) {
-				emailData.setEmail_address(emailDataModel.getEmail());
- 			}
-			if (!emailData.getPhone_number().equals(emailDataModel.getPhone_number())) {
-				emailData.setPhone_number(emailDataModel.getPhone_number());
- 			}
-			
-			if (!emailData.getReason().equals(emailDataModel.getReason())) {
-				emailData.setReason(emailDataModel.getReason());
- 			}
-			if (!emailData.getNgaykham().equals(emailDataModel.getNgaykham())) {
-				emailData.setNgaykham(emailDataModel.getNgaykham());
- 			}
-			if (!emailData.getDoctor_name().equals(emailDataModel.getDoctor_name())) {
-				emailData.setDoctor_name(emailDataModel.getDoctor_name());
- 			}
-			if (!emailData.getDoctor_name().equals(emailDataModel.getPrice())) {
-				emailData.setPrice(emailDataModel.getPrice());
- 			}
-			if (emailData.getDoctorid() != emailDataModel.getDoctorid()) {
-				emailData.setDoctorid(emailDataModel.getDoctorid());
- 			}
-			if (emailData.getPatientid() != emailDataModel.getPatientid()) {
-				emailData.setPatientid(emailDataModel.getPatientid());
- 			}
-			if (emailData.getPatientid() != emailDataModel.getPatientid()) {
-				emailData.setTimetype(emailDataModel.getTimetype());
- 			}
-			if (emailData.getBooking().equals(bookingDAO.getBookingByID(emailDataModel.getBooking_id())) == false) {
-				emailData.setBooking(bookingDAO.getBookingByID(emailDataModel.getBooking_id()));
- 			}
-			emailData.setUpdated_at(new Date());
-			
-			return emailDAO.saveAndFlush(emailData);
+			Booking booking = bookingDAO.getBookingByToken(emailData.getBooking().getToken());
+		
+			booking.setStatusId("S3");
+			return bookingDAO.saveAndFlush(booking);
 		}else {
 			throw new NotFoundException("Khong tim thay nguoi dung nay");
 		}
