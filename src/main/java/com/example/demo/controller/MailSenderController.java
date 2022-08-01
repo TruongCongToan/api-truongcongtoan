@@ -121,6 +121,22 @@ public class MailSenderController {
 		}
 		return new ResponseEntity<Object>(emailDatas, httpStatus);
 	}
+	@GetMapping("/api/mail/doctorID/{doctorid}")
+	public ResponseEntity<Object> getAllEMailDataByDoctorID(@Valid @PathVariable("doctorid") int doctorid) {
+		HttpStatus httpStatus = null;
+		List<EmailData> emailDatas = new ArrayList<EmailData>();
+		emailDatas = emailDAO.getByDoctorID(doctorid);
+		
+		try {
+			
+			httpStatus = HttpStatus.OK;
+//			emailDatas = emailDAO.getByPatientID(patientid);
+			
+		} catch (Exception e) {
+			 throw new InternalServerException("Không được bỏ trống các trường !");
+		}
+		return new ResponseEntity<Object>(emailDatas, httpStatus);
+	}
 	
 	@PostMapping("/api/emaildata/")
 	public ResponseEntity<Object> addSpeciatlties(@Valid @RequestBody EmailDataModel emailDataModel){
