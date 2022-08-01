@@ -157,15 +157,16 @@ public class MailSenderController {
 		@PathVariable("date") String date,
 		@PathVariable("doctorid") int doctorid) {
 		HttpStatus httpStatus = null;
+		Booking booking = new Booking();
 		try {
-			emailService.editClinic(emailDataModel, patientid,date,doctorid);
-			httpStatus = HttpStatus.OK;
+			booking =	emailService.editClinic(emailDataModel, patientid,date,doctorid);
+			httpStatus = HttpStatus.CREATED;
 
 		} catch (Exception e) {
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 			 throw new InternalServerException("Không được bỏ trống các trường !");
 		}
-		return new ResponseEntity<Object>(httpStatus);
+		return new ResponseEntity<Object>(booking,httpStatus);
 	}
 	
 }
