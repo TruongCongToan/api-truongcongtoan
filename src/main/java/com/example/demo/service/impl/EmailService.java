@@ -151,13 +151,13 @@ public class EmailService implements IEmailService {
 	}
 
 	@Override
-	public Booking editClinic(String timetype, int patientid,String date,int doctorid) throws SQLException {
+	public Booking editClinic(String timetype, int patientid,String date,int doctorid,String statusid) throws SQLException {
 		if (emailDAO.getByDoctorID(patientid,date,doctorid,timetype) != null) {
 			EmailData emailData = emailDAO.getByDoctorID(patientid,date,doctorid,timetype);
 			Booking booking  = new Booking();
 			if(emailData != null) {
 				 booking = bookingDAO.getBookingByToken(emailData.getBooking().getToken());
-				booking.setStatusId("S3");
+				booking.setStatusId(statusid);
 			}else {
 				throw new DuplicateRecordException("Da co user nay trong danh sach");
 			}
