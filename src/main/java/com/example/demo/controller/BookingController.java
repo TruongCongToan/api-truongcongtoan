@@ -50,8 +50,39 @@ public class BookingController {
 		return new ResponseEntity<Object>(bookingList, httpStatus);
 	}
 
-		//add new booking
 
+	@GetMapping("/api/bookings/count")
+	@CrossOrigin(origins = "http://localhost:3000")
+	public ResponseEntity<Object> countBooking() {
+		HttpStatus httpStatus = null;
+		List<Booking> bookingList = new ArrayList<> ();
+		
+		try {
+			bookingList = bookingService.getListBooking();
+			httpStatus = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			 throw new InternalServerException("Không được bỏ trống các trường !");
+	}
+		return new ResponseEntity<Object>(bookingList.size(),httpStatus);
+	}
+	
+	@GetMapping("/api/bookings/count/{doctor_id}/{date}")
+	@CrossOrigin(origins = "http://localhost:3000")
+	public ResponseEntity<Object> countBookingByDate(@Valid @PathVariable("doctor_id") int doctor_id, @PathVariable("date") String date) {
+		HttpStatus httpStatus = null;
+		List<Booking> bookingList = new ArrayList<> ();
+		
+		try {
+			bookingList = bookingDAO.getBookingByDoctorID(doctor_id,date);
+			httpStatus = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			 throw new InternalServerException("Không được bỏ trống các trường !");
+	}
+		return new ResponseEntity<Object>(bookingList.size(),httpStatus);
+	}
+	
 	@PostMapping("/api/bookings")
 	@CrossOrigin(origins = "http://localhost:3000")
 	public ResponseEntity<Object> addBooking(@Valid @RequestBody BookingModel bookingModelIn) {
