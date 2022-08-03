@@ -1,5 +1,6 @@
 package com.example.demo.DAO;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -18,6 +19,9 @@ public interface IBookingDAO extends JpaRepository<Booking, Integer> {
 	// get all Booking
 		@Query(nativeQuery = true, value = "select * from  `booking`")
 		public List<Booking> getAllBooking();
+//		1659459600000
+		@Query(nativeQuery = true, value = "select * from  `booking` where statusid = 'S4' and date BETWEEN :datebefo and :dataafter")
+		public List<Booking> getAllBookingDaKham(@Param("datebefo") long datebefo,@Param("dataafter") long dataafter);
 		
 		@Query(value = "select * from  `booking` where id = :inid", nativeQuery = true)
 		public Booking getBookingByID(@Param("inid") int inid);
@@ -26,6 +30,8 @@ public interface IBookingDAO extends JpaRepository<Booking, Integer> {
 		@Query(value = "select * from  `booking` where doctorid = :inid and date = :indate", nativeQuery = true)
 		public List<Booking> getBookingByDoctorID(@Param("inid") int inid,@Param("indate") String indate);
 		
+		@Query(value = "select * from  `booking` where doctorid = :inid and date = :indate and statusid = 'S4'", nativeQuery = true)
+		public List<Booking> getBookingByDoctorIDDaKham(@Param("inid") int inid,@Param("indate") String indate);
 		
 		@Query(value = "select * from  `booking` where date = :indate", nativeQuery = true)
 		public List<Booking> getBookingByAdmin(@Param("indate") String indate);

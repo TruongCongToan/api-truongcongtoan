@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,8 @@ import com.example.demo.exception.InternalServerException;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.BookingModel;
 import com.example.demo.service.impl.BookingService;
-
+import java.sql.Timestamp;    
+import java.util.Date;   
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class BookingController {
@@ -53,18 +55,37 @@ public class BookingController {
 
 	@GetMapping("/api/bookings/count")
 	@CrossOrigin(origins = "http://localhost:3000")
-	public ResponseEntity<Object> countBooking() {
-		HttpStatus httpStatus = null;
+	public List<Integer> countBooking() {
 		List<Booking> bookingList = new ArrayList<> ();
+		List<Booking> bookingList1 = new ArrayList<> ();
+		List<Integer> countList =  new ArrayList<> ();
+
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());       
+
+        
+//        1661878800000
+//        1659512500136
+//        1659546000000
+        System.out.println(timestamp.getTime());
+		if((timestamp.getTime()) < 1661878800000L) {
+			System.out.println("Yes");
+				bookingList = bookingDAO.getAllBookingDaKham(timestamp.getTime(),1661878800000L);
+				countList.add(bookingList.size());
+			}else {
+				bookingList = bookingDAO.getAllBookingDaKham(timestamp.getTime(),1661878800000L);
+				bookingList1 = bookingDAO.getAllBookingDaKham(timestamp.getTime(),1664470800000L);
+				countList.add(bookingList.size());
+				countList.add(bookingList1.size());
+				System.out.println("NO");
+				System.out.println(countList);
+			}
 		
-		try {
-			bookingList = bookingService.getListBooking();
-			httpStatus = HttpStatus.OK;
+//		countList.add(1);
+//		countList.add(2);
+//		System.out.println(countList);
+			return countList;
 			
-		} catch (Exception e) {
-			 throw new InternalServerException("Không được bỏ trống các trường !");
-	}
-		return new ResponseEntity<Object>(bookingList.size(),httpStatus);
+		
 	}
 	
 	@GetMapping("/api/bookings/count/{doctor_id}/{date}")
