@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -59,6 +60,10 @@ public class Rating  implements Serializable {
 	  @ManyToOne(cascade = CascadeType.ALL)
 	  @JoinColumn(name = "doctor_id")
 	  private Users doctors;
+	  
+	  @OneToOne(cascade = CascadeType.ALL)
+		@JoinColumn(name = "doctor_id", referencedColumnName = "doctorid", insertable = false, updatable = false)
+		private EmailData emailData = null;
 	  
 	  
 	
