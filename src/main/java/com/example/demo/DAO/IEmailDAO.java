@@ -18,6 +18,9 @@ public interface IEmailDAO extends JpaRepository<EmailData, Integer>{
 	@Query(value = "select * from `emaildata` where patientid = :inid", nativeQuery = true)
 	public List<EmailData> getByPatientID(@Param("inid") int inid);
 	
+	@Query(value = "select * from `emaildata`", nativeQuery = true)
+	public List<EmailData> getAll();
+	
 	@Query(value = "select * from `emaildata` where doctorid = :inid", nativeQuery = true)
 	public List<EmailData> getByDoctorID(@Param("inid") int inid);
 	
