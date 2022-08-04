@@ -59,7 +59,9 @@ public class BookingService implements IBookingService {
 	@Override
 	public Booking editBooking(BookingModel bookingModel, int doctorID) throws SQLException {
 		Booking booking = bookingDAO.getBookingByDoctorIdandPatienId(doctorID,bookingModel.getPatientid(),bookingModel.getDate(),bookingModel.getTimetype());
-		if(booking != null ) {		
+		System.out.println(bookingModel.getToken()==null);
+		
+				if(booking != null ) {		
 			if (!booking.getDate().equals(bookingModel.getDate()) ) {
 					booking.setDate(bookingModel.getDate());
 			}
@@ -73,8 +75,15 @@ public class BookingService implements IBookingService {
 				booking.setTimetype(bookingModel.getTimetype());
 			}
 
-			if(!booking.getToken().equals(bookingModel.getToken())) {
-				booking.setToken(bookingModel.getToken());
+			if(bookingModel.getToken()==null) {
+				booking.setToken(booking.getToken());
+			}else {
+				if(booking.getToken() == null) {
+					booking.setToken(bookingModel.getToken());
+				}else
+				if(!booking.getToken().equals(bookingModel.getToken())) {
+					booking.setToken(bookingModel.getToken());
+				}
 			}
 			
 			booking.setUpdateat(new Date());

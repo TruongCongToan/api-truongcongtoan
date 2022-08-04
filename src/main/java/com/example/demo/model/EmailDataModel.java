@@ -24,7 +24,7 @@ public class EmailDataModel {
 	private String price;
 	private String ngaykham;
 	private String doctor_name;
-	private String direct_url;
+//	private String direct_url;
 	private String date;
 	private int booking_id;
 	private String timetype;

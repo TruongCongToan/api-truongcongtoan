@@ -70,18 +70,17 @@ public class MailSenderController {
 	@PostMapping("/api/sendEmail")
 //	@EventListener(ApplicationReadyEvent.class)
 	public void sendMail(@Valid @RequestBody EmailDataModel emailDataModel) throws SQLException {
-
+		
 		EmailDTO email = new EmailDTO();
-//		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
 		Booking booking = bookingDAO.getBookingByDoctorIdandPatienId(emailDataModel.getDoctorid(),emailDataModel.getPatientid(),emailDataModel.getDate(),emailDataModel.getTimetype());
 		BookingModel bookingModel = defineModelToken(booking,corrId);
+
 		Booking bookingResultBooking = bookingService.editBooking(bookingModel, emailDataModel.getDoctorid());
-		System.out.println("Gia tri cua booking sau khi uodate "+bookingResultBooking);
+
 		
 		email.setTo(emailDataModel.getEmail());
 		email.setSubject("BKHcare xin thông báo đặt lịch khám thành công");
-		// Populate the template data
-				Map<String, Object> templateData = new HashMap<>();
+						Map<String, Object> templateData = new HashMap<>();
 				templateData.put("name", emailDataModel.getFull_name());
 				
 				String full_name =String.format("Họ và tên bệnh nhân : %s", emailDataModel.getFull_name()); 
@@ -101,9 +100,11 @@ public class MailSenderController {
 				templateData.put("direct_url", direct_url);
 				email.setEmailData(templateData);
 				
+				System.out.println("gia tri url "+direct_url);
+				
 				emailService.sendWelcomeEmail(email);
 				
-	}
+	}		
 	
 	@GetMapping("/api/mail/{patientid}")
 	public ResponseEntity<Object> getAllEMailData(@Valid @PathVariable("patientid") int patientid) {
