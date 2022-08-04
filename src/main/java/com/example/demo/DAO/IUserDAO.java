@@ -30,8 +30,8 @@ public interface IUserDAO extends JpaRepository<Users, Integer> {
 	@Query(value = "select * from `users` where user_id = :inid", nativeQuery = true)
 	public Users findbyId(@Param("inid") int inid);
 	
-	@Query(value = "select statusId from `users` where user_id = :inid", nativeQuery = true)
-	public String getOTP(@Param("inid") int inid);
+	@Query(value = "select statusId from `users` where user_id = :inid and statusid = :otp", nativeQuery = true)
+	public String getOTP(@Param("inid") int inid,@Param("otp") int otp);
 	// xoa sinh vien theo masv
 	@Modifying
 	@Query(value = "delete from `users` where user_id =:inid", nativeQuery = true)

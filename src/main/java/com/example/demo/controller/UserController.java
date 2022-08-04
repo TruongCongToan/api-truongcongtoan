@@ -317,10 +317,10 @@ public class UserController {
 			
 			return new ResponseEntity<Object>(users,httpStatus);
 			}
-		@GetMapping("/api/users/getOTP/{userID}")
-		public String GetOTP(@Valid @PathVariable("userID") int userID) throws SQLException{
-			if (userDAO.getOTP(userID) != null) {
-				return userDAO.getOTP(userID);
+		@GetMapping("/api/users/getOTP/{userID}/{OTP}")
+		public String GetOTP(@Valid @PathVariable("userID") int userID,@PathVariable("OTP") int OTP) throws SQLException{
+			if (userDAO.getOTP(userID,OTP) != null) {
+				return userDAO.getOTP(userID,OTP);
 			}else {
 				throw new NotFoundException("Khong tim thay ma OTP cua nguoi dung nay");
 			}
