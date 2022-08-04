@@ -123,7 +123,6 @@ public class EmailService implements IEmailService {
 	@Override
 	public EmailData addEmailData(EmailDataModel emailDataModel) throws SQLException {
 		System.out.println("Gia tri check "+emailDAO.getByDoctorID(emailDataModel.getPatientid(),emailDataModel.getDate(),emailDataModel.getDoctorid(),emailDataModel.getTimetype()));
-		if (emailDAO.getByDoctorID(emailDataModel.getPatientid(),emailDataModel.getDate(),emailDataModel.getDoctorid(),emailDataModel.getTimetype()) == null) {
 			EmailData emailData = new EmailData();
 			
 			emailData.setFull_name(emailDataModel.getFull_name());
@@ -144,9 +143,6 @@ public class EmailService implements IEmailService {
 			
 		 return	emailDAO.save(emailData);
 
-		}else {
-			throw new DuplicateRecordException("Da co user nay trong danh sach");
-		}
 		
 	}
 

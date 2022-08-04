@@ -131,7 +131,6 @@ public class MailSenderController {
 			try {
 				
 				httpStatus = HttpStatus.OK;
-//				emailDatas = emailDAO.getByPatientID(patientid);
 				
 			} catch (Exception e) {
 				 throw new InternalServerException("Không được bỏ trống các trường !");
