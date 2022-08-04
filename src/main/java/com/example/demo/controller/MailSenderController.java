@@ -69,7 +69,7 @@ public class MailSenderController {
 	//get all doctor infor
 	@PostMapping("/api/sendEmail")
 //	@EventListener(ApplicationReadyEvent.class)
-	public void sendMail(@Valid @RequestBody EmailDataModel emailDataModel) throws SQLException {
+	public String sendMail(@Valid @RequestBody EmailDataModel emailDataModel) throws SQLException {
 		
 		EmailDTO email = new EmailDTO();
 		Booking booking = bookingDAO.getBookingByDoctorIdandPatienId(emailDataModel.getDoctorid(),emailDataModel.getPatientid(),emailDataModel.getDate(),emailDataModel.getTimetype());
@@ -103,7 +103,7 @@ public class MailSenderController {
 				System.out.println("gia tri url "+direct_url);
 				
 				emailService.sendWelcomeEmail(email);
-				
+				return "send";
 	}		
 	
 	@GetMapping("/api/mail/{patientid}")
