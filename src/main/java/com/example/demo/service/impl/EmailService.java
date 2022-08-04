@@ -150,9 +150,11 @@ public class EmailService implements IEmailService {
 	public Booking editClinic(String timetype, int patientid,String date,int doctorid,String statusid) throws SQLException {
 		if (emailDAO.getByDoctorID(patientid,date,doctorid,timetype) != null) {
 			EmailData emailData = emailDAO.getByDoctorID(patientid,date,doctorid,timetype);
+			System.out.println("token" +emailData.getBooking().getToken());
 			Booking booking  = new Booking();
 			if(emailData != null) {
 				 booking = bookingDAO.getBookingByToken(emailData.getBooking().getToken());
+				 System.out.println(booking);
 				booking.setStatusId(statusid);
 			}else {
 				throw new DuplicateRecordException("Da co user nay trong danh sach");

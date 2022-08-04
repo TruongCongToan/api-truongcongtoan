@@ -73,7 +73,10 @@ public class BookingService implements IBookingService {
 				booking.setTimetype(bookingModel.getTimetype());
 			}
 
-			booking.setToken(bookingModel.getToken());
+			if(!booking.getToken().equals(bookingModel.getToken())) {
+				booking.setToken(bookingModel.getToken());
+			}
+			
 			booking.setUpdateat(new Date());
 			
 			return bookingDAO.saveAndFlush(booking);

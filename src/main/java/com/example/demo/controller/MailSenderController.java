@@ -174,11 +174,12 @@ public class MailSenderController {
 		@PathVariable("doctorid") int doctorid,
 		@PathVariable("timetype") String timetype,
 		@PathVariable("statusid") String statusid
-		) {
+		) throws SQLException {
 		HttpStatus httpStatus = null;
 		Booking booking = new Booking();
+		booking =	emailService.editClinic(timetype, patientid,date,doctorid,statusid);
 		try {
-			booking =	emailService.editClinic(timetype, patientid,date,doctorid,statusid);
+//			booking =	emailService.editClinic(timetype, patientid,date,doctorid,statusid);
 			httpStatus = HttpStatus.CREATED;
 
 		} catch (Exception e) {
