@@ -26,6 +26,7 @@ import com.example.demo.DAO.IBookingDAO;
 import com.example.demo.DAO.IEmailDAO;
 import com.example.demo.entity.Booking;
 import com.example.demo.entity.EmailData;
+import com.example.demo.entity.Response;
 import com.example.demo.exception.DuplicateRecordException;
 import com.example.demo.exception.InternalServerException;
 import com.example.demo.model.BookingModel;
@@ -177,17 +178,16 @@ public class MailSenderController {
 		@PathVariable("statusid") String statusid
 		) throws SQLException {
 		HttpStatus httpStatus = null;
-		Booking booking = new Booking();
-		booking =	emailService.editClinic(timetype, patientid,date,doctorid,statusid);
+		Response response = new Response();
+		response =	emailService.editClinic(timetype, patientid,date,doctorid,statusid);
 		try {
-//			booking =	emailService.editClinic(timetype, patientid,date,doctorid,statusid);
 			httpStatus = HttpStatus.CREATED;
 
 		} catch (Exception e) {
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 			 throw new InternalServerException("Không được bỏ trống các trường !");
 		}
-		return new ResponseEntity<Object>(booking,httpStatus);
+		return new ResponseEntity<Object>(response,httpStatus);
 	}
 	
 }

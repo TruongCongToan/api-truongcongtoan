@@ -17,8 +17,10 @@ import com.example.demo.DAO.IBookingDAO;
 import com.example.demo.DAO.IEmailDAO;
 import com.example.demo.entity.Booking;
 import com.example.demo.entity.EmailData;
+import com.example.demo.entity.Response;
 import com.example.demo.exception.DuplicateRecordException;
 import com.example.demo.exception.NotFoundException;
+import com.example.demo.model.BookingModel;
 import com.example.demo.model.EmailDTO;
 import com.example.demo.model.EmailDataModel;
 import com.example.demo.service.IEmailService;
@@ -37,6 +39,9 @@ public class EmailService implements IEmailService {
 	
 	@Autowired
 	IBookingDAO bookingDAO;
+	
+	@Autowired
+	BookingService bookingService;
 	
 	public void sendWelcomeEmail(EmailDTO emailDTO) {
 		System.out.println("##### Started sending welcome email ####");
@@ -145,25 +150,43 @@ public class EmailService implements IEmailService {
 
 		
 	}
+	
+	public BookingModel defineBookingModel(String timetype, int patientid,String date,int doctorid,String statusid,String token) {
+		BookingModel bookingModel = new BookingModel();
+		bookingModel.setDate(date);
+		bookingModel.setDoctorid(doctorid);	
+		bookingModel.setPatientid(patientid);
+		bookingModel.setStatusId(statusid);
+		bookingModel.setTimetype(timetype);
+		bookingModel.setToken(token);
+		return bookingModel;
+		
+	}
 
 	@Override
-	public Booking editClinic(String timetype, int patientid,String date,int doctorid,String statusid) throws SQLException {
+	public Response editClinic(String timetype, int patientid,String date,int doctorid,String statusid) throws SQLException {
+		Response response = new Response();
 		if (emailDAO.getByDoctorID(patientid,date,doctorid,timetype) != null) {
 			EmailData emailData = emailDAO.getByDoctorID(patientid,date,doctorid,timetype);
-			System.out.println("token" +emailData.getBooking().getToken());
-			Booking booking  = new Booking();
 			if(emailData != null) {
-				 booking = bookingDAO.getBookingByToken(emailData.getBooking().getToken());
-				 System.out.println(booking);
-				booking.setStatusId(statusid);
+					
+					BookingModel bookingModel =	defineBookingModel(timetype,patientid,date,doctorid,statusid,emailData.getBooking().getToken());
+					bookingService.editBooking(bookingModel, doctorid);
+					
+					
+					response.setErrorCode(200);
+					response.setMessage("Update Success !");
+					return response;
 			}else {
-				throw new DuplicateRecordException("Da co user nay trong danh sach");
+				response.setErrorCode(400);
+				response.setMessage(" Du lieu nhap vao khong the ho tro tim email Data!");
+				return response;
 			}
 		
-			
-			return bookingDAO.saveAndFlush(booking);
 		}else {
-			throw new NotFoundException("Khong tim thay nguoi dung nay");
+			response.setErrorCode(400);
+			response.setMessage(" Du lieu nhap vao khong the ho tro tim email Data!");
+			return response;
 		}
 	}
 }
